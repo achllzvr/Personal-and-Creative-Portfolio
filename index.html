@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Portfolio — Achilles Vonn D. Rabina</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            navy: { 950: '#070d1f', 900: '#0d1535', 800: '#111d45', 700: '#1a2a5e' },
+          },
+          backdropBlur: { xs: '2px' },
+          animation: {
+            'fade-in': 'fadeIn 0.4s ease forwards',
+            'slide-up': 'slideUp 0.5s cubic-bezier(.22,1,.36,1) forwards',
+            'scale-in': 'scaleIn 0.3s cubic-bezier(.22,1,.36,1) forwards',
+          },
+          keyframes: {
+            fadeIn: { from: { opacity: 0 }, to: { opacity: 1 } },
+            slideUp: { from: { opacity: 0, transform: 'translateY(24px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+            scaleIn: { from: { opacity: 0, transform: 'scale(.92)' }, to: { opacity: 1, transform: 'scale(1)' } },
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ─── Blueprint Background (Monochrome) ───────────────── */
+    .blueprint-bg {
+      background-color: #0d1535;
+      background-image:
+        linear-gradient(rgba(200,200,200,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,200,200,0.08) 1px, transparent 1px),
+        linear-gradient(rgba(200,200,200,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,200,200,0.03) 1px, transparent 1px);
+      background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+      background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+      position: relative;
+      animation: gridPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes gridPulse {
+      0%, 100% {
+        filter: brightness(1) saturate(0.3);
+      }
+      50% {
+        filter: brightness(1.1) saturate(0.8);
+      }
+    }
+
+    .blueprint-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle 400px at var(--mouse-x, 0%) var(--mouse-y, 0%), rgba(59,130,246,0.15) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.1s ease-out;
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: screen;
+    }
+
+    .blueprint-bg.mouse-active::before {
+      opacity: 1;
+    }
+
+    .blueprint-bg-light {
+      background-color: #e8f0fd;
+      background-image:
+        linear-gradient(rgba(100,100,100,0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100,100,100,0.10) 1px, transparent 1px),
+        linear-gradient(rgba(100,100,100,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100,100,100,0.04) 1px, transparent 1px);
+      background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+      background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+      position: relative;
+      animation: gridPulseLight 4s ease-in-out infinite;
+    }
+
+    @keyframes gridPulseLight {
+      0%, 100% {
+        filter: brightness(0.95) saturate(0.4);
+      }
+      50% {
+        filter: brightness(1.05) saturate(1);
+      }
+    }
+
+    .blueprint-bg-light::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle 400px at var(--mouse-x, 0%) var(--mouse-y, 0%), rgba(37,99,235,0.12) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.1s ease-out;
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: multiply;
+    }
+
+    .blueprint-bg-light.mouse-active::before {
+      opacity: 1;
+    }
+
+
+
+    /* ─── Decorative mosaic squares ───────────────────────── */
+    .mosaic-square {
+      position: absolute;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    /* ─── Card Glass — Dark ────────────────────────────────– */
+    .glass-dark {
+      background: rgba(17, 35, 90, 0.45);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(96, 165, 250, 0.35);
+      box-shadow: 0 8px 32px rgba(0,0,14,0.4), inset 0 1px 0 rgba(255,255,255,0.07);
+    }
+
+    /* ─── Card Glass — Light (White Base) ───────────────────– */
+    .glass-light-white {
+      background: #ffffff;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.15);
+      color: #1e293b;
+    }
+
+    .dark .glass-light-white {
+      background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: none;
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* ─── Card Glass — Blue Recommendations (left to right) ───────────────────────– */
+    .glass-blue-recommendations {
+      background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .dark .glass-blue-recommendations {
+      background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* ─── Card Glass — Blue Experience (top to bottom) ───────────────────────– */
+    .glass-blue-experience {
+      background: linear-gradient(180deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .dark .glass-blue-experience {
+      background: linear-gradient(180deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* ─── Card Glass — Blue Gallery (top-left to bottom-right diagonal) ───────────────────────– */
+    .glass-blue-gallery {
+      background: linear-gradient(135deg, #2563eb 0%, #1e3f7c 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .dark .glass-blue-gallery {
+      background: linear-gradient(135deg, #2563eb 0%, #1e3f7c 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* ─── Card Glass — Light (Blue Base for Recommendations/Gallery) ───────────────────────– */
+    .glass-light-blue {
+      background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .dark .glass-light-blue {
+      background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* ─── Glassmorphic Child Containers ─────────────────────– */
+    /* ─── Child containers for light mode blue cards (white with black text) ───────────────────────– */
+    .child-glass-white-light {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: #000000;
+    }
+
+    /* ─── Child containers for light mode white cards - blue projects ───────────────────────– */
+    .child-glass-blue-light {
+      background: linear-gradient(90deg, #0d2145 0%, #2563eb 100%);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #ffffff;
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    }
+
+    .dark .child-glass-blue-light {
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    }
+
+    /* ─── Child containers for light mode white cards - white gradient certifications ───────────────────────– */
+    .child-glass-white-gradient {
+      background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: 2px solid rgba(64, 97, 147, 0.089);
+      color: #1e40af;
+    }
+
+    .dark .child-glass-white-gradient {
+      background: rgba(15, 40, 71, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(96, 165, 250, 0.25);
+      color: #ffffff;
+    }
+
+    /* ─── Child containers for experience card - always dark blue ───────────────────────– */
+    .child-glass-experience {
+      background: rgba(15, 40, 71, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(96, 165, 250, 0.25);
+      color: #ffffff;
+    }
+
+    /* ─── Child containers for recommendations/gallery in light mode ───────────────────────– */
+    .child-glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: #000000;
+    }
+
+    .dark .child-glass {
+      background: rgba(15, 40, 71, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(96, 165, 250, 0.25);
+      color: #ffffff;
+    }
+
+    /* ─── Glassmorphic Pills ───────────────────────– */
+    .pill-glass {
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .dark .pill-glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* ─── Scrollbar hide ───────────────────────────────────── */
+    .scroll-hide::-webkit-scrollbar { display: none; }
+    .scroll-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* ─── Profile image glow ───────────────────────────────── */
+    .profile-glow {
+      box-shadow: 0 0 0 4px rgba(96,165,250,0.3), 0 0 40px rgba(59,130,246,0.2);
+    }
+
+    /* ─── Timeline line ────────────────────────────────────── */
+    .timeline-line {
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(96,165,250,0.6), rgba(96,165,250,0.1));
+    }
+
+    /* ─── Modal overlay ────────────────────────────────────── */
+    #contact-modal {
+      display: none;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(7,13,31,0.75);
+    }
+    #contact-modal.open { display: flex; }
+    .dark #contact-modal { background: rgba(7,13,31,0.80); }
+    html:not(.dark) #contact-modal { background: rgba(100,130,200,0.45); }
+
+    /* ─── Theme toggle track ───────────────────────────────── */
+    .toggle-track {
+      transition: background 0.3s;
+    }
+
+    /* ─── Carousel dot active ──────────────────────────────── */
+    .dot-active {
+      background: #3b82f6;
+      width: 20px !important;
+    }
+
+    /* ─── Card entry animations ────────────────────────────── */
+    .card-enter { animation: slideUp 0.55s cubic-bezier(.22,1,.36,1) both; }
+    .card-enter:nth-child(1) { animation-delay: 0.05s; }
+    .card-enter:nth-child(2) { animation-delay: 0.12s; }
+    .card-enter:nth-child(3) { animation-delay: 0.18s; }
+    .card-enter:nth-child(4) { animation-delay: 0.24s; }
+    .card-enter:nth-child(5) { animation-delay: 0.30s; }
+    .card-enter:nth-child(6) { animation-delay: 0.36s; }
+
+    /* ─── Keyword highlight ────────────────────────────────── */
+    .kw { color: #facc15; font-weight: 500; }
+    .dark .kw-link { color: #93c5fd; text-decoration: underline; text-underline-offset: 3px; }
+    html:not(.dark) .kw-link { color: #1d4ed8; text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+
+    /* ─── Input styles ─────────────────────────────────────── */
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(203,213,225,0.5);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: #1e3a8a;
+      outline: none;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .form-input:focus {
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
+      border-color: #60a5fa;
+    }
+    .form-input::placeholder { color: #94a3b8; }
+
+    /* ─── Cert badge ───────────────────────────────────────– */
+    .cert-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ─── 12-Column Grid ────────────────────────────────────– */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* ─── Responsive tweaks ────────────────────────────────– */
+    @media (max-width: 1024px) {
+      .bento-grid {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ─── Modal card container (allow overflow) ───────────– */
+    #modal-card {
+      overflow: visible;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen font-body text-white transition-colors duration-300">
+
+<!-- ══════════════════════════════════════════════════════════
+     BACKGROUND LAYER
+════════════════════════════════════════════════════════════ -->
+<div id="bg-layer" class="fixed inset-0 blueprint-bg -z-10 transition-all duration-500"></div>
+
+<!-- Decorative mosaic squares (dark mode) -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none -z-10" id="mosaic-layer">
+  <div class="mosaic-square w-16 h-16 bg-blue-700/30 top-8 right-24"></div>
+  <div class="mosaic-square w-8 h-8 bg-blue-600/20 top-4 right-48"></div>
+  <div class="mosaic-square w-24 h-12 bg-blue-800/25 top-16 right-6"></div>
+  <div class="mosaic-square w-10 h-10 bg-blue-500/15 top-32 right-32"></div>
+  <div class="mosaic-square w-6 h-6 bg-blue-400/20 top-2 right-72"></div>
+  <div class="mosaic-square w-20 h-8 bg-blue-900/30 top-24 right-56"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     APP SHELL
+════════════════════════════════════════════════════════════ -->
+<div class="min-h-screen px-6 py-6 max-w-[1400px] mx-auto">
+
+  <!-- ── HEADER ──────────────────────────────────────────– -->
+  <header class="flex items-center justify-between mb-8">
+    <h1 class="font-display font-800 text-3xl tracking-tight
+                dark:text-white text-navy-900"
+        id="header-title"
+        style="font-weight:800; color: inherit;">
+      Personal Portfolio
+    </h1>
+
+    <!-- Controls Container -->
+    <div class="flex items-center gap-3">
+      <!-- Dark/Light Mode Toggle Button -->
+      <button id="mode-toggle"
+              onclick="toggleTheme()"
+              class="flex items-center justify-center w-11 h-11 rounded-full
+                     dark:bg-navy-900 bg-white/80
+                     dark:border dark:border-blue-500/40
+                     border border-slate-200
+                     shadow-lg cursor-pointer transition-all duration-300 hover:scale-105"
+              aria-label="Toggle light/dark mode">
+        <!-- Sun icon (feather) — shows in dark mode -->
+        <svg id="sun-icon" class="w-5 h-5 dark:block hidden dark:text-yellow-400 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <!-- Moon icon (feather) — shows in light mode -->
+        <svg id="moon-icon" class="w-5 h-5 dark:hidden block text-blue-600 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+
+      <!-- Portfolio Mode Toggle Pill (Dummy) -->
+      <div class="relative">
+        <div class="flex items-center gap-1 rounded-full p-1.5 toggle-track
+                   dark:bg-navy-900 bg-white/80
+                   dark:border dark:border-blue-500/40
+                   border border-slate-200
+                   shadow-lg transition-all duration-300"
+             aria-label="Portfolio mode (coming soon)">
+          <!-- Personal mode icon — left side -->
+          <span id="personal-icon"
+                class="w-9 h-9 rounded-full flex items-center justify-center text-base
+                       bg-blue-600 text-white
+                       transition-all duration-300"
+                data-mode="personal">⌘</span>
+          <!-- Creative mode icon — right side -->
+          <span id="creative-icon"
+                class="w-9 h-9 rounded-full flex items-center justify-center text-base
+                       bg-transparent text-slate-500
+                       transition-all duration-300"
+                data-mode="creative">☺</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── BENTO GRID (12 COLUMNS) ──────────────────────────– -->
+  <main class="bento-grid">
+
+    <!-- ══════════════════════════════
+         PROFILE CARD (col-span-3, row-span-3)
+    ══════════════════════════════ -->
+    <div class="card-enter rounded-3xl overflow-hidden relative
+                col-span-3 row-span-3"
+         style="padding: 0; position: relative; background: transparent;" 
+         data-dark-bg="linear-gradient(90deg, rgba(150, 150, 150, 0) 0%, rgba(180, 180, 180, 0.7) 30%, rgba(240, 240, 240, 1) 100%)"
+         data-light-bg="linear-gradient(90deg, rgba(30, 58, 138, 0) 0%, rgba(30, 58, 138, 0.6) 30%, rgba(59, 130, 246, 0.9) 100%)">
+
+      <!-- Background Card (behind everything) -->
+      <div class="absolute inset-0 rounded-3xl"
+           style="margin-top: 40%; z-index: 0; background: linear-gradient(90deg, rgba(150, 150, 150, 0) 0%, rgba(180, 180, 180, 0.7) 30%, rgba(240, 240, 240, 1) 100%); background-color: rgba(240, 240, 240, 0.95);"
+           data-dark-bg-card="linear-gradient(90deg, rgba(150, 150, 150, 0) 0%, rgba(180, 180, 180, 0.7) 30%, rgba(240, 240, 240, 1) 100%)"
+           data-light-bg-card="linear-gradient(90deg, rgba(13, 71, 161, 0.9) 0%, rgba(66, 133, 244, 0.85) 100%)"></div>
+
+      <!-- Photo fills entire card -->
+      <img src="chi_photo.png"
+           alt="Achilles Vonn D. Rabina"
+           class="absolute inset-0 w-full h-full object-cover object-top"
+           style="z-index: 1;"
+           onerror="this.src='https://ui-avatars.com/api/?name=Achilles+Rabina&size=400&background=1e3a8a&color=fff&font-size=0.4'" />
+
+      <!-- Blue gradient overlay (transparent to opaque) -->
+      <div class="absolute bottom-0 w-full px-6 py-6 flex flex-col gap-4 text-white"
+           style="z-index: 10; height: 30%; background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.85) 60%, rgba(20, 84, 220, 1) 100%); display: flex; flex-direction: column; justify-content: flex-end;">
+        <div>
+          <h2 class="font-display font-700 text-lg leading-tight text-white"
+              style="font-weight: 700;">
+            Achilles Vonn D. Rabina
+          </h2>
+          <p class="text-sm mt-0.5 text-blue-100 italic">
+            Student / Mobile &amp; Web Developer
+          </p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-3">
+          <button onclick="openModal()"
+                  class="flex-1 flex items-center justify-center gap-2 rounded-full py-3 text-sm font-600 cursor-pointer
+                         dark:bg-transparent dark:hover:bg-white/10 dark:border-2 dark:border-blue-200/80 text-white
+                         bg-transparent hover:bg-white/10 border-2 border-blue-100/80 text-white
+                         transition-all duration-200 active:scale-95"
+                  style="font-weight: 600;">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+            Message
+          </button>
+          <button class="flex-1 flex items-center justify-center gap-2 rounded-full py-3 text-sm font-600 cursor-pointer
+                         dark:bg-transparent dark:hover:bg-white/10 dark:border-2 dark:border-blue-200/80 text-white
+                         bg-transparent hover:bg-white/10 border-2 border-blue-100/80 text-white
+                         transition-all duration-200 active:scale-95"
+                  style="font-weight: 600;">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            GitHub
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         ABOUT ME CARD (col-span-6)
+    ══════════════════════════════ -->
+    <div class="card-enter rounded-3xl p-6
+                glass-light-white
+                dark:text-white text-slate-800
+                col-span-6">
+      <h3 class="font-display font-700 text-base mb-3 dark:text-white text-blue-600"
+          style="font-weight:700;">About me</h3>
+      <p class="text-sm leading-relaxed dark:text-slate-200 text-slate-600">
+        A consistent First Honor Dean's Lister and team leader, I've led multiple projects
+        and built various personal and academic coding solutions. My <a href="#" class="kw-link">skills</a> and 
+        <a href="#" class="kw-link">experience</a> have made me a versatile programmer, specializing in the 
+        MERN stack and modern Laravel-React-MySQL architectures.
+      </p>
+      <p class="mt-3 text-sm italic font-mono dark:text-yellow-400 text-blue-700" style="font-weight: 500;">
+        Let's build something great together!
+      </p>
+    </div>
+
+    <!-- ══════════════════════════════
+         EXPERIENCE CARD (col-span-3, row-span-3)
+    ══════════════════════════════ -->
+    <div class="card-enter rounded-3xl p-5
+                glass-blue-experience
+                text-white
+                col-span-3 row-span-3">
+      <h3 class="font-display font-700 text-sm mb-5 text-center tracking-wide text-white"
+          style="font-weight:700;">Experience</h3>
+
+      <div class="flex flex-col gap-4 relative pl-2">
+        <div class="absolute left-3 top-4 bottom-4 timeline-line"></div>
+
+        <!-- Entry 1 -->
+        <div class="relative pl-6">
+          <div class="absolute left-0 w-3 h-3 rounded-full bg-blue-300 border-2 border-blue-500 mt-1"></div>
+          <div class="rounded-xl p-3 child-glass-experience border">
+            <p class="font-display font-700 text-xs" style="font-weight:700;">President</p>
+            <p class="text-xs text-white/80 mt-0.5">SPACE (Media & Tech Council)</p>
+            <span class="inline-block mt-2 text-xs font-mono bg-white/10 px-2 py-0.5 rounded-full border border-white/30">2026</span>
+          </div>
+        </div>
+
+        <!-- Entry 2 -->
+        <div class="relative pl-6">
+          <div class="absolute left-0 w-3 h-3 rounded-full bg-blue-300 border-2 border-blue-500 mt-1"></div>
+          <div class="rounded-xl p-3 child-glass-experience border">
+            <p class="font-display font-700 text-xs" style="font-weight:700;">President</p>
+            <p class="text-xs text-white/80 mt-0.5">SOITS</p>
+            <span class="inline-block mt-2 text-xs font-mono bg-white/10 px-2 py-0.5 rounded-full border border-white/30">2025</span>
+          </div>
+        </div>
+
+        <!-- Entry 3 -->
+        <div class="relative pl-6">
+          <div class="absolute left-0 w-3 h-3 rounded-full bg-blue-300 border-2 border-blue-500 mt-1"></div>
+          <div class="rounded-xl p-3 child-glass-experience border">
+            <p class="font-display font-700 text-xs" style="font-weight:700;">Developer</p>
+            <p class="text-xs text-white/80 mt-0.5">Laravel-React Hybrid</p>
+            <span class="inline-block mt-2 text-xs font-mono bg-white/10 px-2 py-0.5 rounded-full border border-white/30">2024</span>
+          </div>
+        </div>
+
+        <!-- Entry 4 -->
+        <div class="relative pl-6">
+          <div class="absolute left-0 w-3 h-3 rounded-full bg-blue-200 border-2 border-blue-400 mt-1"></div>
+          <div class="rounded-xl p-3 child-glass-experience border">
+            <p class="font-display font-700 text-xs" style="font-weight:700;">Student</p>
+            <p class="text-xs text-white/80 mt-0.5">BSIT – MWA</p>
+            <span class="inline-block mt-2 text-xs font-mono bg-white/10 px-2 py-0.5 rounded-full border border-white/30">2023</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         PROJECTS CARD (col-span-6)
+    ══════════════════════════════ -->
+    <div class="card-enter rounded-3xl p-6
+                glass-light-white
+                dark:text-white text-slate-800
+                col-span-6">
+      <h3 class="font-display font-700 text-base mb-4 dark:text-white text-blue-600"
+          style="font-weight:700;">Projects</h3>
+
+      <div id="projects-track" class="flex gap-4 overflow-x-auto scroll-hide pb-1 snap-x snap-mandatory">
+
+        <!-- Project 1 -->
+        <div class="snap-start flex-shrink-0 rounded-2xl p-4 w-56 relative
+                    dark:child-glass child-glass-blue-light
+                    text-white">
+          <h4 class="font-display font-700 text-sm" style="font-weight:700;">SIGHT</h4>
+          <p class="text-xs text-blue-100 mt-1 mb-12">Mobile-only Guardian App</p>
+          <span class="absolute bottom-3 left-3 inline-block text-xs font-mono pill-glass text-white rounded-lg px-3 py-1.5">
+            In Development
+          </span>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="snap-start flex-shrink-0 rounded-2xl p-4 w-56 relative
+                    dark:child-glass child-glass-blue-light
+                    text-white">
+          <h4 class="font-display font-700 text-sm" style="font-weight:700;">TAPUS!</h4>
+          <p class="text-xs text-blue-100 mt-1 mb-12">NFC-enabled 3D Printed Accessories</p>
+          <span class="absolute bottom-3 left-3 inline-block text-xs font-mono pill-glass text-white rounded-lg px-3 py-1.5">
+            Active Project
+          </span>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="snap-start flex-shrink-0 rounded-2xl p-4 w-56 relative
+                    dark:child-glass child-glass-blue-light
+                    text-white">
+          <h4 class="font-display font-700 text-sm" style="font-weight:700;">Ligal.ai</h4>
+          <p class="text-xs text-blue-100 mt-1 mb-12">AI Legal Document Generator</p>
+          <span class="absolute bottom-3 left-3 inline-block text-xs font-mono pill-glass text-white rounded-lg px-3 py-1.5">
+            In Development
+          </span>
+        </div>
+      </div>
+
+      <div class="flex gap-1.5 mt-3 justify-center" id="projects-dots">
+        <div class="h-1.5 rounded-full dark:bg-blue-400 bg-white transition-all duration-300 dot-active"></div>
+        <div class="h-1.5 w-6 rounded-full dark:bg-blue-400/30 bg-white/40 transition-all duration-300"></div>
+        <div class="h-1.5 w-6 rounded-full dark:bg-blue-400/30 bg-white/40 transition-all duration-300"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         CERTIFICATIONS CARD (col-span-6)
+    ══════════════════════════════ -->
+    <div class="card-enter rounded-3xl p-6
+                glass-light-white
+                dark:text-white text-slate-800
+                col-span-6">
+      <h3 class="font-display font-700 text-base mb-4 dark:text-white text-blue-600"
+          style="font-weight:700;">Certifications and Awards</h3>
+
+      <div class="flex gap-4 overflow-x-auto scroll-hide snap-x snap-mandatory pb-1">
+
+        <div class="snap-start flex-shrink-0 rounded-2xl p-4 w-56 flex items-start gap-3
+                    dark:child-glass child-glass-white-gradient">
+          <div class="cert-icon bg-yellow-400/20 border border-yellow-400/40 text-yellow-500 dark:text-yellow-400">🏆</div>
+          <div>
+            <h4 class="font-display font-700 text-xs dark:text-white text-blue-700" style="font-weight:700;">1st Place</h4>
+            <p class="text-xs dark:text-blue-100 text-slate-600 mt-0.5">National Hackathon, Sustainability Category</p>
+          </div>
+        </div>
+
+        <div class="snap-start flex-shrink-0 rounded-2xl p-4 w-56 flex items-start gap-3
+                    dark:child-glass child-glass-white-gradient">
+          <div class="cert-icon bg-blue-400/20 border border-blue-400/40 text-blue-500 dark:text-blue-300">🎖</div>
+          <div>
+            <h4 class="font-display font-700 text-xs dark:text-white text-blue-700" style="font-weight:700;">IT Specialist – Java</h4>
+            <p class="text-xs dark:text-blue-100 text-slate-600 mt-0.5">Issued by Certiport, a Pearson VUE business</p>
+          </div>
+        </div>
+
+        <div class="snap-start flex-shrink-0 rounded-2xl p-4 w-56 flex items-start gap-3
+                    dark:child-glass child-glass-white-gradient">
+          <div class="cert-icon bg-green-400/20 border border-green-400/40 text-green-600 dark:text-green-300">📜</div>
+          <div>
+            <h4 class="font-display font-700 text-xs dark:text-white text-blue-700" style="font-weight:700;">Dean's Lister</h4>
+            <p class="text-xs dark:text-blue-100 text-slate-600 mt-0.5">First Honor, Multiple Semesters</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         RECOMMENDATIONS (col-span-8)
+    ══════════════════════════════ -->
+    <div class="card-enter rounded-3xl p-6
+                glass-blue-recommendations
+                dark:text-white text-white
+                col-span-8">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-display font-700 text-base dark:text-blue-100 text-white"
+            style="font-weight:700;">Recommendations</h3>
+        <button class="w-8 h-8 rounded-full dark:bg-blue-700/50 bg-white/30 dark:text-blue-200 text-white
+                       flex items-center justify-center text-xs hover:scale-105 transition-transform">
+          ···
+        </button>
+      </div>
+
+      <div id="rec-track" class="flex gap-5 overflow-x-auto scroll-hide snap-x snap-mandatory">
+
+        <div class="snap-start flex-shrink-0 w-full max-w-3xl">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-11 h-11 rounded-full bg-gradient-to-br from-blue-400 to-blue-700 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">JD</div>
+            <div>
+              <p class="font-display font-700 text-sm" style="font-weight:700;">Mr. John Doe</p>
+              <p class="text-xs dark:text-blue-300 text-white/80">Full-time Professor at NU Lipa</p>
+            </div>
+          </div>
+          <div class="dark:border-t dark:border-blue-500/40 border-t border-gray-300 pt-3 dark:child-glass child-glass rounded-lg p-3">
+            <p class="text-sm leading-relaxed dark:text-slate-300 text-gray-800">
+              "As his Mobile and Web Development professor, I have had the privilege of watching
+              <strong class="dark:text-yellow-400 text-gray-900">Achilles</strong>
+              evolve from an exceptional student into a visionary technologist. He does not just write code;
+              he engineers comprehensive solutions, seamlessly mastering the MERN stack and transitioning brilliantly to 
+              Laravel-React-MySQL hybrid architectures. His technical acumen, combined with his collaborative spirit, 
+              makes him an invaluable asset to any team."
+            </p>
+          </div>
+        </div>
+
+        <div class="snap-start flex-shrink-0 w-full max-w-3xl">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-11 h-11 rounded-full bg-gradient-to-br from-purple-400 to-purple-700 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">MP</div>
+            <div>
+              <p class="font-display font-700 text-sm" style="font-weight:700;">Maria P.</p>
+              <p class="text-xs dark:text-blue-300 text-white/80">Industry Mentor</p>
+            </div>
+          </div>
+          <div class="dark:border-t dark:border-blue-500/40 border-t border-gray-300 pt-3 dark:child-glass child-glass rounded-lg p-3">
+            <p class="text-sm leading-relaxed dark:text-slate-300 text-gray-800">
+              "Achilles demonstrated exceptional initiative and technical depth during our collaboration. His ability to learn quickly and deliver polished results is truly impressive. His expertise in modern full-stack development is remarkable."
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-1.5 mt-4 justify-center">
+        <div class="h-1.5 rounded-full dark:bg-blue-400 bg-white dot-active transition-all duration-300"></div>
+        <div class="h-1.5 w-6 rounded-full dark:bg-blue-400/30 bg-white/40 transition-all duration-300"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         GALLERY (col-span-4)
+    ══════════════════════════════ -->
+    <div class="card-enter rounded-3xl p-5
+                glass-blue-gallery
+                text-white
+                col-span-4">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-display font-700 text-sm" style="font-weight:700;">Gallery</h3>
+        <button class="w-7 h-7 rounded-full bg-white/20 border border-white/30 text-white flex items-center justify-center text-xs hover:scale-105 transition-transform">
+          ···
+        </button>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden relative mb-3" style="height: 120px;">
+        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&q=80"
+             alt="NU Lipa hackathon event"
+             class="w-full h-full object-cover"
+             onerror="this.src='https://placehold.co/400x120/1e3a8a/93c5fd?text=NU+LIPA+Event'" />
+        <div class="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent"></div>
+        <div class="absolute bottom-2 left-2 right-2">
+          <div class="flex items-center gap-1.5">
+            <div class="w-4 h-4 rounded bg-white/30 flex items-center justify-center">
+              <span class="text-white text-[8px] font-bold">N</span>
+            </div>
+            <span class="text-xs font-bold text-white">NU LIPA</span>
+            <span class="text-[10px] text-white/70 italic ml-auto">Education that works.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-xl p-3 dark:child-glass child-glass-white-light dark:bg-white/20 bg-white/50 border dark:border-white/30 border-gray-300 text-center">
+        <p class="text-xs italic dark:text-white/90 text-gray-800">"One of my greatest achievements"</p>
+        <span class="inline-block mt-2 text-xs font-mono dark:bg-white/10 bg-white/30 px-2 py-0.5 rounded-full border dark:border-white/30 border-white/40">2025</span>
+      </div>
+
+      <div class="flex gap-1 mt-3 justify-center">
+        <div class="h-1 rounded-full bg-white dot-active transition-all duration-300"></div>
+        <div class="h-1 w-4 rounded-full bg-white/30 transition-all duration-300"></div>
+        <div class="h-1 w-4 rounded-full bg-white/30 transition-all duration-300"></div>
+        <div class="h-1 w-4 rounded-full bg-white/30 transition-all duration-300"></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CONTACT MODAL OVERLAY
+════════════════════════════════════════════════════════════ -->
+<div id="contact-modal"
+     class="fixed inset-0 z-50 items-center justify-center p-6 animate-fade-in"
+     onclick="handleModalClick(event)">
+
+  <!-- Modal card — Allow overflow for 3D image breakout -->
+  <div id="modal-card"
+       class="relative w-full max-w-3xl rounded-3xl
+              dark:bg-blue-800/60 bg-blue-600/90
+              border dark:border-blue-400/40 border-blue-400/50
+              shadow-2xl animate-scale-in"
+       style="backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); overflow: visible;">
+
+    <!-- Close button -->
+    <button onclick="closeModal()"
+            class="absolute top-4 right-4 w-8 h-8 rounded-full
+                   dark:bg-blue-700/60 bg-white/20
+                   text-white hover:scale-110 transition-transform flex items-center justify-center z-20"
+            aria-label="Close">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <!-- Container: Two-pane layout (flex row) -->
+    <div class="flex relative" style="min-height: 420px;">
+
+      <!-- PROFILE IMAGE — Absolutely positioned breakout (Left) -->
+      <img src="chi_photo.png"
+           alt="Achilles"
+           class="absolute bottom-0 w-72 object-cover"
+           style="left: -4rem; height: 110%; z-index: 20;"
+           onerror="this.src='https://ui-avatars.com/api/?name=AVR&size=400&background=1e3a8a&color=fff'" />
+
+      <!-- LEFT PANE: My Socials (offset for breakout image) -->
+      <div class="relative flex flex-col items-center justify-end w-64 flex-shrink-0 pl-8 pb-6"
+           style="background: linear-gradient(135deg, rgba(59,130,246,0.3), rgba(29,78,216,0.2)); z-index: 10;">
+
+        <div class="relative z-10 w-full">
+          <div class="rounded-2xl p-4 dark:bg-blue-600/40 bg-white/10 border border-blue-400/30 dark:border-blue-400/30 backdrop-blur-sm">
+            <h3 class="font-display font-700 text-sm text-white mb-4" style="font-weight:700;">My Socials</h3>
+
+            <div class="h-12"></div>
+
+            <p class="text-xs text-white/80 mb-3">Connect with me here!</p>
+            <div class="flex gap-3">
+              <a href="#" class="w-10 h-10 rounded-xl dark:bg-blue-700/60 bg-white/20 border dark:border-blue-400/40 border-white/30 flex items-center justify-center
+                                  text-white hover:bg-blue-600/80 hover:scale-110 transition-all duration-200">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-xl dark:bg-blue-700/60 bg-white/20 border dark:border-blue-400/40 border-white/30 flex items-center justify-center
+                                  text-white hover:bg-blue-600/80 hover:scale-110 transition-all duration-200">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-xl dark:bg-blue-700/60 bg-white/20 border dark:border-blue-400/40 border-white/30 flex items-center justify-center
+                                  text-white hover:bg-blue-600/80 hover:scale-110 transition-all duration-200">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT PANE: Get In Touch form -->
+      <div class="flex-1 p-6 flex flex-col justify-center">
+        <div class="rounded-2xl p-5
+                    dark:bg-blue-700/50 bg-white/10
+                    border dark:border-blue-400/30 border-white/30">
+          <h3 class="font-display font-700 text-base text-white mb-5" style="font-weight:700;">Get In Touch</h3>
+
+          <div class="flex flex-col gap-4">
+            <div>
+              <label class="block text-xs text-white/80 mb-1.5">Name</label>
+              <input type="text" placeholder="Your name" class="form-input" />
+            </div>
+
+            <div>
+              <label class="block text-xs text-white/80 mb-1.5">Email</label>
+              <input type="email" placeholder="your@email.com" class="form-input" />
+            </div>
+
+            <div class="relative">
+              <label class="block text-xs text-white/80 mb-1.5">Subject</label>
+              <textarea rows="4" placeholder="Your message…" class="form-input resize-none"></textarea>
+
+              <button class="absolute -bottom-4 -right-4 w-12 h-12 rounded-full
+                             bg-yellow-400 hover:bg-yellow-300
+                             shadow-lg shadow-yellow-400/40
+                             flex items-center justify-center
+                             hover:scale-110 transition-all duration-200 active:scale-95
+                             cursor-pointer z-10"
+                      aria-label="Send message">
+                <svg class="w-5 h-5 text-blue-900 rotate-45" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════════════════ -->
+<script>
+  const html   = document.documentElement;
+  const bg     = document.getElementById('bg-layer');
+  const title  = document.getElementById('header-title');
+
+  function toggleTheme() {
+    const isDark = html.classList.toggle('dark');
+    applyTheme(isDark);
+  }
+
+  function applyTheme(isDark) {
+    const bgCard = document.querySelector('[data-dark-bg-card]');
+    
+    if (isDark) {
+      bg.className = 'fixed inset-0 blueprint-bg -z-10 transition-all duration-500';
+      title.style.color = '#fff';
+      if (bgCard) {
+        bgCard.style.background = 'linear-gradient(90deg, rgba(150, 150, 150, 0) 0%, rgba(180, 180, 180, 0.7) 30%, rgba(240, 240, 240, 1) 100%)';
+        bgCard.style.backgroundColor = 'rgba(240, 240, 240, 0.95)';
+      }
+    } else {
+      bg.className = 'fixed inset-0 blueprint-bg-light -z-10 transition-all duration-500';
+      title.style.color = '#1e3a8a';
+      if (bgCard) {
+        bgCard.style.background = 'linear-gradient(90deg, rgba(13, 71, 161, 0.9) 0%, rgba(66, 133, 244, 0.85) 100%)';
+        bgCard.style.backgroundColor = 'rgba(66, 133, 244, 0.95)';
+      }
+    }
+  }
+
+  applyTheme(true);
+
+  const modal = document.getElementById('contact-modal');
+
+  function openModal() {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleModalClick(e) {
+    if (e.target === modal) closeModal();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  const track = document.getElementById('projects-track');
+  const dots  = document.querySelectorAll('#projects-dots > div');
+
+  if (track) {
+    track.addEventListener('scroll', () => {
+      const idx = Math.round(track.scrollLeft / track.clientWidth);
+      dots.forEach((d, i) => {
+        if (i === idx) {
+          d.style.width = '20px';
+          d.style.background = '#3b82f6';
+        } else {
+          d.style.width = '24px';
+          d.style.background = 'rgba(96,165,250,0.3)';
+        }
+      });
+    });
+  }
+
+  /* ── Grid Glow and Ripple Effects ──────────────────────– */
+  const bgLayer = document.getElementById('bg-layer');
+  let mouseTimeout;
+
+  // Track mouse movement for glow effect
+  document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth) * 100;
+    const y = (e.clientY / window.innerHeight) * 100;
+
+    bgLayer.style.setProperty('--mouse-x', `${x}%`);
+    bgLayer.style.setProperty('--mouse-y', `${y}%`);
+
+    // Activate glow
+    bgLayer.classList.add('mouse-active');
+
+    // Clear timeout if exists
+    clearTimeout(mouseTimeout);
+
+    // Deactivate glow after mouse stops moving
+    mouseTimeout = setTimeout(() => {
+      bgLayer.classList.remove('mouse-active');
+    }, 100);
+  });
+
+  // Leave document to deactivate glow
+  document.addEventListener('mouseleave', () => {
+    bgLayer.classList.remove('mouse-active');
+    clearTimeout(mouseTimeout);
+  });
+
+
+</script>
+</body>
+</html>
