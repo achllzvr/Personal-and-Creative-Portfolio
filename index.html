@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Personal Portfolio — Achilles Vonn D. Rabina</title>
+  <link rel="icon" type="image/png" href="assets/images/AVR_Logo_Redesign.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -357,6 +358,34 @@
     .card-enter:nth-child(4) { animation-delay: 0.24s; }
     .card-enter:nth-child(5) { animation-delay: 0.30s; }
     .card-enter:nth-child(6) { animation-delay: 0.36s; }
+
+    /* ─── Custom Slide Up Keyframe for CSS animations ───────────– */
+    @keyframes slideUpCustom {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ─── Global fade-in-up animation for all containers ────────– */
+    header, main, #contact-modal { animation: slideUpCustom 1.5s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    
+    .rounded-3xl, .rounded-2xl { animation: slideUpCustom 1.2s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    
+    /* Staggered delays for nested container elements */
+    header > * { animation-delay: 0.05s; }
+    main > * { animation-delay: 0.1s; }
+    .bento-grid > *:not(.card-enter) { animation: slideUpCustom 1.2s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    .bento-grid > *:nth-child(1):not(.card-enter) { animation-delay: 0.05s; }
+    .bento-grid > *:nth-child(2):not(.card-enter) { animation-delay: 0.12s; }
+    .bento-grid > *:nth-child(3):not(.card-enter) { animation-delay: 0.18s; }
+    .bento-grid > *:nth-child(4):not(.card-enter) { animation-delay: 0.24s; }
+    .bento-grid > *:nth-child(5):not(.card-enter) { animation-delay: 0.30s; }
+    .bento-grid > *:nth-child(6):not(.card-enter) { animation-delay: 0.36s; }
 
     /* ─── Keyword highlight ────────────────────────────────── */
     .kw { color: #facc15; font-weight: 500; }
@@ -968,6 +997,13 @@
   const html   = document.documentElement;
   const bg     = document.getElementById('bg-layer');
   const title  = document.getElementById('header-title');
+
+  // Scroll to top on page load
+  window.addEventListener('load', () => {
+    window.scrollTo(0, 0);
+  });
+  // Fallback for immediate scroll
+  window.scrollTo(0, 0);
 
   function toggleTheme() {
     const isDark = html.classList.toggle('dark');
