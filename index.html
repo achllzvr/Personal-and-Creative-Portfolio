@@ -521,7 +521,7 @@
       height: 100%;
       object-fit: cover;
       object-position: top;
-      z-index: 5;
+      z-index: 2;
       display: none;
       background-color: transparent;
     }
@@ -679,22 +679,662 @@
       gap: 1.5rem;
     }
 
-    /* ─── Responsive tweaks ────────────────────────────────– */
-    @media (max-width: 1024px) {
-      .bento-grid {
-        grid-template-columns: repeat(12, minmax(0, 1fr));
+    /* ─── Touch-friendly optimizations ────────────────────– */
+    @media (hover: none) and (pointer: coarse) {
+      button,
+      a,
+      input[type="button"],
+      input[type="submit"] {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 0.75rem 1rem;
       }
     }
 
-    @media (max-width: 768px) {
+    /* ═══════════════════════════════════════════════════════════
+       COMPREHENSIVE RESPONSIVE SYSTEM - COMPLETELY REBUILT
+       Fixes: Container max-width, padding, profile card height,
+       all Tailwind class conflicts
+    ═══════════════════════════════════════════════════════════ */
+
+    /* ─── DESKTOP (1400px and above) ──────────────────────– */
+    /* No overrides needed - base styles apply */
+
+    /* ═══════════════════════════════════════════════════════════
+       BASE STYLES FOR ALL SCREEN SIZES (applies everywhere)
+    ═══════════════════════════════════════════════════════════ */
+
+    /* Blue gradient overlay - base styling for all screens */
+    .bento-grid > div:first-of-type > div:last-of-type {
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      height: auto !important;
+      padding: 1.5rem !important;
+      margin: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-end !important;
+      gap: 0.75rem !important;
+      border-radius: 1.5rem !important;
+      z-index: 2 !important;
+    }
+
+    /* Text wrapper - base styling for all screens */
+    .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+      position: relative !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      z-index: 1 !important;
+    }
+
+    /* ─── MOBILE LANDSCAPE / SMALL TABLET (769px - 1024px) ─– */
+    @media (max-width: 1024px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      /* CRITICAL: Override the main container's max-width constraint */
+      div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Fallback for dynamic elements */
+      .min-h-screen.mx-auto.max-w-\[1400px\] {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Bento grid adjustments */
       .bento-grid {
-        grid-template-columns: 1fr;
+        gap: 1rem !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Profile card - full width, optimized height */
+      .bento-grid > div:first-of-type {
+        display: block !important;
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+        min-height: 450px !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
+      /* All other cards full-width */
+      .col-span-3,
+      .col-span-4,
+      .col-span-6,
+      .col-span-8 {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+      }
+
+      .row-span-3 {
+        grid-row: auto !important;
+      }
+
+      /* Adjust background card margin-top */
+      #bg-card {
+        margin-top: 25% !important;
+      }
+
+      header {
+        margin-bottom: 1rem !important;
+      }
+    }
+
+
+    /* ─── PHONE / PORTRAIT (481px - 768px) ───────────────– */
+    @media (max-width: 768px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      /* CRITICAL: Override the main container's max-width constraint */
+      div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Fallback for dynamic elements */
+      .min-h-screen.mx-auto.max-w-\[1400px\] {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Bento grid adjustments */
+      .bento-grid {
+        gap: 0.875rem !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Profile card - full width, reduced height for phone */
+      .bento-grid > div:first-of-type {
+        display: block !important;
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+        min-height: 420px !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
+      /* All other cards full-width */
+      .col-span-3,
+      .col-span-4,
+      .col-span-6,
+      .col-span-8 {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+      }
+
+      .row-span-3 {
+        grid-row: auto !important;
+      }
+
+      /* Adjust background card margin-top */
+      #bg-card {
+        margin-top: 20% !important;
+      }
+
+      header {
+        margin-bottom: 0.875rem !important;
+      }
+    }
+
+        /* ensure the main wrapper is a positioned container for absolute children */
+    div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+      position: relative !important;
+    }
+    
+    /* move only the title to the empty area to the right of the mobile profile image */
+    @media (max-width: 1024px) {
+      header h1#header-title {
+        position: absolute !important;
+        top: 15rem !important;
+        left: calc(25% + 0.3rem) !important; /* match the mobile image width (45%) + small gap */
+        right: 1rem !important; /* prevent overflow on very small screens */
+        transform: translateY(-50%) !important; /* vertically center alongside the image */
+        z-index: 20 !important;
+        margin: 0 !important;
+        white-space: wrap !important;
+        text-align: right !important;
+        font-size: 4rem !important; /* increase/decrease as needed */
+        line-height: 1 !important;
+        background: transparent !important;
+      }
+
+      /* page container padding */
+      div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+      }
+
+      /* buttons/text blocks inside overlay */
+      .bento-grid > div:first-of-type > div:last-of-type,
+      .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+      }
+    }
+
+    /* ─── SMALL PHONE (320px - 480px) ───────────────────– */
+    @media (max-width: 480px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      /* CRITICAL: Override the main container's max-width constraint */
+      div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0.75rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Fallback for dynamic elements */
+      .min-h-screen.mx-auto.max-w-\[1400px\] {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0.75rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Bento grid adjustments */
+      .bento-grid {
+        gap: 0.75rem !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Profile card - full width, minimal height for small phone */
+      .bento-grid > div:first-of-type {
+        display: block !important;
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+        min-height: 380px !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
+      /* All other cards full-width */
+      .col-span-3,
+      .col-span-4,
+      .col-span-6,
+      .col-span-8 {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+      }
+
+      .row-span-3 {
+        grid-row: auto !important;
+      }
+
+      /* Adjust background card margin-top */
+      #bg-card {
+        margin-top: 15% !important;
+      }
+
+      header {
+        margin-bottom: 0.75rem !important;
+      }
+    }
+
+    /* ─── EXTRA SMALL SCREENS (≤790px) ────────────────────────– */
+    @media (max-width: 790px) {
+      /* More aggressive shrinking for very small screens */
+      div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+        padding: 0.5rem !important;
+      }
+
+      /* Reduce header spacing */
+      header {
+        margin-bottom: 0.5rem !important;
+      }
+
+      .bento-grid {
+        gap: 0.5rem !important;
+      }
+
+      /* Reduce card padding */
+      .rounded-3xl {
+        padding: 1rem !important;
+      }
+
+      /* Smaller font in general */
+      .font-display {
+        font-size: 0.875rem !important;
+      }
+
+      /* Reduce spacing in cards */
+      .bento-grid > div {
+        padding: 0.75rem !important;
+      }
+    }
+
+
+    /* ─── PORTRAIT ORIENTATION OVERRIDE ──────────────────– */
+    @media (orientation: portrait) and (max-width: 1024px) {
+      .bento-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .bento-grid > div:first-of-type {
+        display: block !important;
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+        min-height: 420px !important;
       }
     }
 
     /* ─── Modal card container (allow overflow) ───────────– */
     #modal-card {
       overflow: visible;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PROFILE CARD MOBILE LAYOUT
+       Desktop: Photo fills container with overlay at bottom
+       Mobile: Flex layout - Photo on left, text/buttons on right
+    ═══════════════════════════════════════════════════════════ */
+
+    /* ─── MOBILE PROFILE CARD LAYOUT (≤1024px) ──────────– */
+    @media (max-width: 1024px) {
+      .bento-grid > div:first-of-type {
+        position: relative !important;
+        display: flex !important;
+        flex-direction: row !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        background: transparent !important;
+        margin-top: 2rem !important;
+      }
+
+      /* Profile image - fixed width on left */
+      #profile-image {
+        position: relative !important;
+        inset: auto !important;
+        width: 45% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        z-index: 1 !important;
+        border-radius: 1.5rem 0 0 1.5rem !important;
+        flex-shrink: 0 !important;
+      }
+
+      /* Background card - visible on mobile, spans full width but contained */
+      #bg-card {
+        position: absolute !important;
+        inset: auto !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 60% !important;
+        margin: 0 !important;
+        margin-top: 60% !important;
+        border-radius: 1.5rem !important;
+        z-index: 0 !important;
+      }
+
+      /* Transition GIF adjustment for mobile */
+      /* Transition GIF adjustment for mobile - place over the image on the left */
+      #transition-gif {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 45% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        border-radius: 1.5rem 0 0 1.5rem !important;
+        z-index: 1 !important;
+        pointer-events: none !important;
+      }
+
+      /* Blue gradient overlay - repositioned on mobile, spans full width, buttons only */
+      .bento-grid > div:first-of-type > div:last-of-type {
+        position: absolute !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0) 65%, rgba(37, 99, 235, 0.85) 90%, rgba(20, 84, 220, 1) 100%) !important;
+        display: block !important;
+        border-radius: 1.5rem !important;
+        z-index: 3 !important;
+      }
+
+      /* Text wrapper - position on right side, above buttons with margin-top for tall image effect */
+      .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+        position: absolute !important;
+        top: auto !important;
+        bottom: 12rem !important;
+        right: 0 !important;
+        left: 45% !important;
+        transform: none !important;
+        margin-bottom: 0 !important;
+        padding: 1.5rem !important;
+        text-wrap: nowrap !important;
+        z-index: 4 !important;
+      }
+
+      /* Buttons at bottom on mobile */
+      .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
+        position: absolute !important;
+        bottom: 1.5rem !important;
+        left: 45% !important;
+        right: 1.5rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        z-index: 5 !important;
+      }
+
+      /* Name heading mobile - larger, theme-aware colors */
+      .bento-grid > div:first-of-type h2 {
+        font-size: 1.8rem !important;
+        line-height: 1.2 !important;
+        margin: 0 !important;
+        color: white !important;
+      }
+
+      .dark .bento-grid > div:first-of-type h2 {
+        color: #1e3a8a !important;
+      }
+
+      /* Position text mobile - larger, theme-aware colors */
+      .bento-grid > div:first-of-type p {
+        font-size: 1rem !important;
+        margin: 0.35rem 0 0 0 !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+      }
+
+      .dark .bento-grid > div:first-of-type p {
+        color: #3730a3 !important;
+      }
+
+      /* Action buttons on mobile */
+      .bento-grid > div:first-of-type .flex.gap-3 {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+      }
+
+      .bento-grid > div:first-of-type button {
+        flex: 1 !important;
+        padding: 0.75rem !important;
+        font-size: 0.75rem !important;
+      }
+    }
+
+    /* ─── PHONE SPECIFIC (≤768px) ─────────────────────────– */
+    @media (max-width: 768px) {
+      .bento-grid > div:first-of-type {
+        min-height: 420px !important;
+        margin-top: 1.5rem !important;
+      }
+
+      /* Image takes 50% width on smaller phones */
+      #profile-image {
+        width: 48% !important;
+      }
+
+      /* Background card spans full width on small phones */
+      #bg-card {
+        width: 100% !important;
+        margin-left: 0 !important;
+      }
+
+      /* Text wrapper on right side, positioned above buttons */
+      .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+        top: auto !important;
+        bottom: 11rem !important;
+        left: 48% !important;
+        padding: 1rem !important;
+        z-index: 4 !important;
+        text-wrap: nowrap !important;
+      }
+
+      /* Text area - full width overlay */
+      .bento-grid > div:first-of-type > div:last-of-type {
+        width: 100% !important;
+        height: 100% !important;
+        padding: 0 !important;
+        display: block !important;
+        background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0) 65%, rgba(37, 99, 235, 0.85) 90%, rgba(20, 84, 220, 1) 100%) !important;
+      }
+
+      #bg-card {
+        height: 55% !important;
+        margin-top: 45% !important;
+      }
+
+      /* Buttons at bottom on phone */
+      .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
+        position: absolute !important;
+        bottom: 1rem !important;
+        left: 48% !important;
+        right: 1rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        z-index: 5 !important;
+      }
+
+      /* Adjusted spacing on small phones */
+      .bento-grid > div:first-of-type h2 {
+        font-size: 1.5rem !important;
+        color: white !important;
+      }
+
+      .dark .bento-grid > div:first-of-type h2 {
+        color: #1e3a8a !important;
+      }
+
+      .bento-grid > div:first-of-type p {
+        font-size: 0.9rem !important;
+        margin: 0.2rem 0 0 0 !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+      }
+
+      .dark .bento-grid > div:first-of-type p {
+        color: #3730a3 !important;
+      }
+
+      .bento-grid > div:first-of-type button {
+        padding: 0.6rem !important;
+        font-size: 0.7rem !important;
+      }
+    }
+
+    /* ─── SMALL PHONE SPECIFIC (≤480px) ────────────────– */
+    @media (max-width: 480px) {
+      .bento-grid > div:first-of-type {
+        min-height: 380px !important;
+        flex-wrap: wrap !important;
+        margin-top: 1rem !important;
+      }
+
+      /* Image takes full width on very small phones, stack vertically */
+      #profile-image {
+        width: 100% !important;
+        border-radius: 1.5rem 1.5rem 0 0 !important;
+        order: -1 !important;
+        height: 200px !important;
+      }
+
+      /* Background card spans full width for stacked layout */
+      #bg-card {
+        width: 100% !important;
+        margin-left: 0 !important;
+        height: 40% !important;
+        margin-top: 60% !important;
+        border-radius: 1.5rem !important;
+      }
+
+      /* Text wrapper for stacked layout - full width, above buttons */
+      .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+        position: absolute !important;
+        top: auto !important;
+        bottom: 4.6rem !important;
+        left: 0 !important;
+        right: 0 !important;
+        transform: none !important;
+        padding: 1rem !important;
+        z-index: 5 !important;
+        margin-bottom: 0 !important;
+      }
+
+      /* Text area below image, full width */
+      .bento-grid > div:first-of-type > div:last-of-type {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 1.5rem !important;
+        display: block !important;
+        padding: 0 !important;
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0) 65%, rgba(37, 99, 235, 0.85) 90%, rgba(20, 84, 220, 1) 100%) !important;
+      }
+
+      /* Buttons at bottom on small phone */
+      .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
+        position: absolute !important;
+        bottom: 1rem !important;
+        left: 1rem !important;
+        right: 1rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+        z-index: 5 !important;
+      }
+
+      /* Smaller text on very small screens, with theme colors */
+      .bento-grid > div:first-of-type h2 {
+        font-size: 1.2rem !important;
+        color: white !important;
+      }
+
+      .dark .bento-grid > div:first-of-type h2 {
+        color: #1e3a8a !important;
+      }
+
+      .bento-grid > div:first-of-type p {
+        font-size: 0.8rem !important;
+        margin: 0.1rem 0 0 0 !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+      }
+
+      .dark .bento-grid > div:first-of-type p {
+        color: #3730a3 !important;
+      }
+
+      .bento-grid > div:first-of-type .flex.gap-3 {
+        gap: 0.5rem !important;
+      }
+
+      .bento-grid > div:first-of-type button {
+        padding: 0.5rem !important;
+        font-size: 0.65rem !important;
+      }
     }
   </style>
 </head>
@@ -799,7 +1439,7 @@
       <!-- Background Card (behind everything) -->
       <div id="bg-card"
            class="absolute inset-0 rounded-3xl"
-           style="margin-top: 40%; z-index: 0; background: linear-gradient(90deg, rgba(150, 150, 150, 0) 0%, rgba(180, 180, 180, 0.7) 30%, rgba(240, 240, 240, 1) 100%); background-color: rgba(240, 240, 240, 0.95);"
+           style="margin-top: 60%; z-index: 0; background: linear-gradient(90deg, rgba(150, 150, 150, 0) 0%, rgba(180, 180, 180, 0.7) 30%, rgba(240, 240, 240, 1) 100%); background-color: rgba(240, 240, 240, 0.95);"
            data-dark-bg-card="linear-gradient(90deg, rgba(150, 150, 150, 0) 0%, rgba(180, 180, 180, 0.7) 30%, rgba(240, 240, 240, 1) 100%)"
            data-light-bg-card="linear-gradient(90deg, rgba(13, 71, 161, 0.9) 0%, rgba(66, 133, 244, 0.85) 100%)"></div>
 
@@ -818,8 +1458,8 @@
            preload="auto" />
 
       <!-- Blue gradient overlay (transparent to opaque) -->
-      <div class="absolute bottom-0 w-full px-6 py-6 flex flex-col gap-4 text-white"
-           style="z-index: 10; height: 30%; background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.85) 60%, rgba(20, 84, 220, 1) 100%); display: flex; flex-direction: column; justify-content: flex-end;">
+      <div class="absolute w-full px-6 py-6 flex flex-col gap-4 text-white"
+           style="bottom: auto; left: 0; right: 0; background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.85) 60%, rgba(20, 84, 220, 1) 100%); z-index: 2;">
         <div>
           <h2 class="font-display font-700 text-lg leading-tight text-white"
               style="font-weight: 700;">
