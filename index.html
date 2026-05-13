@@ -105,18 +105,26 @@
                    border border-slate-200
                    shadow-lg transition-all duration-300"
              aria-label="Portfolio mode (coming soon)">
-          <!-- Personal mode icon left side -->
-          <span id="personal-icon"
-                class="w-9 h-9 rounded-full flex items-center justify-center text-base
-                       bg-blue-600 text-white
-                       transition-all duration-300"
-                data-mode="personal">âŒ˜</span>
-          <!-- Creative mode icon right side -->
-          <span id="creative-icon"
-                class="w-9 h-9 rounded-full flex items-center justify-center text-base
-                       bg-transparent text-slate-500
-                       transition-all duration-300"
-                data-mode="creative">â˜º</span>
+             <!-- Personal mode icon left side -->
+             <span id="personal-icon"
+              class="w-9 h-9 rounded-full flex items-center justify-center text-base
+                bg-blue-600 text-white
+                transition-all duration-300"
+              data-mode="personal">
+               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill="currentColor" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-4 0-8 2-8 4v2h16v-2c0-2-4-4-8-4z" />
+               </svg>
+             </span>
+             <!-- Creative mode icon right side -->
+             <span id="creative-icon"
+              class="w-9 h-9 rounded-full flex items-center justify-center text-base
+                bg-transparent text-slate-500
+                transition-all duration-300"
+              data-mode="creative">
+               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+               </svg>
+             </span>
         </div>
       </div>
     </div>
@@ -158,25 +166,20 @@
            preload="auto" />
 
       <!-- Blue gradient overlay (transparent to opaque) -->
-      <div class="absolute w-full px-6 py-6 flex flex-col gap-4 text-white"
-           style="bottom: auto; left: 0; right: 0; background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.85) 60%, rgba(20, 84, 220, 1) 100%); z-index: 2;">
-        </div>
+      <div class="absolute bottom-0 left-0 right-0 px-6 py-6 flex flex-col gap-3 text-white"
+           style="background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.6) 60%, rgba(20, 84, 220, 1) 100%); z-index: 3;">
 
-        <!-- ===== BENTO GRID (12 COLUMNS) ===== -->
-        <main class="bento-grid">
-          </h2>
-          <p class="text-sm mt-0.5 text-blue-100 italic">
-            Student / Mobile &amp; Web Developer
-          </p>
+        <div class="profile-text-wrapper">
+          <h2 class="font-display font-800 text-xl mb-1" style="font-weight:800;">Achilles Vonn D. Rabina</h2>
+          <p class="text-sm mt-0.5 text-blue-100 italic">Student / Mobile &amp; Web Developer</p>
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex gap-3">
+        <div class="flex gap-3 mt-2">
           <button onclick="openModal()"
                   class="flex-1 flex items-center justify-center gap-2 rounded-full py-3 text-sm font-600 cursor-pointer
                          dark:bg-transparent dark:hover:bg-white/10 dark:border-2 dark:border-blue-200/80 text-white
-                         bg-transparent hover:bg-white/10 border-2 border-blue-100/80 text-white
-                         transition-all duration-200 active:scale-95"
+                         bg-transparent hover:bg-white/10 border-2 border-blue-100/80 transition-all duration-200 active:scale-95"
                   style="font-weight: 600;">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
@@ -184,9 +187,8 @@
             Message
           </button>
           <button class="flex-1 flex items-center justify-center gap-2 rounded-full py-3 text-sm font-600 cursor-pointer
-                         dark:bg-transparent dark:hover:bg-white/10 dark:border-2 dark:border-blue-200/80 text-white
-                         bg-transparent hover:bg-white/10 border-2 border-blue-100/80 text-white
-                         transition-all duration-200 active:scale-95"
+                         dark:bg-transparent dark:hover:bg-white/10 dark:border-2 dark:border-blue-200/80
+                         bg-transparent hover:bg-white/10 border-2 border-blue-100/80 transition-all duration-200 active:scale-95"
                   style="font-weight: 600;">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
@@ -267,8 +269,13 @@
         <h3 class="font-display font-700 text-base dark:text-blue-100 text-white"
             style="font-weight:700;">Recommendations</h3>
         <button class="w-8 h-8 rounded-full dark:bg-blue-700/50 bg-white/30 dark:text-blue-200 text-white
-                       flex items-center justify-center text-xs hover:scale-105 transition-transform">
-          Â·Â·Â·
+                       flex items-center justify-center text-xs hover:scale-105 transition-transform"
+                aria-label="More">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="6" cy="12" r="1.6" fill="currentColor" />
+            <circle cx="12" cy="12" r="1.6" fill="currentColor" />
+            <circle cx="18" cy="12" r="1.6" fill="currentColor" />
+          </svg>
         </button>
       </div>
 
@@ -289,8 +296,13 @@
                 col-span-4">
       <div class="flex items-center justify-between mb-4">
         <h3 class="font-display font-700 text-sm" style="font-weight:700;">Gallery</h3>
-        <button class="w-7 h-7 rounded-full bg-white/20 border border-white/30 text-white flex items-center justify-center text-xs hover:scale-105 transition-transform">
-          Â·Â·Â·
+        <button class="w-7 h-7 rounded-full bg-white/20 border border-white/30 text-white flex items-center justify-center text-xs hover:scale-105 transition-transform"
+                aria-label="Gallery options">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="6" cy="12" r="1.4" fill="currentColor" />
+            <circle cx="12" cy="12" r="1.4" fill="currentColor" />
+            <circle cx="18" cy="12" r="1.4" fill="currentColor" />
+          </svg>
         </button>
       </div>
 
@@ -393,7 +405,7 @@
 
             <div class="relative">
               <label class="block text-sm text-white/90 mb-2.5 font-medium">Subject</label>
-              <textarea rows="5" placeholder="Your messageâ€¦" class="form-input resize-none"></textarea>
+              <textarea rows="5" placeholder="Your message…" class="form-input resize-none"></textarea>
 
               <button class="absolute -bottom-6 -right-6 w-14 h-14 rounded-full
                              bg-yellow-400 hover:bg-yellow-300

@@ -929,17 +929,18 @@
     /* move only the title to the empty area to the right of the mobile profile image */
     @media (max-width: 1024px) {
       header h1#header-title {
+        /* Safer mobile placement: anchor near top-left with readable size */
         position: absolute !important;
-        top: 15rem !important;
-        left: calc(25% + 0.3rem) !important; /* match the mobile image width (45%) + small gap */
-        right: 1rem !important; /* prevent overflow on very small screens */
-        transform: translateY(-50%) !important; /* vertically center alongside the image */
+        top: 1.5rem !important;
+        left: 1rem !important;
+        right: 1rem !important;
+        transform: none !important;
         z-index: 20 !important;
         margin: 0 !important;
-        white-space: wrap !important;
-        text-align: right !important;
-        font-size: 4rem !important; /* increase/decrease as needed */
-        line-height: 1 !important;
+        white-space: normal !important;
+        text-align: left !important;
+        font-size: 2rem !important;
+        line-height: 1.1 !important;
         background: transparent !important;
       }
 
@@ -1108,6 +1109,22 @@
         z-index: 1 !important;
         border-radius: 1.5rem 0 0 1.5rem !important;
         flex-shrink: 0 !important;
+      }
+
+      /* Overlay text wrapper inside profile card */
+      .profile-text-wrapper {
+        padding: 0.25rem 0.5rem !important;
+        max-width: calc(100% - 48%) !important;
+        margin-left: 46% !important;
+        color: #ffffff !important;
+      }
+
+      /* Make buttons easier to tap on mobile */
+      .bento-grid > div:first-of-type .flex.gap-3 button,
+      .bento-grid > div:first-of-type .flex.gap-3 a {
+        min-height: 44px !important;
+        padding: 0.6rem 0.75rem !important;
+        font-size: 0.85rem !important;
       }
 
       /* Background card - visible on mobile, spans full width but contained */
@@ -1313,6 +1330,19 @@
         height: 200px !important;
       }
 
+        /* ensure overlay text sits above the bg card and is readable */
+        .profile-text-wrapper {
+          margin-left: 0 !important;
+          padding: 0.75rem 1rem !important;
+          max-width: 100% !important;
+        }
+
+        /* make overlay buttons full width stacked on small screens */
+        .bento-grid > div:first-of-type .flex.gap-3 {
+          left: 1rem !important;
+          right: 1rem !important;
+        }
+
       /* Background card spans full width for stacked layout */
       #bg-card {
         width: 100% !important;
@@ -1365,6 +1395,16 @@
       .bento-grid > div:first-of-type h2 {
         font-size: 1.2rem !important;
         color: white !important;
+      }
+
+      /* Ensure header title does not overlap on very small screens */
+      header h1#header-title {
+        position: static !important;
+        margin: 0.5rem 0 0 0 !important;
+        font-size: 1.15rem !important;
+        text-align: left !important;
+        line-height: 1.15 !important;
+        z-index: 10 !important;
       }
 
       .dark .bento-grid > div:first-of-type h2 {

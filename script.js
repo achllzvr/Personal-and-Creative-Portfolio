@@ -179,6 +179,30 @@
     clearTimeout(mouseTimeout);
   });
 
+  // Touch support: update glow position on touch and keep interactions friendly on mobile
+  function handleTouchForGlow(e) {
+    if (!e.touches || e.touches.length === 0) return;
+    const t = e.touches[0];
+    const x = (t.clientX / window.innerWidth) * 100;
+    const y = (t.clientY / window.innerHeight) * 100;
+
+    bgLayer.style.setProperty('--mouse-x', `${x}%`);
+    bgLayer.style.setProperty('--mouse-y', `${y}%`);
+    bgLayer.classList.add('mouse-active');
+
+    clearTimeout(mouseTimeout);
+    mouseTimeout = setTimeout(() => {
+      bgLayer.classList.remove('mouse-active');
+    }, 150);
+  }
+
+  document.addEventListener('touchstart', handleTouchForGlow, { passive: true });
+  document.addEventListener('touchmove', handleTouchForGlow, { passive: true });
+  document.addEventListener('touchend', () => {
+    bgLayer.classList.remove('mouse-active');
+    clearTimeout(mouseTimeout);
+  }, { passive: true });
+
 
 
   // --- Data Loading Logic ---
@@ -425,23 +449,63 @@
     const galleryCard = document.getElementById('gallery-bento-card');
     
     if (overlay && galleryCard) {
-      items.forEach(item => {
+      items.forEach((item, idx) => {
+        // desktop hover behavior
         item.addEventListener('mouseenter', () => {
-          overlay.classList.remove('opacity-0', 'invisible');
-          overlay.classList.add('opacity-100', 'visible');
-          galleryCard.style.zIndex = '50';
+          if (window.matchMedia('(hover: hover)').matches) {
+            overlay.classList.remove('opacity-0', 'invisible');
+            overlay.classList.add('opacity-100', 'visible');
+            galleryCard.style.zIndex = '50';
+          }
         });
-        
+
         item.addEventListener('mouseleave', () => {
-          overlay.classList.remove('opacity-100', 'visible');
-          overlay.classList.add('opacity-0', 'invisible');
-          
-          setTimeout(() => {
-            if(overlay.classList.contains('opacity-0')) {
-               galleryCard.style.zIndex = 'auto';
-            }
-          }, 1000); 
+          if (window.matchMedia('(hover: hover)').matches) {
+            overlay.classList.remove('opacity-100', 'visible');
+            overlay.classList.add('opacity-0', 'invisible');
+
+            setTimeout(() => {
+              if (overlay.classList.contains('opacity-0')) {
+                galleryCard.style.zIndex = 'auto';
+              }
+            }, 500);
+          }
         });
+
+        // touch / click behavior: toggle focus for the tapped item
+        item.addEventListener('click', (ev) => {
+          // On touch devices prefer focusing the tapped item and showing overlay
+          const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+          if (!isTouch) return;
+
+          ev.stopPropagation();
+          const isActive = item.classList.contains('touch-active');
+
+          // clear any other active items
+          items.forEach(i => i.classList.remove('touch-active'));
+
+          if (!isActive) {
+            item.classList.add('touch-active');
+            overlay.classList.remove('opacity-0', 'invisible');
+            overlay.classList.add('opacity-100', 'visible');
+            galleryCard.style.zIndex = '50';
+            // ensure the item is centered
+            item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          } else {
+            item.classList.remove('touch-active');
+            overlay.classList.remove('opacity-100', 'visible');
+            overlay.classList.add('opacity-0', 'invisible');
+            setTimeout(() => { galleryCard.style.zIndex = 'auto'; }, 300);
+          }
+        });
+      });
+
+      // allow tapping the overlay to dismiss
+      overlay.addEventListener('click', () => {
+        items.forEach(i => i.classList.remove('touch-active'));
+        overlay.classList.remove('opacity-100', 'visible');
+        overlay.classList.add('opacity-0', 'invisible');
+        setTimeout(() => { galleryCard.style.zIndex = 'auto'; }, 300);
       });
     }
 
