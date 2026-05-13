@@ -1,0 +1,1392 @@
+﻿/* â”€â”€â”€ Global Theme Transition â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    * {
+      transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  fill 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  stroke 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    :root {
+      --stroke-blue-clear: rgba(59, 130, 246, 0);
+      --stroke-blue-soft: rgba(59, 130, 246, 0.45);
+      --stroke-blue-strong: rgba(37, 99, 235, 0.95);
+      --stroke-blue-tail: rgba(59, 130, 246, 0.6);
+      --stroke-white-clear: rgba(255, 255, 255, 0);
+      --stroke-white-soft: rgba(255, 255, 255, 0.35);
+      --stroke-white-strong: rgba(255, 255, 255, 0.98);
+      --stroke-white-tail: rgba(255, 255, 255, 0.58);
+    }
+
+    /* â”€â”€â”€ Blueprint Background (Monochrome) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .blueprint-bg {
+      background-color: #0d1535;
+      background-image:
+        linear-gradient(rgba(200,200,200,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,200,200,0.08) 1px, transparent 1px),
+        linear-gradient(rgba(200,200,200,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,200,200,0.03) 1px, transparent 1px);
+      background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+      background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+      position: relative;
+      animation: gridPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes gridPulse {
+      0%, 100% {
+        filter: brightness(1) saturate(0.3);
+      }
+      50% {
+        filter: brightness(1.1) saturate(0.8);
+      }
+    }
+
+    .blueprint-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle 400px at var(--mouse-x, 0%) var(--mouse-y, 0%), rgba(59,130,246,0.15) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.1s ease-out;
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: screen;
+    }
+
+    .blueprint-bg.mouse-active::before {
+      opacity: 1;
+    }
+
+    .blueprint-bg-light {
+      background-color: #e8f0fd;
+      background-image:
+        linear-gradient(rgba(100,100,100,0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100,100,100,0.10) 1px, transparent 1px),
+        linear-gradient(rgba(100,100,100,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100,100,100,0.04) 1px, transparent 1px);
+      background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+      background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+      position: relative;
+      animation: gridPulseLight 4s ease-in-out infinite;
+    }
+
+    @keyframes gridPulseLight {
+      0%, 100% {
+        filter: brightness(0.95) saturate(0.4);
+      }
+      50% {
+        filter: brightness(1.05) saturate(1);
+      }
+    }
+
+    .blueprint-bg-light::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle 400px at var(--mouse-x, 0%) var(--mouse-y, 0%), rgba(37,99,235,0.12) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.1s ease-out;
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: multiply;
+    }
+
+    .blueprint-bg-light.mouse-active::before {
+      opacity: 1;
+    }
+
+    /* â”€â”€â”€ Decorative mosaic squares â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .mosaic-square {
+      position: absolute;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    /* â”€â”€â”€ Card Glass â€” Dark â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .glass-dark {
+      background: rgba(17, 35, 90, 0.45);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(96, 165, 250, 0.35);
+      box-shadow: 0 8px 32px rgba(0,0,14,0.4), inset 0 1px 0 rgba(255,255,255,0.07);
+    }
+
+    /* â”€â”€â”€ Card Glass â€” Light (White Base) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .glass-light-white {
+      background: #ffffff;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.15);
+      color: #1e293b;
+    }
+
+    .dark .glass-light-white {
+      background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: none;
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* â”€â”€â”€ Stroke Outline Flow Animation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    @property --stroke-angle {
+      syntax: '<angle>';
+      inherits: false;
+      initial-value: 0deg;
+    }
+
+    @keyframes stroke-flow {
+      0% {
+        --stroke-angle: 0deg;
+      }
+      100% {
+        --stroke-angle: 360deg;
+      }
+    }
+
+    .glass-light-white,
+    .glass-blue-experience,
+    .glass-blue-recommendations,
+    .glass-blue-gallery,
+    .glass-light-blue {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .glass-light-white::before,
+    .glass-blue-experience::before,
+    .glass-blue-recommendations::before,
+    .glass-blue-gallery::before,
+    .glass-light-blue::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      padding: 2px;
+      background: var(--stroke-ring);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 0.35s ease;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      filter: blur(0.35px);
+      will-change: opacity;
+    }
+
+    html:not(.dark) .glass-light-white::before {
+      --stroke-ring: conic-gradient(
+        from var(--stroke-angle),
+        var(--stroke-blue-clear) 0deg 320deg,
+        var(--stroke-blue-soft) 334deg,
+        var(--stroke-blue-strong) 348deg,
+        var(--stroke-blue-tail) 360deg
+      );
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.16), 0 0 14px rgba(59, 130, 246, 0.18);
+    }
+
+    .dark .glass-light-white::before {
+      --stroke-ring: conic-gradient(
+        from var(--stroke-angle),
+        var(--stroke-white-clear) 0deg 320deg,
+        var(--stroke-white-soft) 334deg,
+        rgba(255, 255, 255, 0.95) 348deg,
+        rgba(255, 255, 255, 0.55) 360deg
+      );
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16), 0 0 14px rgba(255, 255, 255, 0.16);
+    }
+
+    .glass-blue-experience::before,
+    .glass-blue-recommendations::before,
+    .glass-blue-gallery::before,
+    .glass-light-blue::before {
+      --stroke-ring: conic-gradient(
+        from var(--stroke-angle),
+        var(--stroke-white-clear) 0deg 320deg,
+        var(--stroke-white-soft) 334deg,
+        var(--stroke-white-strong) 348deg,
+        var(--stroke-white-tail) 360deg
+      );
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 0 14px rgba(255, 255, 255, 0.16);
+    }
+
+    .glass-light-white:hover::before,
+    .glass-blue-experience:hover::before,
+    .glass-blue-recommendations:hover::before,
+    .glass-blue-gallery:hover::before,
+    .glass-light-blue:hover::before {
+      opacity: 1;
+      animation: stroke-flow 6.2s infinite cubic-bezier(0.45, 0, 0.55, 1);
+    }
+
+    .glass-light-white > *,
+    .glass-blue-experience > *,
+    .glass-blue-recommendations > *,
+    .glass-blue-gallery > *,
+    .glass-light-blue > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* â”€â”€â”€ Card Glass â€” Blue Recommendations (left to right) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .glass-blue-recommendations {
+      background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .dark .glass-blue-recommendations {
+      background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* â”€â”€â”€ Card Glass â€” Blue Experience (top to bottom) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .glass-blue-experience {
+      background: linear-gradient(180deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .dark .glass-blue-experience {
+      background: linear-gradient(180deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* â”€â”€â”€ Card Glass â€” Blue Gallery (top-left to bottom-right diagonal) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .glass-blue-gallery {
+      background: linear-gradient(135deg, #2563eb 0%, #1e3f7c 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .dark .glass-blue-gallery {
+      background: linear-gradient(135deg, #2563eb 0%, #1e3f7c 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* â”€â”€â”€ Card Glass â€” Light (Blue Base for Recommendations/Gallery) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .glass-light-blue {
+      background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .dark .glass-light-blue {
+      background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* â”€â”€â”€ Glassmorphic Child Containers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    /* â”€â”€â”€ Child containers for light mode blue cards (white with black text) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .child-glass-white-light {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: #000000;
+    }
+
+    /* â”€â”€â”€ Child containers for light mode white cards - blue projects â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .child-glass-blue-light {
+      background: linear-gradient(90deg, #0d2145 0%, #0f3178 100%);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #ffffff;
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    }
+
+    .dark .child-glass-blue-light {
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    }
+
+    /* â”€â”€â”€ Child containers for light mode white cards - white gradient certifications â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .child-glass-white-gradient {
+      background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: 2px solid rgba(64, 97, 147, 0.089);
+      color: #1e40af;
+    }
+
+    .dark .child-glass-white-gradient {
+      background: rgba(15, 40, 71, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(96, 165, 250, 0.25);
+      color: #ffffff;
+    }
+
+    /* â”€â”€â”€ Child containers for experience card - always dark blue â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .child-glass-experience {
+      background: linear-gradient(90deg, #0d2145 0%, #0f3178 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #ffffff;
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    }
+
+    /* â”€â”€â”€ Glassmorphic Pills â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .pill-glass {
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .dark .pill-glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* â”€â”€â”€ Scrollbar hide â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .scroll-hide::-webkit-scrollbar { display: none; }
+    .scroll-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* â”€â”€â”€ Profile image glow â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .profile-glow {
+      box-shadow: 0 0 0 4px rgba(96,165,250,0.3), 0 0 40px rgba(59,130,246,0.2);
+    }
+
+    /* â”€â”€â”€ Timeline line â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .timeline-line {
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(96,165,250,0.6), rgba(96,165,250,0.1));
+    }
+
+    /* â”€â”€â”€ Modal overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    #contact-modal {
+      display: none;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(7,13,31,0.75);
+    }
+    #contact-modal.open { display: flex; }
+    .dark #contact-modal { background: rgba(7,13,31,0.80); }
+    html:not(.dark) #contact-modal { background: rgba(100,130,200,0.45); }
+
+    /* â”€â”€â”€ Theme toggle track â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .toggle-track {
+      transition: background 0.3s;
+    }
+
+    /* â”€â”€â”€ Carousel dot active â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .dot-active {
+      background: #3b82f6;
+      width: 20px !important;
+    }
+
+    /* â”€â”€â”€ Card entry animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .card-enter { animation: slideUp 0.55s cubic-bezier(.22,1,.36,1) both; }
+    .card-enter:nth-child(1) { animation-delay: 0.05s; }
+    .card-enter:nth-child(2) { animation-delay: 0.12s; }
+    .card-enter:nth-child(3) { animation-delay: 0.18s; }
+    .card-enter:nth-child(4) { animation-delay: 0.24s; }
+    .card-enter:nth-child(5) { animation-delay: 0.30s; }
+    .card-enter:nth-child(6) { animation-delay: 0.36s; }
+
+    /* â”€â”€â”€ Custom Slide Up Keyframe for CSS animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @keyframes slideUpCustom {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* â”€â”€â”€ Profile Card Water Flow Background Animation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @keyframes waterFlowDarkToLight {
+      0% {
+        background: linear-gradient(90deg, rgb(150, 150, 150) 0%, rgba(180, 180, 180, 0.7) 30%, rgba(240, 240, 240, 1) 100%);
+      }
+      5% {
+        background: linear-gradient(90deg, rgb(145, 147, 162) 0%, rgba(175, 180, 218, 0.68) 30%, rgba(232, 237, 252, 0.99) 100%);
+      }
+      10% {
+        background: linear-gradient(90deg, rgb(140, 145, 170) 0%, rgba(170, 180, 215, 0.65) 30%, rgba(225, 235, 250, 0.98) 100%);
+      }
+      15% {
+        background: linear-gradient(90deg, rgb(135, 142, 166) 0%, rgba(165, 178, 213, 0.63) 30%, rgba(220, 233, 250, 0.97) 100%);
+      }
+      20% {
+        background: linear-gradient(90deg, rgb(130, 140, 160) 0%, rgba(160, 180, 210, 0.62) 30%, rgba(215, 232, 250, 0.96) 100%);
+      }
+      25% {
+        background: linear-gradient(90deg, rgb(125, 138, 161) 0%, rgba(155, 180, 212, 0.61) 30%, rgba(212, 231, 250, 0.955) 100%);
+      }
+      30% {
+        background: linear-gradient(90deg, rgb(120, 140, 160) 0%, rgba(150, 180, 215, 0.60) 30%, rgba(210, 230, 250, 0.95) 100%);
+      }
+      35% {
+        background: linear-gradient(90deg, rgb(110, 130, 158) 0%, rgba(140, 170, 210, 0.57) 30%, rgba(205, 225, 250, 0.94) 100%);
+      }
+      40% {
+        background: linear-gradient(90deg, rgb(100, 120, 155) 0%, rgba(130, 165, 205, 0.55) 30%, rgba(195, 220, 250, 0.92) 100%);
+      }
+      45% {
+        background: linear-gradient(90deg, rgb(90, 110, 152) 0%, rgba(125, 157, 202, 0.52) 30%, rgba(190, 215, 250, 0.91) 100%);
+      }
+      50% {
+        background: linear-gradient(90deg, rgb(80, 100, 150) 0%, rgba(120, 150, 200, 0.5) 30%, rgba(180, 210, 250, 0.9) 100%);
+      }
+      55% {
+        background: linear-gradient(90deg, rgb(75, 95, 147) 0%, rgba(112, 142, 195, 0.48) 30%, rgba(175, 205, 250, 0.88) 100%);
+      }
+      60% {
+        background: linear-gradient(90deg, rgb(70, 90, 145) 0%, rgba(100, 135, 190, 0.45) 30%, rgba(170, 200, 250, 0.87) 100%);
+      }
+      65% {
+        background: linear-gradient(90deg, rgb(62, 82, 138) 0%, rgba(95, 130, 185, 0.43) 30%, rgba(165, 195, 250, 0.865) 100%);
+      }
+      70% {
+        background: linear-gradient(90deg, rgb(55, 75, 130) 0%, rgba(90, 125, 180, 0.42) 30%, rgba(160, 190, 250, 0.86) 100%);
+      }
+      75% {
+        background: linear-gradient(90deg, rgb(47, 67, 125) 0%, rgba(82, 117, 175, 0.41) 30%, rgba(155, 185, 250, 0.855) 100%);
+      }
+      80% {
+        background: linear-gradient(90deg, rgb(40, 60, 120) 0%, rgba(80, 120, 180, 0.4) 30%, rgba(150, 190, 250, 0.85) 100%);
+      }
+      90% {
+        background: linear-gradient(90deg, rgb(25, 50, 110) 0%, rgba(50, 100, 170, 0.87) 30%, rgba(100, 150, 240, 0.88) 100%);
+      }
+      100% {
+        background: linear-gradient(90deg, rgba(13, 71, 161, 0.9) 0%, rgba(66, 133, 244, 0.85) 100%);
+      }
+    }
+
+    @keyframes waterFlowLightToDark {
+      0% {
+        background: linear-gradient(90deg, rgba(13, 71, 161, 0.9) 0%, rgba(66, 133, 244, 0.85) 100%);
+      }
+      10% {
+        background: linear-gradient(90deg, rgb(25, 50, 110) 0%, rgba(50, 100, 170, 0.87) 30%, rgba(100, 150, 240, 0.88) 100%);
+      }
+      20% {
+        background: linear-gradient(90deg, rgb(40, 60, 120) 0%, rgba(80, 120, 180, 0.4) 30%, rgba(150, 190, 250, 0.85) 100%);
+      }
+      25% {
+        background: linear-gradient(90deg, rgb(47, 67, 125) 0%, rgba(82, 117, 175, 0.41) 30%, rgba(155, 185, 250, 0.855) 100%);
+      }
+      30% {
+        background: linear-gradient(90deg, rgb(55, 75, 130) 0%, rgba(90, 125, 180, 0.42) 30%, rgba(160, 190, 250, 0.86) 100%);
+      }
+      35% {
+        background: linear-gradient(90deg, rgb(62, 82, 138) 0%, rgba(95, 130, 185, 0.43) 30%, rgba(165, 195, 250, 0.865) 100%);
+      }
+      40% {
+        background: linear-gradient(90deg, rgb(70, 90, 145) 0%, rgba(100, 135, 190, 0.45) 30%, rgba(170, 200, 250, 0.87) 100%);
+      }
+      45% {
+        background: linear-gradient(90deg, rgb(75, 95, 147) 0%, rgba(112, 142, 195, 0.48) 30%, rgba(175, 205, 250, 0.88) 100%);
+      }
+      50% {
+        background: linear-gradient(90deg, rgb(80, 100, 150) 0%, rgba(120, 150, 200, 0.5) 30%, rgba(180, 210, 250, 0.9) 100%);
+      }
+      55% {
+        background: linear-gradient(90deg, rgb(90, 110, 152) 0%, rgba(125, 157, 202, 0.52) 30%, rgba(190, 215, 250, 0.91) 100%);
+      }
+      60% {
+        background: linear-gradient(90deg, rgb(100, 120, 155) 0%, rgba(130, 165, 205, 0.55) 30%, rgba(195, 220, 250, 0.92) 100%);
+      }
+      65% {
+        background: linear-gradient(90deg, rgb(110, 130, 158) 0%, rgba(140, 170, 210, 0.57) 30%, rgba(205, 225, 250, 0.94) 100%);
+      }
+      70% {
+        background: linear-gradient(90deg, rgb(120, 140, 160) 0%, rgba(150, 180, 215, 0.60) 30%, rgba(210, 230, 250, 0.95) 100%);
+      }
+      75% {
+        background: linear-gradient(90deg, rgb(125, 138, 161) 0%, rgba(155, 180, 212, 0.61) 30%, rgba(212, 231, 250, 0.955) 100%);
+      }
+      80% {
+        background: linear-gradient(90deg, rgb(130, 140, 160) 0%, rgba(160, 180, 210, 0.62) 30%, rgba(215, 232, 250, 0.96) 100%);
+      }
+      85% {
+        background: linear-gradient(90deg, rgb(135, 142, 166) 0%, rgba(165, 178, 213, 0.63) 30%, rgba(220, 233, 250, 0.97) 100%);
+      }
+      90% {
+        background: linear-gradient(90deg, rgb(140, 145, 170) 0%, rgba(170, 180, 215, 0.65) 30%, rgba(225, 235, 250, 0.98) 100%);
+      }
+      95% {
+        background: linear-gradient(90deg, rgb(145, 147, 162) 0%, rgba(175, 180, 218, 0.68) 30%, rgba(232, 237, 252, 0.99) 100%);
+      }
+      100% {
+        background: linear-gradient(90deg, rgb(150, 150, 150) 0%, rgba(180, 180, 180, 0.7) 30%, rgba(240, 240, 240, 1) 100%);
+      }
+    }
+
+    /* Apply water flow animation to profile card background - light mode */
+    html:not(.dark) [data-dark-bg-card] {
+      animation: waterFlowDarkToLight 1s linear forwards;
+    }
+
+    /* Apply water flow animation to profile card background - dark mode */
+    .dark [data-dark-bg-card] {
+      animation: waterFlowLightToDark 1s linear forwards;
+    }
+
+    /* â”€â”€â”€ Transition GIF (Transparent Background) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    #transition-gif {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      z-index: 2;
+      display: none;
+      background-color: transparent;
+    }
+
+    #transition-gif.show {
+      display: block;
+    }
+
+    /* â”€â”€â”€ Image Fade Animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @keyframes fadeOutImage {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeInImage {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    #profile-image.fade-out {
+      animation: fadeOutImage 0.5s ease-in-out forwards;
+    }
+
+    #profile-image.fade-in {
+      animation: fadeInImage 0.5s ease-in-out forwards;
+    }
+
+    /* â”€â”€â”€ Video Fade Animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @keyframes fadeOutVideo {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeInVideo {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    #transition-video.fade-out {
+      animation: fadeOutVideo 0.3s ease-in-out forwards;
+    }
+
+    #transition-video.fade-in {
+      animation: fadeInVideo 0.3s ease-in-out forwards;
+    }
+
+    /* â”€â”€â”€ GIF Fade Animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    #transition-gif.fade-out {
+      animation: fadeOutVideo 0.3s ease-in-out forwards;
+    }
+
+    #transition-gif.fade-in {
+      animation: fadeInVideo 0.3s ease-in-out forwards;
+    }
+
+    /* â”€â”€â”€ Background Card Margin Animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @keyframes marginTopCollapse {
+      from {
+        margin-top: 40%;
+      }
+      to {
+        margin-top: 0%;
+      }
+    }
+
+    @keyframes marginTopExpand {
+      from {
+        margin-top: 0%;
+      }
+      to {
+        margin-top: 40%;
+      }
+    }
+
+    #bg-card.collapse {
+      animation: marginTopCollapse 0.5s ease-in-out forwards;
+    }
+
+    #bg-card.expand {
+      animation: marginTopExpand 0.5s ease-in-out forwards;
+    }
+
+    /* â”€â”€â”€ Global fade-in-up animation for all containers â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    header, #contact-modal { animation: slideUpCustom 1.5s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    
+    .rounded-3xl, .rounded-2xl { animation: slideUpCustom 1.2s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    
+    /* Staggered delays for nested container elements */
+    header > * { animation-delay: 0.05s; }
+    main > * { animation-delay: 0.1s; }
+    .bento-grid > *:not(.card-enter) { animation: slideUpCustom 1.2s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    .bento-grid > *:nth-child(1):not(.card-enter) { animation-delay: 0.05s; }
+    .bento-grid > *:nth-child(2):not(.card-enter) { animation-delay: 0.12s; }
+    .bento-grid > *:nth-child(3):not(.card-enter) { animation-delay: 0.18s; }
+    .bento-grid > *:nth-child(4):not(.card-enter) { animation-delay: 0.24s; }
+    .bento-grid > *:nth-child(5):not(.card-enter) { animation-delay: 0.30s; }
+    .bento-grid > *:nth-child(6):not(.card-enter) { animation-delay: 0.36s; }
+
+    /* â”€â”€â”€ Keyword highlight â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .kw { color: #facc15; font-weight: 500; }
+    .dark .kw-link { color: #93c5fd; text-decoration: underline; text-underline-offset: 3px; }
+    html:not(.dark) .kw-link { color: #1d4ed8; text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+
+
+    /* â”€â”€â”€ Input styles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(203,213,225,0.5);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: #1e3a8a;
+      outline: none;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .form-input:focus {
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
+      border-color: #60a5fa;
+    }
+    .form-input::placeholder { color: #94a3b8; }
+
+    /* â”€â”€â”€ Cert badge â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .cert-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* â”€â”€â”€ 12-Column Grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* â”€â”€â”€ Touch-friendly optimizations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @media (hover: none) and (pointer: coarse) {
+      button,
+      a,
+      input[type="button"],
+      input[type="submit"] {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 0.75rem 1rem;
+      }
+    }
+
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       COMPREHENSIVE RESPONSIVE SYSTEM - COMPLETELY REBUILT
+       Fixes: Container max-width, padding, profile card height,
+       all Tailwind class conflicts
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+    /* â”€â”€â”€ DESKTOP (1400px and above) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    /* No overrides needed - base styles apply */
+
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       BASE STYLES FOR ALL SCREEN SIZES (applies everywhere)
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+    /* Blue gradient overlay - base styling for all screens */
+    .bento-grid > div:first-of-type > div:last-of-type {
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      height: auto !important;
+      padding: 1.5rem !important;
+      margin: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-end !important;
+      gap: 0.75rem !important;
+      border-radius: 1.5rem !important;
+      z-index: 2 !important;
+    }
+
+    /* Text wrapper - base styling for all screens */
+    .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+      position: relative !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      z-index: 1 !important;
+    }
+
+    /* â”€â”€â”€ MOBILE LANDSCAPE / SMALL TABLET (769px - 1024px) â”€â€“ */
+    @media (max-width: 1024px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      /* CRITICAL: Override the main container's max-width constraint */
+      div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Fallback for dynamic elements */
+      .min-h-screen.mx-auto.max-w-\[1400px\] {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Bento grid adjustments */
+      .bento-grid {
+        gap: 1rem !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Profile card - full width, optimized height */
+      .bento-grid > div:first-of-type {
+        display: block !important;
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+        min-height: 450px !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
+      /* All other cards full-width */
+      .col-span-3,
+      .col-span-4,
+      .col-span-6,
+      .col-span-8 {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+      }
+
+      .row-span-3 {
+        grid-row: auto !important;
+      }
+
+      /* Adjust background card margin-top */
+      #bg-card {
+        margin-top: 25% !important;
+      }
+
+      header {
+        margin-bottom: 1rem !important;
+      }
+    }
+
+
+    /* â”€â”€â”€ PHONE / PORTRAIT (481px - 768px) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @media (max-width: 768px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      /* CRITICAL: Override the main container's max-width constraint */
+      div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Fallback for dynamic elements */
+      .min-h-screen.mx-auto.max-w-\[1400px\] {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Bento grid adjustments */
+      .bento-grid {
+        gap: 0.875rem !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Profile card - full width, reduced height for phone */
+      .bento-grid > div:first-of-type {
+        display: block !important;
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+        min-height: 420px !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
+      /* All other cards full-width */
+      .col-span-3,
+      .col-span-4,
+      .col-span-6,
+      .col-span-8 {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+      }
+
+      .row-span-3 {
+        grid-row: auto !important;
+      }
+
+      /* Adjust background card margin-top */
+      #bg-card {
+        margin-top: 20% !important;
+      }
+
+      header {
+        margin-bottom: 0.875rem !important;
+      }
+    }
+
+        /* ensure the main wrapper is a positioned container for absolute children */
+    div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+      position: relative !important;
+    }
+    
+    /* move only the title to the empty area to the right of the mobile profile image */
+    @media (max-width: 1024px) {
+      header h1#header-title {
+        position: absolute !important;
+        top: 15rem !important;
+        left: calc(25% + 0.3rem) !important; /* match the mobile image width (45%) + small gap */
+        right: 1rem !important; /* prevent overflow on very small screens */
+        transform: translateY(-50%) !important; /* vertically center alongside the image */
+        z-index: 20 !important;
+        margin: 0 !important;
+        white-space: wrap !important;
+        text-align: right !important;
+        font-size: 4rem !important; /* increase/decrease as needed */
+        line-height: 1 !important;
+        background: transparent !important;
+      }
+
+      /* page container padding */
+      div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+      }
+
+      /* buttons/text blocks inside overlay */
+      .bento-grid > div:first-of-type > div:last-of-type,
+      .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+      }
+    }
+
+    /* â”€â”€â”€ SMALL PHONE (320px - 480px) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @media (max-width: 480px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      /* CRITICAL: Override the main container's max-width constraint */
+      div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0.75rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Fallback for dynamic elements */
+      .min-h-screen.mx-auto.max-w-\[1400px\] {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0.75rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Bento grid adjustments */
+      .bento-grid {
+        gap: 0.75rem !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Profile card - full width, minimal height for small phone */
+      .bento-grid > div:first-of-type {
+        display: block !important;
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+        min-height: 380px !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
+      /* All other cards full-width */
+      .col-span-3,
+      .col-span-4,
+      .col-span-6,
+      .col-span-8 {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+      }
+
+      .row-span-3 {
+        grid-row: auto !important;
+      }
+
+      /* Adjust background card margin-top */
+      #bg-card {
+        margin-top: 15% !important;
+      }
+
+      header {
+        margin-bottom: 0.75rem !important;
+      }
+    }
+
+    /* â”€â”€â”€ EXTRA SMALL SCREENS (â‰¤790px) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @media (max-width: 790px) {
+      /* More aggressive shrinking for very small screens */
+      div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+        padding: 0.5rem !important;
+      }
+
+      /* Reduce header spacing */
+      header {
+        margin-bottom: 0.5rem !important;
+      }
+
+      .bento-grid {
+        gap: 0.5rem !important;
+      }
+
+      /* Reduce card padding */
+      .rounded-3xl {
+        padding: 1rem !important;
+      }
+
+      /* Smaller font in general */
+      .font-display {
+        font-size: 0.875rem !important;
+      }
+
+      /* Reduce spacing in cards */
+      .bento-grid > div {
+        padding: 0.75rem !important;
+      }
+    }
+
+
+    /* â”€â”€â”€ PORTRAIT ORIENTATION OVERRIDE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @media (orientation: portrait) and (max-width: 1024px) {
+      .bento-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .bento-grid > div:first-of-type {
+        display: block !important;
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+        min-height: 420px !important;
+      }
+    }
+
+    /* â”€â”€â”€ Modal card container (allow overflow) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    #modal-card {
+      overflow: visible;
+    }
+
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       PROFILE CARD MOBILE LAYOUT
+       Desktop: Photo fills container with overlay at bottom
+       Mobile: Flex layout - Photo on left, text/buttons on right
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+    /* â”€â”€â”€ MOBILE PROFILE CARD LAYOUT (â‰¤1024px) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @media (max-width: 1024px) {
+      .bento-grid > div:first-of-type {
+        position: relative !important;
+        display: flex !important;
+        flex-direction: row !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        background: transparent !important;
+        margin-top: 2rem !important;
+      }
+
+      /* Profile image - fixed width on left */
+      #profile-image {
+        position: relative !important;
+        inset: auto !important;
+        width: 45% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        z-index: 1 !important;
+        border-radius: 1.5rem 0 0 1.5rem !important;
+        flex-shrink: 0 !important;
+      }
+
+      /* Background card - visible on mobile, spans full width but contained */
+      #bg-card {
+        position: absolute !important;
+        inset: auto !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 60% !important;
+        margin: 0 !important;
+        margin-top: 60% !important;
+        border-radius: 1.5rem !important;
+        z-index: 0 !important;
+      }
+
+      /* Transition GIF adjustment for mobile */
+      /* Transition GIF adjustment for mobile - place over the image on the left */
+      #transition-gif {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 45% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        border-radius: 1.5rem 0 0 1.5rem !important;
+        z-index: 1 !important;
+        pointer-events: none !important;
+      }
+
+      /* Blue gradient overlay - repositioned on mobile, spans full width, buttons only */
+      .bento-grid > div:first-of-type > div:last-of-type {
+        position: absolute !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0) 65%, rgba(37, 99, 235, 0.85) 90%, rgba(20, 84, 220, 1) 100%) !important;
+        display: block !important;
+        border-radius: 1.5rem !important;
+        z-index: 3 !important;
+      }
+
+      /* Text wrapper - position on right side, above buttons with margin-top for tall image effect */
+      .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+        position: absolute !important;
+        top: auto !important;
+        bottom: 12rem !important;
+        right: 0 !important;
+        left: 45% !important;
+        transform: none !important;
+        margin-bottom: 0 !important;
+        padding: 1.5rem !important;
+        text-wrap: nowrap !important;
+        z-index: 4 !important;
+      }
+
+      /* Buttons at bottom on mobile */
+      .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
+        position: absolute !important;
+        bottom: 1.5rem !important;
+        left: 45% !important;
+        right: 1.5rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        z-index: 5 !important;
+      }
+
+      /* Name heading mobile - larger, theme-aware colors */
+      .bento-grid > div:first-of-type h2 {
+        font-size: 1.8rem !important;
+        line-height: 1.2 !important;
+        margin: 0 !important;
+        color: white !important;
+      }
+
+      .dark .bento-grid > div:first-of-type h2 {
+        color: #1e3a8a !important;
+      }
+
+      /* Position text mobile - larger, theme-aware colors */
+      .bento-grid > div:first-of-type p {
+        font-size: 1rem !important;
+        margin: 0.35rem 0 0 0 !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+      }
+
+      .dark .bento-grid > div:first-of-type p {
+        color: #3730a3 !important;
+      }
+
+      /* Action buttons on mobile */
+      .bento-grid > div:first-of-type .flex.gap-3 {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+      }
+
+      .bento-grid > div:first-of-type button {
+        flex: 1 !important;
+        padding: 0.75rem !important;
+        font-size: 0.75rem !important;
+      }
+    }
+
+    /* â”€â”€â”€ PHONE SPECIFIC (â‰¤768px) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @media (max-width: 768px) {
+      .bento-grid > div:first-of-type {
+        min-height: 420px !important;
+        margin-top: 1.5rem !important;
+      }
+
+      /* Image takes 50% width on smaller phones */
+      #profile-image {
+        width: 48% !important;
+      }
+
+      /* Background card spans full width on small phones */
+      #bg-card {
+        width: 100% !important;
+        margin-left: 0 !important;
+      }
+
+      /* Text wrapper on right side, positioned above buttons */
+      .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+        top: auto !important;
+        bottom: 11rem !important;
+        left: 48% !important;
+        padding: 1rem !important;
+        z-index: 4 !important;
+        text-wrap: nowrap !important;
+      }
+
+      /* Text area - full width overlay */
+      .bento-grid > div:first-of-type > div:last-of-type {
+        width: 100% !important;
+        height: 100% !important;
+        padding: 0 !important;
+        display: block !important;
+        background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0) 65%, rgba(37, 99, 235, 0.85) 90%, rgba(20, 84, 220, 1) 100%) !important;
+      }
+
+      #bg-card {
+        height: 55% !important;
+        margin-top: 45% !important;
+      }
+
+      /* Buttons at bottom on phone */
+      .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
+        position: absolute !important;
+        bottom: 1rem !important;
+        left: 48% !important;
+        right: 1rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        z-index: 5 !important;
+      }
+
+      /* Adjusted spacing on small phones */
+      .bento-grid > div:first-of-type h2 {
+        font-size: 1.5rem !important;
+        color: white !important;
+      }
+
+      .dark .bento-grid > div:first-of-type h2 {
+        color: #1e3a8a !important;
+      }
+
+      .bento-grid > div:first-of-type p {
+        font-size: 0.9rem !important;
+        margin: 0.2rem 0 0 0 !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+      }
+
+      .dark .bento-grid > div:first-of-type p {
+        color: #3730a3 !important;
+      }
+
+      .bento-grid > div:first-of-type button {
+        padding: 0.6rem !important;
+        font-size: 0.7rem !important;
+      }
+    }
+
+    /* â”€â”€â”€ SMALL PHONE SPECIFIC (â‰¤480px) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
+    @media (max-width: 480px) {
+      .bento-grid > div:first-of-type {
+        min-height: 380px !important;
+        flex-wrap: wrap !important;
+        margin-top: 1rem !important;
+      }
+
+      /* Image takes full width on very small phones, stack vertically */
+      #profile-image {
+        width: 100% !important;
+        border-radius: 1.5rem 1.5rem 0 0 !important;
+        order: -1 !important;
+        height: 200px !important;
+      }
+
+      /* Background card spans full width for stacked layout */
+      #bg-card {
+        width: 100% !important;
+        margin-left: 0 !important;
+        height: 40% !important;
+        margin-top: 60% !important;
+        border-radius: 1.5rem !important;
+      }
+
+      /* Text wrapper for stacked layout - full width, above buttons */
+      .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+        position: absolute !important;
+        top: auto !important;
+        bottom: 4.6rem !important;
+        left: 0 !important;
+        right: 0 !important;
+        transform: none !important;
+        padding: 1rem !important;
+        z-index: 5 !important;
+        margin-bottom: 0 !important;
+      }
+
+      /* Text area below image, full width */
+      .bento-grid > div:first-of-type > div:last-of-type {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 1.5rem !important;
+        display: block !important;
+        padding: 0 !important;
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0) 65%, rgba(37, 99, 235, 0.85) 90%, rgba(20, 84, 220, 1) 100%) !important;
+      }
+
+      /* Buttons at bottom on small phone */
+      .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
+        position: absolute !important;
+        bottom: 1rem !important;
+        left: 1rem !important;
+        right: 1rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+        z-index: 5 !important;
+      }
+
+      /* Smaller text on very small screens, with theme colors */
+      .bento-grid > div:first-of-type h2 {
+        font-size: 1.2rem !important;
+        color: white !important;
+      }
+
+      .dark .bento-grid > div:first-of-type h2 {
+        color: #1e3a8a !important;
+      }
+
+      .bento-grid > div:first-of-type p {
+        font-size: 0.8rem !important;
+        margin: 0.1rem 0 0 0 !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+      }
+
+      .dark .bento-grid > div:first-of-type p {
+        color: #3730a3 !important;
+      }
+
+      .bento-grid > div:first-of-type .flex.gap-3 {
+        gap: 0.5rem !important;
+      }
+
+      .bento-grid > div:first-of-type button {
+        padding: 0.5rem !important;
+        font-size: 0.65rem !important;
+      }
+    }
