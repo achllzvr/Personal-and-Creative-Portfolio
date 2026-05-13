@@ -139,101 +139,6 @@
       initial-value: 0deg;
     }
 
-    @keyframes stroke-flow {
-      0% {
-        --stroke-angle: 0deg;
-      }
-      100% {
-        --stroke-angle: 360deg;
-      }
-    }
-
-    .glass-light-white,
-    .glass-blue-experience,
-    .glass-blue-recommendations,
-    .glass-blue-gallery,
-    .glass-light-blue {
-      position: relative;
-      isolation: isolate;
-    }
-
-    .glass-light-white::before,
-    .glass-blue-experience::before,
-    .glass-blue-recommendations::before,
-    .glass-blue-gallery::before,
-    .glass-light-blue::before {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      border-radius: inherit;
-      padding: 2px;
-      background: var(--stroke-ring);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 0;
-      transition: opacity 0.35s ease;
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      filter: blur(0.35px);
-      will-change: opacity;
-    }
-
-    html:not(.dark) .glass-light-white::before {
-      --stroke-ring: conic-gradient(
-        from var(--stroke-angle),
-        var(--stroke-blue-clear) 0deg 320deg,
-        var(--stroke-blue-soft) 334deg,
-        var(--stroke-blue-strong) 348deg,
-        var(--stroke-blue-tail) 360deg
-      );
-      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.16), 0 0 14px rgba(59, 130, 246, 0.18);
-    }
-
-    .dark .glass-light-white::before {
-      --stroke-ring: conic-gradient(
-        from var(--stroke-angle),
-        var(--stroke-white-clear) 0deg 320deg,
-        var(--stroke-white-soft) 334deg,
-        rgba(255, 255, 255, 0.95) 348deg,
-        rgba(255, 255, 255, 0.55) 360deg
-      );
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16), 0 0 14px rgba(255, 255, 255, 0.16);
-    }
-
-    .glass-blue-experience::before,
-    .glass-blue-recommendations::before,
-    .glass-blue-gallery::before,
-    .glass-light-blue::before {
-      --stroke-ring: conic-gradient(
-        from var(--stroke-angle),
-        var(--stroke-white-clear) 0deg 320deg,
-        var(--stroke-white-soft) 334deg,
-        var(--stroke-white-strong) 348deg,
-        var(--stroke-white-tail) 360deg
-      );
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 0 14px rgba(255, 255, 255, 0.16);
-    }
-
-    .glass-light-white:hover::before,
-    .glass-blue-experience:hover::before,
-    .glass-blue-recommendations:hover::before,
-    .glass-blue-gallery:hover::before,
-    .glass-light-blue:hover::before {
-      opacity: 1;
-      animation: stroke-flow 6.2s infinite cubic-bezier(0.45, 0, 0.55, 1);
-    }
-
-    .glass-light-white > *,
-    .glass-blue-experience > *,
-    .glass-blue-recommendations > *,
-    .glass-blue-gallery > *,
-    .glass-light-blue > * {
-      position: relative;
-      z-index: 1;
-    }
-
     /* â”€â”€â”€ Card Glass â€” Blue Recommendations (left to right) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ */
     .glass-blue-recommendations {
       background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
@@ -1198,24 +1103,29 @@
         position: absolute !important;
         top: auto !important;
         bottom: 12rem !important;
+        left: 0 !important;
         right: 0 !important;
-        left: 45% !important;
         transform: none !important;
-        margin-bottom: 0 !important;
+        margin: 0 auto !important;
         padding: 1.5rem !important;
-        text-wrap: nowrap !important;
+        text-wrap: normal !important;
         z-index: 4 !important;
+        text-align: center !important;
+        max-width: 900px !important;
       }
 
       /* Buttons at bottom on mobile */
       .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
         position: absolute !important;
         bottom: 1.5rem !important;
-        left: 45% !important;
-        right: 1.5rem !important;
+        left: 0 !important;
+        right: 0 !important;
         display: flex !important;
         flex-direction: column !important;
         gap: 0.75rem !important;
+        align-items: center !important;
+        padding: 0 1.5rem !important;
+        width: 100% !important;
         z-index: 5 !important;
       }
 
@@ -1273,14 +1183,18 @@
         margin-left: 0 !important;
       }
 
-      /* Text wrapper on right side, positioned above buttons */
+      /* Text wrapper: center and span full width above buttons */
       .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
         top: auto !important;
         bottom: 11rem !important;
-        left: 48% !important;
+        left: 0 !important;
+        right: 0 !important;
+        margin: 0 auto !important;
         padding: 1rem !important;
         z-index: 4 !important;
-        text-wrap: nowrap !important;
+        text-wrap: normal !important;
+        text-align: center !important;
+        max-width: 860px !important;
       }
 
       /* Text area - full width overlay */
@@ -1297,15 +1211,18 @@
         margin-top: 45% !important;
       }
 
-      /* Buttons at bottom on phone */
+      /* Buttons at bottom on phone - center and full width */
       .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
         position: absolute !important;
         bottom: 1rem !important;
-        left: 48% !important;
-        right: 1rem !important;
+        left: 0 !important;
+        right: 0 !important;
         display: flex !important;
         flex-direction: column !important;
         gap: 0.75rem !important;
+        align-items: center !important;
+        padding: 0 1rem !important;
+        width: 100% !important;
         z-index: 5 !important;
       }
 
@@ -1449,5 +1366,550 @@
       .bento-grid > div:first-of-type button {
         padding: 0.5rem !important;
         font-size: 0.65rem !important;
+      }
+    }
+
+    /* Final mobile polish overrides (authoritative block) */
+    @media (max-width: 768px) {
+      div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+        padding-top: 0.9rem !important;
+        padding-bottom: 0.9rem !important;
+      }
+
+      header {
+        margin-bottom: 0.65rem !important;
+      }
+
+      header h1#header-title {
+        font-size: 2rem !important;
+        line-height: 1.05 !important;
+        letter-spacing: -0.02em !important;
+      }
+
+      #mode-toggle,
+      .toggle-track {
+        transform: scale(0.96);
+        transform-origin: top right;
+      }
+
+      .bento-grid {
+        gap: 0.65rem !important;
+      }
+
+      .bento-grid > div {
+        border-radius: 1.1rem !important;
+      }
+
+      .bento-grid > div:not(:first-of-type) {
+        padding: 0.9rem !important;
+      }
+
+      .bento-grid > div:first-of-type {
+        min-height: 400px !important;
+      }
+
+      #profile-image {
+        width: 46% !important;
+      }
+
+      .profile-text-wrapper {
+        margin-left: 46% !important;
+        padding: 0.5rem 0.75rem !important;
+      }
+
+      .bento-grid > div:first-of-type h2 {
+        font-size: 1.9rem !important;
+        line-height: 1.05 !important;
+      }
+
+      .bento-grid > div:first-of-type p {
+        font-size: 0.9rem !important;
+        line-height: 1.2 !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      div.min-h-screen.px-6.py-6.max-w-\[1400px\].mx-auto {
+        padding-left: max(env(safe-area-inset-left), 0.7rem) !important;
+        padding-right: max(env(safe-area-inset-right), 0.7rem) !important;
+      }
+
+      header h1#header-title {
+        font-size: 1.1rem !important;
+        line-height: 1.15 !important;
+        margin-top: 0.15rem !important;
+      }
+
+      .bento-grid {
+        gap: 0.6rem !important;
+      }
+
+      .bento-grid > div:not(:first-of-type) {
+        padding: 0.85rem !important;
+      }
+
+      .bento-grid > div:first-of-type {
+        min-height: 365px !important;
+      }
+
+      #profile-image {
+        height: 195px !important;
+      }
+
+      .profile-text-wrapper {
+        padding: 0.65rem 0.9rem !important;
+      }
+
+      .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
+        bottom: 0.85rem !important;
+      }
+
+      .bento-grid > div:first-of-type .flex.gap-3 button {
+        min-height: 40px !important;
+        padding: 0.48rem 0.7rem !important;
+        font-size: 0.72rem !important;
+      }
+    }
+
+    /* Profile card fix: keep side-by-side composition on phones */
+    @media (max-width: 768px) {
+      .bento-grid > div:first-of-type {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: stretch !important;
+        flex-wrap: nowrap !important;
+        overflow: hidden !important;
+        margin-top: 0 !important;
+        min-height: 250px !important;
+      }
+
+      #bg-card {
+        inset: 0 !important;
+        margin-top: 0 !important;
+        height: auto !important;
+      }
+
+      #profile-image {
+        position: relative !important;
+        order: 0 !important;
+        width: 42% !important;
+        height: 100% !important;
+        border-radius: 1.1rem 0 0 1.1rem !important;
+      }
+
+      .bento-grid > div:first-of-type > div:last-of-type {
+        position: absolute !important;
+        inset: 0 !important;
+        border-radius: 1.1rem !important;
+        background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.22) 58%, rgba(20, 84, 220, 0.9) 100%) !important;
+      }
+
+      .profile-text-wrapper,
+      .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+        position: absolute !important;
+        left: 44% !important;
+        right: 0.8rem !important;
+        bottom: 5.2rem !important;
+        margin: 0 !important;
+        padding: 0.35rem 0.2rem !important;
+        max-width: none !important;
+        white-space: normal !important;
+        text-wrap: balance !important;
+      }
+
+      .profile-text-wrapper h2,
+      .bento-grid > div:first-of-type h2 {
+        font-size: clamp(1rem, 4.5vw, 1.3rem) !important;
+        line-height: 1.1 !important;
+        margin: 0 !important;
+      }
+
+      .profile-text-wrapper p,
+      .bento-grid > div:first-of-type p {
+        font-size: clamp(0.72rem, 3.2vw, 0.88rem) !important;
+        margin-top: 0.2rem !important;
+      }
+
+      .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
+        position: absolute !important;
+        left: 44% !important;
+        right: 0.8rem !important;
+        bottom: 0.8rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+      }
+
+      .bento-grid > div:first-of-type .flex.gap-3 button {
+        min-height: 36px !important;
+        padding: 0.45rem 0.6rem !important;
+        font-size: 0.78rem !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .bento-grid > div:first-of-type {
+        min-height: 230px !important;
+      }
+
+      #profile-image {
+        width: 43% !important;
+      }
+
+      .profile-text-wrapper,
+      .bento-grid > div:first-of-type > div:last-of-type > div:first-child,
+      .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
+        left: 43.5% !important;
+      }
+    }
+
+    /* Mockup parity fix: profile card layout on mobile */
+    @media (max-width: 768px) {
+      .bento-grid > div:first-of-type {
+        min-height: 300px !important;
+        border-radius: 1.6rem !important;
+      }
+
+      #profile-image {
+        width: 50% !important;
+        border-radius: 1.6rem 0 0 1.6rem !important;
+        object-position: top center !important;
+      }
+
+      #bg-card {
+        border-radius: 1.6rem !important;
+        top: auto !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 66% !important;
+      }
+
+      .bento-grid > div:first-of-type > div:last-of-type {
+        border-radius: 1.6rem !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background:
+          radial-gradient(120% 90% at 50% 100%, rgba(37, 99, 235, 0.82) 0%, rgba(37, 99, 235, 0.45) 32%, rgba(37, 99, 235, 0.08) 62%, rgba(37, 99, 235, 0) 78%),
+          linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.04) 62%, rgba(20, 84, 220, 0.78) 100%) !important;
+      }
+
+      .profile-text-wrapper,
+      .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+        left: 53% !important;
+        right: 0.9rem !important;
+        top: 2.8rem !important;
+        bottom: auto !important;
+        padding: 0 !important;
+        z-index: 6 !important;
+      }
+
+      .profile-text-wrapper h2,
+      .bento-grid > div:first-of-type h2 {
+        font-size: clamp(1rem, 3.8vw, 1.5rem) !important;
+        line-height: 1.08 !important;
+        letter-spacing: -0.015em !important;
+        white-space: normal !important;
+        word-break: keep-all !important;
+      }
+
+      .profile-text-wrapper p,
+      .bento-grid > div:first-of-type p {
+        font-size: clamp(0.75rem, 2.4vw, 0.92rem) !important;
+        line-height: 1.2 !important;
+      }
+
+      .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
+        left: 52.5% !important;
+        right: 1.35rem !important;
+        bottom: 0.95rem !important;
+        gap: 0.45rem !important;
+        z-index: 6 !important;
+      }
+
+      .bento-grid > div:first-of-type .flex.gap-3 button {
+        min-height: 40px !important;
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.82rem !important;
+        border-radius: 9999px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .bento-grid > div:first-of-type {
+        min-height: 300px !important;
+      }
+
+      #profile-image {
+        width: 50% !important;
+      }
+
+      #bg-card {
+        height: 64% !important;
+      }
+
+      .profile-text-wrapper,
+      .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+        left: 52.5% !important;
+        right: 0.8rem !important;
+        top: 2.6rem !important;
+      }
+
+      .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
+        left: 52% !important;
+        right: 1.15rem !important;
+        bottom: 0.9rem !important;
+      }
+
+      .profile-text-wrapper h2,
+      .bento-grid > div:first-of-type h2 {
+        font-size: clamp(0.95rem, 5.3vw, 1.28rem) !important;
+      }
+
+      .profile-text-wrapper p,
+      .bento-grid > div:first-of-type p {
+        font-size: clamp(0.72rem, 3.4vw, 0.86rem) !important;
+      }
+    }
+
+    /* =========================================================
+       Profile Card Layer System (final authority)
+       Base: container + bg-card (unchanged)
+       Layer 2: split layout (left photo zone, right text/buttons)
+       Layer 3: topmost centered blue gradient covering whole card
+       ========================================================= */
+
+    .profile-layout-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      display: grid;
+      grid-template-columns: 50% 50%;
+      pointer-events: none;
+    }
+
+    .profile-pane-left {
+      min-width: 0;
+    }
+
+    .profile-pane-right {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      gap: 0.65rem;
+      padding: 2.1rem 1.1rem 1rem 0.8rem;
+      pointer-events: auto;
+      z-index: 6;
+    }
+
+    .profile-pane-text {
+      flex-shrink: 0;
+    }
+
+    .profile-pane-text h2 {
+      margin: 0;
+      line-height: 1.06;
+      letter-spacing: -0.015em;
+    }
+
+    .profile-pane-text p {
+      margin-top: 0.35rem;
+      line-height: 1.2;
+    }
+
+
+
+    .profile-pane-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      padding-right: 0;
+      width: 100%;
+    }
+
+    .profile-pane-actions button {
+      width: 100%;
+      min-height: 42px;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.82rem;
+    }
+
+    .profile-gradient-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 7;
+      pointer-events: none;
+      border-radius: inherit;
+      background:
+        radial-gradient(120% 78% at 50% 100%, rgba(37, 99, 235, 0.9) 0%, rgba(37, 99, 235, 0.45) 34%, rgba(37, 99, 235, 0.08) 62%, rgba(37, 99, 235, 0) 78%),
+        linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.04) 62%, rgba(20, 84, 220, 0.74) 100%);
+    }
+
+    @media (max-width: 768px) {
+      .bento-grid > div:first-of-type {
+        min-height: 300px !important;
+        border-radius: 1.6rem !important;
+        overflow: hidden !important;
+      }
+
+      #profile-image {
+        width: 50% !important;
+        height: 100% !important;
+        object-position: top center !important;
+        border-radius: 1.6rem 0 0 1.6rem !important;
+        z-index: 5 !important;
+      }
+
+      .profile-layout-layer {
+        grid-template-columns: 50% 50%;
+      }
+
+      .profile-pane-right {
+        padding: 2.05rem 1.15rem 1rem 0.9rem;
+      }
+
+      .profile-pane-text h2 {
+        font-size: clamp(1.05rem, 4vw, 1.42rem);
+      }
+
+      .profile-pane-text p {
+        font-size: clamp(0.78rem, 2.5vw, 0.92rem);
+      }
+
+      .profile-pane-actions {
+        padding-right: 0;
+        width: 100%;
+      }
+
+      .profile-pane-actions button {
+        min-height: 40px;
+        font-size: 0.82rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .profile-layout-layer {
+        grid-template-columns: 51% 49%;
+      }
+
+      #profile-image {
+        width: 51% !important;
+      }
+
+      .profile-pane-right {
+        padding: 1.95rem 1.2rem 0.95rem 0.85rem;
+      }
+
+      .profile-pane-text h2 {
+        font-size: clamp(1rem, 5.2vw, 1.32rem);
+      }
+
+      .profile-pane-text p {
+        font-size: clamp(0.76rem, 3.1vw, 0.88rem);
+      }
+
+      .profile-pane-actions {
+        padding-right: 0;
+        width: 100%;
+      }
+
+      .profile-pane-actions button {
+        min-height: 40px;
+        padding: 0.48rem 0.72rem;
+        width: 100%;
+      }
+    }
+
+    /* Desktop: full-bleed image with overlaid text/buttons in bottom-right */
+    @media (min-width: 1025px) {
+      /* Image covers entire card */
+      #profile-image {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: top !important;
+        z-index: 1 !important;
+      }
+
+      /* Layout layer covers card (not a grid on desktop) */
+      .profile-layout-layer {
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 5 !important;
+        display: block !important;
+        pointer-events: none !important;
+      }
+
+      .profile-pane-left {
+        display: none !important;
+      }
+
+      /* Gradient overlay covers entire card on top of image */
+      .profile-gradient-layer {
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 3 !important;
+        width: 100% !important;
+        height: 100% !important;
+        pointer-events: none !important;
+        border-radius: inherit !important;
+        background:
+          radial-gradient(120% 78% at 50% 100%, rgba(37, 99, 235, 0.9) 0%, rgba(37, 99, 235, 0.45) 34%, rgba(37, 99, 235, 0.08) 62%, rgba(37, 99, 235, 0) 78%),
+          linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.04) 62%, rgba(20, 84, 220, 0.74) 100%) !important;
+      }
+
+      /* Text and buttons overlay in bottom-right */
+      .profile-pane-right {
+        position: absolute !important;
+        bottom: 1.5rem !important;
+        right: 1.5rem !important;
+        left: auto !important;
+        top: auto !important;
+        max-width: 50% !important;
+        min-width: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-end !important;
+        align-items: flex-start !important;
+        gap: 0.8rem !important;
+        padding: 0 !important;
+        pointer-events: auto !important;
+        z-index: 4 !important;
+      }
+
+      .profile-pane-text {
+        color: white !important;
+      }
+
+      .profile-pane-text h2 {
+        margin: 0 !important;
+        line-height: 1.1 !important;
+        letter-spacing: -0.015em !important;
+        color: white !important;
+        font-size: clamp(1.2rem, 3vw, 1.6rem) !important;
+      }
+
+      .profile-pane-text p {
+        margin-top: 0.3rem !important;
+        line-height: 1.2 !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+        font-size: clamp(0.85rem, 2vw, 0.95rem) !important;
+      }
+
+      .profile-pane-actions {
+        width: 100% !important;
+      }
+
+      .profile-pane-actions button {
+        width: 100% !important;
+        min-height: 42px !important;
+        padding: 0.55rem 0.9rem !important;
+        font-size: 0.85rem !important;
       }
     }
