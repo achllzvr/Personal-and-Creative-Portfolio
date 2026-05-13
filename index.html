@@ -43,9 +43,7 @@
 
 <body class="min-h-screen font-body text-white transition-colors duration-300">
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     BACKGROUND LAYER
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ===== BACKGROUND LAYER ===== -->
 <div id="bg-layer" class="fixed inset-0 blueprint-bg -z-10 transition-all duration-500"></div>
 
 <!-- Decorative mosaic squares (dark mode) -->
@@ -58,12 +56,10 @@
   <div class="mosaic-square w-20 h-8 bg-blue-900/30 top-24 right-56"></div>
 </div>
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     APP SHELL
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ===== APP SHELL ===== -->
 <div class="min-h-screen px-6 py-6 max-w-[1400px] mx-auto">
 
-  <!-- â”€â”€ HEADER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ -->
+    <!-- ===== HEADER ===== -->
   <header class="flex items-center justify-between mb-8">
     <h1 class="font-display font-800 text-3xl tracking-tight
                 dark:text-white text-navy-900"
@@ -74,7 +70,7 @@
 
     <!-- Controls Container -->
     <div class="flex items-center gap-3">
-      <!-- Dark/Light Mode Toggle Button -->
+<!-- ===== SCRIPTS ===== -->
       <button id="mode-toggle"
               onclick="toggleTheme()"
               class="flex items-center justify-center w-11 h-11 rounded-full
@@ -83,7 +79,7 @@
                      border border-slate-200
                      shadow-lg cursor-pointer transition-all duration-300 hover:scale-105"
               aria-label="Toggle light/dark mode">
-        <!-- Sun icon (feather) â€” shows in dark mode -->
+        <!-- Sun icon (feather) — shows in dark mode -->
         <svg id="sun-icon" class="w-5 h-5 dark:block hidden dark:text-yellow-400 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="5"></circle>
           <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -95,7 +91,7 @@
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
         </svg>
-        <!-- Moon icon (feather) â€” shows in light mode -->
+        <!-- Moon icon (feather) — shows in light mode -->
         <svg id="moon-icon" class="w-5 h-5 dark:hidden block text-blue-600 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
@@ -109,13 +105,13 @@
                    border border-slate-200
                    shadow-lg transition-all duration-300"
              aria-label="Portfolio mode (coming soon)">
-          <!-- Personal mode icon â€” left side -->
+          <!-- Personal mode icon left side -->
           <span id="personal-icon"
                 class="w-9 h-9 rounded-full flex items-center justify-center text-base
                        bg-blue-600 text-white
                        transition-all duration-300"
                 data-mode="personal">âŒ˜</span>
-          <!-- Creative mode icon â€” right side -->
+          <!-- Creative mode icon right side -->
           <span id="creative-icon"
                 class="w-9 h-9 rounded-full flex items-center justify-center text-base
                        bg-transparent text-slate-500
@@ -130,13 +126,11 @@
        class="fixed inset-0 z-40 bg-slate-900/20 dark:bg-black/40 opacity-0 invisible backdrop-blur-sm transition-all duration-700 ease-in-out pointer-events-none">
   </div>
 
-  <!-- â”€â”€ BENTO GRID (12 COLUMNS) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â€“ -->
+  <!-- BENTO GRID (12 COLUMNS) -->
   <main class="bento-grid">
 
-    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-         PROFILE CARD (col-span-3, row-span-3)
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-    <div class="card-enter rounded-3xl overflow-hidden relative
+        <!-- ===== PROFILE CARD (col-span-3, row-span-3) ===== -->
+        <div class="card-enter rounded-3xl overflow-hidden relative
                 col-span-3 row-span-3"
          style="padding: 0; position: relative; background: transparent;" 
          data-dark-bg="linear-gradient(90deg, rgba(150, 150, 150, 0) 0%, rgba(180, 180, 180, 0.7) 30%, rgba(240, 240, 240, 1) 100%)"
@@ -166,10 +160,10 @@
       <!-- Blue gradient overlay (transparent to opaque) -->
       <div class="absolute w-full px-6 py-6 flex flex-col gap-4 text-white"
            style="bottom: auto; left: 0; right: 0; background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.85) 60%, rgba(20, 84, 220, 1) 100%); z-index: 2;">
-        <div>
-          <h2 class="font-display font-700 text-lg leading-tight text-white"
-              style="font-weight: 700;">
-            Achilles Vonn D. Rabina
+        </div>
+
+        <!-- ===== BENTO GRID (12 COLUMNS) ===== -->
+        <main class="bento-grid">
           </h2>
           <p class="text-sm mt-0.5 text-blue-100 italic">
             Student / Mobile &amp; Web Developer
@@ -203,10 +197,8 @@
       </div>
     </div>
 
-    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-         ABOUT ME CARD (col-span-6)
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-    <div class="card-enter rounded-3xl p-6
+        <!-- ===== ABOUT ME CARD (col-span-6) ===== -->
+        <div class="card-enter rounded-3xl p-6
                 glass-light-white
                 dark:text-white text-slate-800
                 col-span-6">
@@ -223,13 +215,11 @@
       </p>
     </div>
 
-    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-         EXPERIENCE CARD (col-span-3, row-span-3)
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-    <div class="card-enter rounded-3xl p-5
-                glass-blue-experience
-                text-white
-                col-span-3 row-span-3">
+        <!-- ===== EXPERIENCE CARD (col-span-3, row-span-3) ===== -->
+        <div class="card-enter rounded-3xl p-5
+           glass-blue-experience
+           text-white
+           col-span-3 row-span-3">
       <h3 class="font-display font-700 text-sm mb-5 text-center tracking-wide text-white"
           style="font-weight:700;">Experience</h3>
 
@@ -238,13 +228,11 @@
       </div>
     </div>
 
-    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-         PROJECTS CARD (col-span-6)
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-    <div class="card-enter rounded-3xl p-6
-                glass-light-white
-                dark:text-white text-slate-800
-                col-span-6">
+        <!-- ===== PROJECTS CARD (col-span-6) ===== -->
+        <div class="card-enter rounded-3xl p-6
+           glass-light-white
+           dark:text-white text-slate-800
+           col-span-6">
       <h3 class="font-display font-700 text-base mb-4 dark:text-white text-blue-600"
           style="font-weight:700;">Projects</h3>
 
@@ -258,13 +246,11 @@
       </div>
     </div>
 
-    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-         CERTIFICATIONS CARD (col-span-6)
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-    <div class="card-enter rounded-3xl p-6
-                glass-light-white
-                dark:text-white text-slate-800
-                col-span-6">
+        <!-- ===== CERTIFICATIONS CARD (col-span-6) ===== -->
+        <div class="card-enter rounded-3xl p-6
+           glass-light-white
+           dark:text-white text-slate-800
+           col-span-6">
       <h3 class="font-display font-700 text-base mb-4 dark:text-white text-blue-600"
           style="font-weight:700;">Certifications and Awards</h3>
 
@@ -272,13 +258,11 @@
       </div>
     </div>
 
-    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-         RECOMMENDATIONS (col-span-8)
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-    <div class="card-enter rounded-3xl p-6
-                glass-blue-recommendations
-                dark:text-white text-white
-                col-span-8">
+        <!-- ===== RECOMMENDATIONS (col-span-8) ===== -->
+        <div class="card-enter rounded-3xl p-6
+           glass-blue-recommendations
+           dark:text-white text-white
+           col-span-8">
       <div class="flex items-center justify-between mb-4">
         <h3 class="font-display font-700 text-base dark:text-blue-100 text-white"
             style="font-weight:700;">Recommendations</h3>
@@ -297,9 +281,7 @@
       </div>
     </div>
 
-    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-         GALLERY (col-span-4)
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <!-- ===== GALLERY (col-span-4) ===== -->
     <div id="gallery-bento-card"
       class="card-enter rounded-3xl p-5
                 glass-blue-gallery
@@ -321,14 +303,12 @@
   </main>
 </div>
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     CONTACT MODAL OVERLAY
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ===== CONTACT MODAL OVERLAY ===== -->
 <div id="contact-modal"
-     class="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in"
-     onclick="handleModalClick(event)">
+  class="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in"
+  onclick="handleModalClick(event)">
 
-  <!-- Modal card â€” Allow overflow for 3D image breakout -->
+  <!-- Modal card — Allow overflow for 3D image breakout -->
   <div id="modal-card"
        class="relative w-full max-w-4xl rounded-3xl
               bg-gradient-to-r from-blue-600 to-blue-500
@@ -350,7 +330,7 @@
     <!-- Container: Two-pane layout (flex row) -->
     <div class="flex relative" style="min-height: 480px;">
 
-      <!-- PROFILE IMAGE â€” Absolutely positioned breakout (Left) -->
+      <!-- PROFILE IMAGE — Absolutely positioned breakout (Left) -->
       <img src="assets/images/chi_photo.png"
            alt="Achilles Vonn D. Rabina"
            class="absolute bottom-0 object-cover rounded-l-3xl"
