@@ -159,47 +159,38 @@
            style="z-index: 1;"
            onerror="this.src='https://ui-avatars.com/api/?name=Achilles+Rabina&size=400&background=1e3a8a&color=fff&font-size=0.4'" />
 
-      <!-- Transition GIF (Transparent Background) -->
-      <img id="transition-gif"
-           src="assets/images/chi_loop.gif"
-           alt="Transition animation"
-           preload="auto" />
+      <!-- Transition GIF (Transparen      <!-- Blue gradient overlay (transparent to opaque) -->
+      <div class="absolute bottom-0 left-0 right-0 px-6 py-6 flex flex-col gap-3 text-white"
+           style="background: linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.6) 60%, rgba(20, 84, 220, 1) 100%); z-index: 3;">
 
-      <!-- Split content layer: left pane tracks photo area, right pane holds text and buttons -->
-      <div class="profile-layout-layer" aria-hidden="false">
-        <div class="profile-pane-left" aria-hidden="true"></div>
-        <div class="profile-pane-right">
-          <div class="profile-pane-text text-white">
-            <h2 class="font-display font-800 text-xl mb-1" style="font-weight:800;">Achilles Vonn D. Rabina</h2>
-            <p class="text-sm mt-0.5 text-blue-100 italic">Student / Mobile &amp; Web Developer</p>
-          </div>
+        <div class="profile-text-wrapper">
+          <h2 class="font-display font-800 text-xl mb-1" style="font-weight:800;">Achilles Vonn D. Rabina</h2>
+          <p class="text-sm mt-0.5 text-blue-100 italic">Student / Mobile &amp; Web Developer</p>
+        </div>
 
-          <div class="profile-pane-actions">
-            <button onclick="openModal()"
-                    class="flex-1 flex items-center justify-center gap-2 rounded-full py-3 text-sm font-600 cursor-pointer
-                           dark:bg-transparent dark:hover:bg-white/10 dark:border-2 dark:border-blue-200/80 text-white
-                           bg-transparent hover:bg-white/10 border-2 border-blue-100/80 transition-all duration-200 active:scale-95"
-                    style="font-weight: 600;">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
-              </svg>
-              Message
-            </button>
-            <button class="flex-1 flex items-center justify-center gap-2 rounded-full py-3 text-sm font-600 cursor-pointer
-                           dark:bg-transparent dark:hover:bg-white/10 dark:border-2 dark:border-blue-200/80
-                           bg-transparent hover:bg-white/10 border-2 border-blue-100/80 transition-all duration-200 active:scale-95"
-                    style="font-weight: 600;">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-              </svg>
-              GitHub
-            </button>
-          </div>
+        <!-- Action Buttons -->
+        <div class="flex gap-3 mt-2">
+          <button onclick="openModal()"
+                  class="flex-1 flex items-center justify-center gap-2 rounded-full py-3 text-sm font-600 cursor-pointer
+                         dark:bg-transparent dark:hover:bg-white/10 dark:border-2 dark:border-blue-200/80 text-white
+                         bg-transparent hover:bg-white/10 border-2 border-blue-100/80 transition-all duration-200 active:scale-95"
+                  style="font-weight: 600;">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+            Message
+          </button>
+          <button class="flex-1 flex items-center justify-center gap-2 rounded-full py-3 text-sm font-600 cursor-pointer
+                         dark:bg-transparent dark:hover:bg-white/10 dark:border-2 dark:border-blue-200/80
+                         bg-transparent hover:bg-white/10 border-2 border-blue-100/80 transition-all duration-200 active:scale-95"
+                  style="font-weight: 600;">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            GitHub
+          </button>
         </div>
       </div>
-
-      <!-- Topmost centered blue gradient layer that covers the entire card -->
-      <div class="profile-gradient-layer" aria-hidden="true"></div>
     </div>
 
         <!-- ===== ABOUT ME CARD (col-span-6) ===== -->
@@ -420,6 +411,58 @@
                 <svg class="w-6 h-6 text-blue-900 rotate-45" fill="none" viewBox="0 0 24 24"
                      stroke="currentColor" stroke-width="2.5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     SCRIPTS
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+         <svg class="w-6 h-6 text-blue-900 rotate-45" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                 </svg>
               </button>
             </div>

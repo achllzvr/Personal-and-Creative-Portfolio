@@ -352,8 +352,12 @@
     let html = '';
     let dotsHtml = '';
     galleryArray.forEach((item, index) => {
+      // prefer explicit localImage, then title, then alt for local filename
+      const fileBase = item.localImage || item.title || item.alt;
+      const localSrc = encodeURI('assets/gallery/' + fileBase + '.jpg');
+
       html += `
-        <div class="gallery-item-wrapper snap-center flex-shrink-0 w-full group pointer-events-auto relative hover:z-50 transition-all duration-500 opacity-0 scale-95">
+        <div class="gallery-item-wrapper snap-center flex-shrink-0 w-full group pointer-events-auto relative hover:z-50 transition-all duration-500 opacity-0 scale-95" data-link="${item.link}">
           
           <div class="relative w-full aspect-[2/1] mb-3">
             
@@ -368,10 +372,10 @@
                         group-hover:shadow-[0_15px_35px_-5px_rgba(30,58,138,0.15)] 
                         dark:group-hover:shadow-[0_15px_35px_-5px_rgba(0,0,0,0.6)]">
               
-              <img src="${item.image}"
-                   alt="${item.alt}"
-                   class="w-full h-auto min-h-full object-cover object-top"
-                   onerror="this.src='${item.fallbackImage}'" />
+                  <img src="${localSrc}"
+                    alt="${item.alt}"
+                    class="w-full h-auto min-h-full object-cover object-top"
+                    onerror="this.onerror=null;this.src='${item.image}';" />
                    
               <div class="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900/20 to-transparent pointer-events-none transition-opacity duration-700 group-hover:opacity-60"></div>
               
@@ -474,10 +478,16 @@
 
         // touch / click behavior: toggle focus for the tapped item
         item.addEventListener('click', (ev) => {
-          // On touch devices prefer focusing the tapped item and showing overlay
           const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-          if (!isTouch) return;
+          const itemLink = item.getAttribute('data-link');
 
+          // Non-touch: open link immediately on click
+          if (!isTouch) {
+            if (itemLink) window.open(itemLink, '_blank', 'noopener');
+            return;
+          }
+
+          // Touch devices: first tap = focus, second tap = open link
           ev.stopPropagation();
           const isActive = item.classList.contains('touch-active');
 
@@ -492,6 +502,9 @@
             // ensure the item is centered
             item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
           } else {
+            // second tap -> open link
+            if (itemLink) window.open(itemLink, '_blank', 'noopener');
+            // then clear focus state
             item.classList.remove('touch-active');
             overlay.classList.remove('opacity-100', 'visible');
             overlay.classList.add('opacity-0', 'invisible');

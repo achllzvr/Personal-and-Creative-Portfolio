@@ -970,6 +970,94 @@
         gap: 0.5rem !important;
       }
 
+
+/* DESKTOP FIX: Ensure mobile layout layer is hidden and profile image is full-bleed */
+@media (min-width: 1025px) {
+  /* Hide mobile-specific split layout layer if present */
+  .profile-layout-layer {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Make profile card container positioned for absolute children */
+  .bento-grid > div:first-of-type {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  /* Full-bleed profile image */
+  #profile-image {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    border-radius: 1.5rem !important;
+    z-index: 1 !important;
+  }
+
+  /* Background card sits under image */
+  #bg-card {
+    position: absolute !important;
+    inset: auto 0 0 0 !important;
+    width: 100% !important;
+    height: 40% !important;
+    margin: 0 !important;
+    border-radius: 0 0 1.5rem 1.5rem !important;
+    z-index: 0 !important;
+  }
+
+  /* Ensure overlay uses bottom area and is centered horizontally */
+  .bento-grid > div:first-of-type > div:last-of-type {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    padding: 2rem !important;
+    z-index: 2 !important;
+    pointer-events: auto !important;
+    background: linear-gradient(180deg, rgba(37,99,235,0) 0%, rgba(37,99,235,0.18) 55%, rgba(20,84,220,0.95) 100%) !important;
+    border-radius: 0 0 1.5rem 1.5rem !important;
+  }
+
+  .bento-grid > div:first-of-type > div:last-of-type > div:first-child {
+    left: 0 !important;
+    right: 0 !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+    max-width: 1000px !important;
+    z-index: 3 !important;
+    color: white !important;
+  }
+
+  .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 {
+    width: auto !important;
+    display: flex !important;
+    gap: 1rem !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 4 !important;
+  }
+
+  .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 button,
+  .bento-grid > div:first-of-type > div:last-of-type > .flex.gap-3 a {
+    min-width: 160px !important;
+    padding: 0.75rem 1.25rem !important;
+    font-size: 0.95rem !important;
+    border-radius: 9999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    box-shadow: 0 8px 24px rgba(30,58,138,0.12) !important;
+  }
+}
       /* Reduce card padding */
       .rounded-3xl {
         padding: 1rem !important;
