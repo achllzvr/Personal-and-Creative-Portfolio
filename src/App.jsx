@@ -1,26 +1,34 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { useReducedMotion } from 'motion/react'
 import { BackgroundRippleEffect } from './components/BackgroundRippleEffect'
 import BentoGrid from './components/BentoGrid'
 import ContactModal from './components/ContactModal'
-import CreativePlaceholder from './components/CreativePlaceholder'
+import CreativeHome from './components/CreativeHome'
 import Header from './components/Header'
 import { ModeProvider, useMode } from './context/ModeContext'
 import { ThemeProvider } from './context/ThemeContext'
+import { cn } from './lib/utils'
 
-const VIEW_EASE = [0.22, 1, 0.36, 1]
-const VIEW_DURATION = 0.38
+/** CSS opacity crossfade — avoid transform/contain so `position:fixed` stays viewport-true */
+const VIEW_MS = 420
 
 function AppShell() {
   const { isCreative } = useMode()
+  const reduce = useReducedMotion()
   const [contactOpen, setContactOpen] = useState(false)
   const bentoEnteredRef = useRef(false)
   const [skipBentoEnter, setSkipBentoEnter] = useState(false)
+  const [seenCreative, setSeenCreative] = useState(isCreative)
+  const [seenPersonal, setSeenPersonal] = useState(!isCreative)
 
   const openContact = useCallback(() => setContactOpen(true), [])
   const closeContact = useCallback(() => setContactOpen(false), [])
 
-  // After the first personal visit, don't replay staggered card-enter (main stutter source)
+  useEffect(() => {
+    if (isCreative) setSeenCreative(true)
+    else setSeenPersonal(true)
+  }, [isCreative])
+
   useEffect(() => {
     if (!isCreative) {
       if (bentoEnteredRef.current) setSkipBentoEnter(true)
@@ -32,6 +40,10 @@ function AppShell() {
     window.scrollTo(0, 0)
   }, [isCreative])
 
+  const fadeStyle = {
+    transition: reduce ? 'none' : `opacity ${VIEW_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+  }
+
   return (
     <div className="relative min-h-dvh">
       <div className="page-bg" aria-hidden="true">
@@ -41,7 +53,7 @@ function AppShell() {
       </div>
 
       <div
-        className="mosaic-layer fixed inset-0 z-[1] overflow-hidden pointer-events-none opacity-70 dark:opacity-100"
+        className="mosaic-layer pointer-events-none fixed inset-0 z-[1] overflow-hidden opacity-70 dark:opacity-100"
         aria-hidden="true"
       >
         <div className="mosaic-square top-8 right-24 h-16 w-16 bg-blue-700/30" />
@@ -54,32 +66,38 @@ function AppShell() {
 
       <Header />
 
-      <div className="relative z-10">
-        <AnimatePresence mode="wait" initial={false}>
-          {isCreative ? (
-            <motion.div
-              key="creative"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: VIEW_DURATION, ease: VIEW_EASE }}
-              className="min-h-dvh"
-            >
-              <CreativePlaceholder />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="personal"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: VIEW_DURATION, ease: VIEW_EASE }}
-              className="mx-auto w-full max-w-[1400px] px-4 pb-6 pt-24 sm:px-6"
-            >
-              <BentoGrid onOpenContact={openContact} skipEnter={skipBentoEnter} />
-            </motion.div>
-          )}
-        </AnimatePresence>
+      <div className="relative z-10 min-h-dvh">
+        {seenCreative ? (
+          <div
+            key="creative"
+            aria-hidden={!isCreative}
+            className={cn(
+              'min-h-dvh',
+              isCreative
+                ? 'relative opacity-100'
+                : 'pointer-events-none absolute inset-0 overflow-hidden opacity-0',
+            )}
+            style={{ ...fadeStyle, zIndex: isCreative ? 2 : 1 }}
+          >
+            <CreativeHome active={isCreative} />
+          </div>
+        ) : null}
+
+        {seenPersonal ? (
+          <div
+            key="personal"
+            aria-hidden={isCreative}
+            className={cn(
+              'mx-auto w-full max-w-[1400px] px-4 pb-6 pt-24 sm:px-6',
+              isCreative
+                ? 'pointer-events-none absolute inset-0 overflow-hidden opacity-0'
+                : 'relative opacity-100',
+            )}
+            style={{ ...fadeStyle, zIndex: isCreative ? 1 : 2 }}
+          >
+            <BentoGrid onOpenContact={openContact} skipEnter={skipBentoEnter} />
+          </div>
+        ) : null}
       </div>
 
       <ContactModal open={contactOpen} onClose={closeContact} />

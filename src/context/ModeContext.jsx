@@ -3,7 +3,7 @@ import { createContext, useCallback, useContext, useMemo, useRef, useState } fro
 const ModeContext = createContext(null)
 const STORAGE_KEY = 'portfolio-mode'
 /** Match App view crossfade so rapid toggles don't stack mid-animation */
-const MODE_LOCK_MS = 420
+const MODE_LOCK_MS = 480
 
 function readStoredMode() {
   try {

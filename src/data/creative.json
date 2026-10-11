@@ -1,0 +1,155 @@
+[
+  {
+    "id": "sight",
+    "name": "SIGHT",
+    "verb": "developed",
+    "tagline": "Eye health monitoring for clinics and patients",
+    "description": "Placeholder case study for SIGHT — a mobile and web platform for eye health monitoring with clinical scoring engines, systems architecture, and academic validation. Replace this copy and assets with the real project story.",
+    "role": "Lead Mobile/Web Developer",
+    "status": "In Active Development",
+    "year": "2025–2026",
+    "links": [{ "label": "Coming soon", "href": "#" }],
+    "tech": ["React", "Flutter", "Laravel", "Clinical scoring"],
+    "icon": "assets/creative/icons/sight.svg",
+    "images": [
+      "assets/creative/images/sight/01.svg",
+      "assets/creative/images/sight/02.svg"
+    ]
+  },
+  {
+    "id": "nulplay",
+    "name": "NULPlay",
+    "verb": "created",
+    "tagline": "Campus music queuing that actually ships",
+    "description": "Placeholder case study for NULPlay — campus music queuing and playback with Laravel, real-time WebSockets, and the Spotify API. Drop real screenshots and write-up here.",
+    "role": "Full-Stack Developer",
+    "status": "Campus Launch 2026",
+    "year": "2025–2026",
+    "links": [{ "label": "Coming soon", "href": "#" }],
+    "tech": ["Laravel", "WebSockets", "Spotify API", "React"],
+    "icon": "assets/creative/icons/nulplay.svg",
+    "images": [
+      "assets/creative/images/nulplay/01.svg",
+      "assets/creative/images/nulplay/02.svg"
+    ]
+  },
+  {
+    "id": "tapus",
+    "name": "TAPUS!",
+    "verb": "created",
+    "tagline": "NFC keychains meet a custom web app",
+    "description": "Placeholder case study for TAPUS! — 3D-printed NFC-enabled keychains linked to a custom web app with Gemini chatbot support. Swap placeholders for product shots and launch story.",
+    "role": "Founder & Lead Developer",
+    "status": "tapus.ph",
+    "year": "2026",
+    "links": [{ "label": "tapus.ph", "href": "https://tapus.ph" }],
+    "tech": ["NFC", "Web app", "Gemini", "3D printing"],
+    "icon": "assets/creative/icons/tapus.svg",
+    "images": [
+      "assets/creative/images/tapus/01.svg",
+      "assets/creative/images/tapus/02.svg"
+    ]
+  },
+  {
+    "id": "karbono",
+    "name": "Karbono",
+    "verb": "created",
+    "tagline": "Offline-first carbon tracking",
+    "description": "Placeholder case study for Karbono — an offline-first mobile app to track and optimize individual carbon emissions, from MVP through market validation.",
+    "role": "Founder & Lead Developer",
+    "status": "karbono.com.ph",
+    "year": "2025",
+    "links": [{ "label": "karbono.com.ph", "href": "https://karbono.com.ph" }],
+    "tech": ["Flutter", "Offline-first", "MVP", "Validation"],
+    "icon": "assets/creative/icons/karbono.svg",
+    "images": [
+      "assets/creative/images/karbono/01.svg",
+      "assets/creative/images/karbono/02.svg"
+    ]
+  },
+  {
+    "id": "prism",
+    "name": "PRISM",
+    "verb": "developed",
+    "tagline": "Repository, insights, and submissions",
+    "description": "Placeholder case study for PRISM — Portal for Repository, Insights, and Submission Management for CHED Region IV-A via NU Lipa CSIT Faculty.",
+    "role": "Web Developer",
+    "status": "Private Client",
+    "year": "2025",
+    "links": [{ "label": "Private", "href": "#" }],
+    "tech": ["Web prototype", "CHED", "NU Lipa"],
+    "icon": "assets/creative/icons/prism.svg",
+    "images": [
+      "assets/creative/images/prism/01.svg",
+      "assets/creative/images/prism/02.svg"
+    ]
+  },
+  {
+    "id": "heatmap",
+    "name": "NULP Student Heatmap",
+    "verb": "developed",
+    "tagline": "Campus demographics, visualized",
+    "description": "Placeholder case study for the NULP 2025 Student Heatmap — interactive visualization of student distribution and demographics, demoed to National University's President.",
+    "role": "Developer",
+    "status": "Short-term Launch",
+    "year": "2025",
+    "links": [{ "label": "Coming soon", "href": "#" }],
+    "tech": ["Data viz", "Interactive map", "Campus analytics"],
+    "icon": "assets/creative/icons/heatmap.svg",
+    "images": [
+      "assets/creative/images/heatmap/01.svg",
+      "assets/creative/images/heatmap/02.svg"
+    ]
+  },
+  {
+    "id": "nutify",
+    "name": "NUtify",
+    "verb": "developed",
+    "tagline": "Appointments and campus information",
+    "description": "Placeholder case study for NUtify — faculty and student information and appointment management for NU Lipa's students, faculty, and HR.",
+    "role": "Developer",
+    "status": "Private Client",
+    "year": "2024–2025",
+    "links": [{ "label": "Private", "href": "#" }],
+    "tech": ["Web app", "Appointments", "HR workflows"],
+    "icon": "assets/creative/icons/nutify.svg",
+    "images": [
+      "assets/creative/images/nutify/01.svg",
+      "assets/creative/images/nutify/02.svg"
+    ]
+  },
+  {
+    "id": "tabulation",
+    "name": "NULP Tabulation",
+    "verb": "developed",
+    "tagline": "Live pageant scoring, done cleanly",
+    "description": "Placeholder case study for the NULP Tabulation System — scoring for NU Lipa's Ambassador and Ambassadress pageant 2025.",
+    "role": "Developer",
+    "status": "Private Client",
+    "year": "2025",
+    "links": [{ "label": "Private", "href": "#" }],
+    "tech": ["Realtime scoring", "Events", "Web"],
+    "icon": "assets/creative/icons/tabulation.svg",
+    "images": [
+      "assets/creative/images/tabulation/01.svg",
+      "assets/creative/images/tabulation/02.svg"
+    ]
+  },
+  {
+    "id": "washette",
+    "name": "Washette",
+    "verb": "developed",
+    "tagline": "Laundry ops, ordered",
+    "description": "Placeholder case study for Washette — business and order management for Washette Laundry Services.",
+    "role": "Developer",
+    "status": "Private Client",
+    "year": "2024",
+    "links": [{ "label": "Private", "href": "#" }],
+    "tech": ["Orders", "Business ops", "Web"],
+    "icon": "assets/creative/icons/washette.svg",
+    "images": [
+      "assets/creative/images/washette/01.svg",
+      "assets/creative/images/washette/02.svg"
+    ]
+  }
+]

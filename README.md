@@ -8,7 +8,7 @@ Vite + React portfolio for **Achilles Vonn D. Rabina**, deployed to GitHub Pages
 
 - Vite + React (JSX)
 - Tailwind CSS v4
-- Static data from `src/data/portfolio.json`
+- Static data from `src/data/portfolio.json` (Personal) and `src/data/creative.json` (Creative)
 - Contact form via [Formspree](https://formspree.io)
 
 ## Local development
@@ -36,9 +36,22 @@ npm run preview
 ## Features
 
 - Dark / light theme with preloaded GIF transition
-- Personal / Creative mode switcher (Creative placeholder until that section ships)
+- Personal / Creative mode switcher
+- Creative dock: hover (desktop) or tap (mobile) the intro to reveal a bottom dock; selecting an app opens an in-page case study (icon flies up with a motion trail; short copy uses rolling letters, longer copy uses text emerge)
 - Bento grid: profile, about, experience, projects, certifications, recommendations, gallery
 - Contact modal with social links + Formspree submit
+
+## Creative portfolio assets
+
+Edit works in [`src/data/creative.json`](src/data/creative.json). Each entry needs `id`, `name`, `verb` (`developed` / `created` / `contributed`), copy fields, `links`, `tech`, plus asset paths:
+
+```
+public/assets/creative/
+  icons/{id}.png   # or .svg — dock + case-study icon
+  images/{id}/01.jpg …
+```
+
+Paths in JSON are relative to `public/` (e.g. `assets/creative/icons/sight.svg`). Replace the placeholder SVGs with real icons and screenshots when ready; keep the same filenames or update the JSON paths.
 
 ## Notes
 
