@@ -1,0 +1,622 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: "Syne", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --color-navy-950: #070d1f;
+  --color-navy-900: #0d1535;
+  --color-navy-800: #111d45;
+  --color-navy-700: #1a2a5e;
+}
+
+/* Creative intro — "achi" letters: solid → flowing blue gradient */
+@property --achi-c1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffffff;
+}
+
+@property --achi-c2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffffff;
+}
+
+@property --achi-c3 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffffff;
+}
+
+.achi-letter {
+  --achi-c1: #ffffff;
+  --achi-c2: #ffffff;
+  --achi-c3: #ffffff;
+  background-image: linear-gradient(
+    110deg,
+    var(--achi-c1) 0%,
+    var(--achi-c2) 35%,
+    var(--achi-c3) 50%,
+    var(--achi-c2) 65%,
+    var(--achi-c1) 100%
+  );
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+  transition:
+    --achi-c1 0.65s ease,
+    --achi-c2 0.65s ease,
+    --achi-c3 0.65s ease,
+    background-position 0.65s ease;
+}
+
+html:not(.dark) .achi-letter {
+  --achi-c1: #1e3a8a;
+  --achi-c2: #1e3a8a;
+  --achi-c3: #1e3a8a;
+}
+
+.achi-letter.achi-letter--flow {
+  --achi-c1: #bfdbfe;
+  --achi-c2: #3b82f6;
+  --achi-c3: #1d4ed8;
+  animation: achi-flow 2.6s linear infinite;
+}
+
+html:not(.dark) .achi-letter.achi-letter--flow {
+  --achi-c1: #93c5fd;
+  --achi-c2: #2563eb;
+  --achi-c3: #1e3a8a;
+}
+
+@keyframes achi-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .achi-letter.achi-letter--flow {
+    animation: none;
+    background-position: 40% 50%;
+  }
+}
+
+/* Glass top bar — higher fill + lighter blur so transform slides stay GPU-cheap */
+.top-bar-glass {
+  background: rgba(232, 240, 253, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 24px rgba(15, 40, 100, 0.06);
+  backdrop-filter: blur(8px) saturate(1.2);
+  -webkit-backdrop-filter: blur(8px) saturate(1.2);
+  transform: translateZ(0);
+  contain: layout style;
+}
+
+html.dark .top-bar-glass {
+  background: rgba(13, 21, 53, 0.82);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.28);
+}
+
+/* During theme flip: kill mass color transitions that fight View Transitions / GIF */
+html.theme-switching .theme-surface,
+html.theme-switching .glass-light-white,
+html.theme-switching .glass-blue-recommendations,
+html.theme-switching .glass-blue-experience,
+html.theme-switching .glass-blue-gallery,
+html.theme-switching .top-bar-glass {
+  transition: none !important;
+}
+
+/* Prefer native view-transition crossfade when ThemeContext uses it */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Cell ripple — plain CSS so --delay/--duration on each cell apply reliably */
+@keyframes cell-ripple {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+.animate-cell-ripple {
+  animation-name: cell-ripple;
+  animation-duration: var(--duration, 200ms);
+  animation-timing-function: ease-out;
+  animation-delay: var(--delay, 0ms);
+  animation-iteration-count: 1;
+  animation-fill-mode: none;
+  /* Don't let hover transition fight the keyframes */
+  transition: none !important;
+}
+
+@layer base {
+  html {
+    /* Avoid smooth-scroll jank while the page is heavy; keep snap carousels native */
+    scroll-behavior: auto;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    @apply font-body antialiased overflow-x-hidden;
+    margin: 0;
+    /* Fallback solid colors so theme never shows through as black */
+    background-color: #0d1535;
+    color: #ffffff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  html:not(.dark) body {
+    background-color: #e8f0fd;
+    color: #0f172a;
+  }
+
+  html.theme-switching body {
+    transition: none;
+  }
+
+  .theme-surface {
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+}
+
+/* ─── Page background base (ripple grid sits on top) ─── */
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+  background-color: #0d1535;
+}
+
+html.theme-switching .page-bg {
+  transition: none;
+}
+
+html:not(.dark) .page-bg {
+  background-color: #e8f0fd;
+}
+
+.page-bg-ripple {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+
+.mosaic-square {
+  position: absolute;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+html:not(.dark) .mosaic-layer .mosaic-square {
+  opacity: 0.45;
+}
+
+/* ─── Glass cards (opaque fills — no backdrop-filter; blur is expensive) ─── */
+.glass-light-white {
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.12);
+  color: #1e293b;
+  contain: layout paint;
+}
+
+.dark .glass-light-white {
+  background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
+  box-shadow: 0 8px 24px rgba(0, 20, 60, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.glass-blue-recommendations,
+.glass-blue-experience,
+.glass-blue-gallery {
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 20, 60, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  contain: layout paint;
+}
+
+.glass-blue-recommendations {
+  background: linear-gradient(90deg, #1e3f7c 0%, #2563eb 100%);
+}
+
+.glass-blue-experience {
+  background: linear-gradient(180deg, #1e3f7c 0%, #2563eb 100%);
+}
+
+.glass-blue-gallery {
+  background: linear-gradient(135deg, #2563eb 0%, #1e3f7c 100%);
+}
+
+.child-glass-white-light {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #000000;
+}
+
+.child-glass-blue-light {
+  background: linear-gradient(90deg, #0d2145 0%, #0f3178 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.child-glass-white-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+  border: 2px solid rgba(64, 97, 147, 0.089);
+  color: #1e40af;
+}
+
+.dark .child-glass-white-gradient {
+  background: rgba(15, 40, 71, 0.92);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  color: #ffffff;
+}
+
+.child-glass-experience {
+  background: linear-gradient(90deg, #0d2145 0%, #0f3178 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.child-glass {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #000000;
+}
+
+.dark .child-glass {
+  background: rgba(15, 40, 71, 0.92);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  color: #ffffff;
+}
+
+.pill-glass {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.dark .pill-glass {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.scroll-hide::-webkit-scrollbar { display: none; }
+.scroll-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+.timeline-line {
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(96, 165, 250, 0.6), rgba(96, 165, 250, 0.1));
+}
+
+.dot-active {
+  background: #3b82f6;
+  width: 20px;
+}
+
+@keyframes slideUpCustom {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-enter {
+  animation: slideUpCustom 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.card-enter:nth-child(1) { animation-delay: 0.02s; }
+.card-enter:nth-child(2) { animation-delay: 0.05s; }
+.card-enter:nth-child(3) { animation-delay: 0.08s; }
+.card-enter:nth-child(4) { animation-delay: 0.11s; }
+.card-enter:nth-child(5) { animation-delay: 0.14s; }
+.card-enter:nth-child(6) { animation-delay: 0.17s; }
+.card-enter:nth-child(7) { animation-delay: 0.2s; }
+
+/* Returning to Personal after a mode switch — skip staggered enter jank */
+.bento-grid--no-enter .card-enter {
+  animation: none !important;
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes waterFlowDarkToLight {
+  0% { background: linear-gradient(90deg, rgb(150, 150, 150) 0%, rgba(180, 180, 180, 0.7) 30%, rgba(240, 240, 240, 1) 100%); }
+  50% { background: linear-gradient(90deg, rgb(80, 100, 150) 0%, rgba(120, 150, 200, 0.5) 30%, rgba(180, 210, 250, 0.9) 100%); }
+  100% { background: linear-gradient(90deg, rgba(13, 71, 161, 0.9) 0%, rgba(66, 133, 244, 0.85) 100%); }
+}
+
+@keyframes waterFlowLightToDark {
+  0% { background: linear-gradient(90deg, rgba(13, 71, 161, 0.9) 0%, rgba(66, 133, 244, 0.85) 100%); }
+  50% { background: linear-gradient(90deg, rgb(80, 100, 150) 0%, rgba(120, 150, 200, 0.5) 30%, rgba(180, 210, 250, 0.9) 100%); }
+  100% { background: linear-gradient(90deg, rgb(150, 150, 150) 0%, rgba(180, 180, 180, 0.7) 30%, rgba(240, 240, 240, 1) 100%); }
+}
+
+.transition-gif {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  z-index: 2;
+  display: none;
+  background-color: transparent;
+}
+
+.transition-gif.show {
+  display: block;
+}
+
+.kw-link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.dark .kw-link {
+  color: #93c5fd;
+}
+
+html:not(.dark) .kw-link {
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.form-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(203, 213, 225, 0.5);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  color: #1e3a8a;
+  outline: none;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.form-input:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  border-color: #60a5fa;
+}
+
+.form-input::placeholder {
+  color: #94a3b8;
+}
+
+.cert-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.contact-modal-overlay {
+  background: rgba(7, 13, 31, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+}
+
+html:not(.dark) .contact-modal-overlay {
+  background: rgba(100, 130, 200, 0.4);
+}
+
+.contact-modal-overlay.is-open {
+  animation: contactOverlayIn 0.28s ease-out both;
+}
+
+.contact-modal-overlay.is-closing {
+  animation: contactOverlayOut 0.22s ease-in both;
+}
+
+.contact-modal-panel {
+  transform-origin: center center;
+  will-change: transform, opacity;
+  opacity: 0;
+}
+
+.contact-modal-overlay.is-open .contact-modal-panel {
+  animation: contactPanelIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.contact-modal-overlay.is-closing .contact-modal-panel {
+  animation: contactPanelOut 0.22s ease-in both;
+}
+
+.contact-modal-stagger {
+  opacity: 0;
+}
+
+.contact-modal-overlay.is-open .contact-modal-stagger {
+  animation: contactStaggerIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.contact-modal-overlay.is-open .contact-modal-stagger:nth-child(1) { animation-delay: 0.08s; }
+.contact-modal-overlay.is-open .contact-modal-stagger:nth-child(2) { animation-delay: 0.14s; }
+.contact-modal-overlay.is-open .contact-modal-stagger:nth-child(3) { animation-delay: 0.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-modal-overlay,
+  .contact-modal-overlay.is-open,
+  .contact-modal-overlay.is-closing,
+  .contact-modal-overlay.is-open .contact-modal-panel,
+  .contact-modal-overlay.is-closing .contact-modal-panel,
+  .contact-modal-overlay.is-open .contact-modal-stagger {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+  }
+
+  .contact-modal-overlay.is-open,
+  .contact-modal-overlay.is-open .contact-modal-panel,
+  .contact-modal-overlay.is-open .contact-modal-stagger {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes contactOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes contactOverlayOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes contactPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes contactPanelOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+}
+
+@keyframes contactStaggerIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .card-enter {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Mobile / tablet — single column, cleaner than !important soup */
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .bento-span {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+
+  .profile-card {
+    min-height: 280px;
+  }
+
+  .profile-card-desktop {
+    display: none;
+  }
+
+  .profile-card-mobile {
+    display: flex;
+  }
+
+  .experience-track {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .experience-track .timeline-line,
+  .experience-track .exp-dot {
+    display: none;
+  }
+
+  .experience-track .exp-item {
+    padding-left: 0;
+  }
+}
+
+@media (min-width: 1025px) {
+  .profile-card-mobile {
+    display: none;
+  }
+
+  .profile-card-desktop {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .experience-track {
+    grid-template-columns: 1fr;
+  }
+
+  .bento-grid {
+    gap: 0.75rem;
+  }
+}

@@ -1,15 +1,22 @@
 {
   "experience": [
     {
-      "role": "Founder & CEO",
-      "organization": "Karbono",
-      "year": "2025",
+      "role": "President",
+      "organization": "SACE Student Council",
+      "year": "2026",
       "dotColor": "bg-green-300",
       "borderColor": "border-green-500"
     },
     {
-      "role": "Founder & Owner",
-      "organization": "TAPUS!",
+      "role": "Founder & Lead Developer",
+      "organization": "TAPUS / tapus.ph",
+      "year": "2026",
+      "dotColor": "bg-green-300",
+      "borderColor": "border-green-500"
+    },
+    {
+      "role": "Founder & Lead Developer",
+      "organization": "Karbono",
       "year": "2025",
       "dotColor": "bg-green-300",
       "borderColor": "border-green-500"
@@ -18,8 +25,8 @@
       "role": "President",
       "organization": "SOITS",
       "year": "2025",
-      "dotColor": "bg-green-300",
-      "borderColor": "border-green-500"
+      "dotColor": "bg-blue-300",
+      "borderColor": "border-blue-500"
     },
     {
       "role": "Creatives Director",
@@ -37,7 +44,7 @@
     },
     {
       "role": "Student",
-      "organization": "BSIT – MWA",
+      "organization": "BSIT – MWA, NU Lipa",
       "year": "2023",
       "dotColor": "bg-green-300",
       "borderColor": "border-green-500"
@@ -45,43 +52,48 @@
   ],
   "projects": [
     {
-      "title": "LUMI (SIGHT Thesis)",
-      "description": "Offline-first Assistive AI for Eye Health Monitoring & Children's Device Usage with Data Syncing for Guardians and Healthcare Professionals",
+      "title": "SIGHT (Thesis)",
+      "description": "Mobile & web platform for eye health monitoring — clinical scoring engines, systems architecture, and academic validation as Lead Mobile/Web Developer",
       "status": "In Active Development"
     },
     {
+      "title": "NULPlay",
+      "description": "Campus music queuing and playback platform built with Laravel, real-time WebSockets, and the Spotify API — launched for NU Lipa campus use",
+      "status": "Campus Launch 2026"
+    },
+    {
       "title": "TAPUS!",
-      "description": "Business Management and NFC Redirect System for TAPUS!",
+      "description": "3D-printed NFC-enabled keychains linked to a custom web app with Gemini chatbot support and Google Drive account storage",
       "status": "tapus.ph"
     },
     {
       "title": "Karbono",
-      "description": "World's First Offline-first Carbon Footprint Tracker for Mobile Devices",
+      "description": "Offline-first mobile app to track and optimize individual carbon emissions — guided from MVP through market validation",
       "status": "karbono.com.ph"
     },
     {
-      "title": "CHED PRISM",
-      "description": "CHED Region IV-A's Portal for Repository, Insights, and Submission Management",
+      "title": "PRISM",
+      "description": "Portal for Repository, Insights, and Submission Management — web prototype for CHED Region IV-A via NU Lipa CSIT Faculty",
       "status": "Private Client"
     },
     {
       "title": "NULP 2025 Student Heatmap",
-      "description": "Interactive Heatmap Visualizing Student Distribution and Demographics of NU Lipa used for demonstration to National University's President",
+      "description": "Interactive heatmap visualizing student distribution and demographics of NU Lipa, demoed to National University's President",
       "status": "Short-term Launch"
     },
     {
       "title": "NUtify",
-      "description": "Faculty and Student Information and Appointment Management System for NU Lipa's Students, Faculty, and HR",
+      "description": "Faculty and student information and appointment management system for NU Lipa's students, faculty, and HR",
       "status": "Private Client"
     },
     {
-      "title": "NULP Tabulation System (2025)",
-      "description": "Tabulation System for NU Lipa's Pageant (Ambassador and Ambassadress) 2025",
+      "title": "NULP Tabulation System",
+      "description": "Tabulation system for NU Lipa's Ambassador and Ambassadress pageant 2025",
       "status": "Private Client"
     },
     {
       "title": "Washette",
-      "description": "Business and Order Management System for Washette Laundry Services",
+      "description": "Business and order management system for Washette Laundry Services",
       "status": "Private Client"
     }
   ],
@@ -92,8 +104,8 @@
       "iconBorder": "border-yellow-400/40",
       "iconTextDark": "text-yellow-500",
       "iconTextLight": "dark:text-yellow-400",
-      "title": "Champion - Gold Medalist",
-      "description": "WorldSkills Batangas 2026, Digital Interactive Media Design (UI/UX)"
+      "title": "2× Gold Medalist / Champion",
+      "description": "WorldSkills 2026 — Digital Interactive Media Design (Provincial & Regional)"
     },
     {
       "icon": "🏆",
@@ -101,8 +113,8 @@
       "iconBorder": "border-yellow-400/40",
       "iconTextDark": "text-yellow-500",
       "iconTextLight": "dark:text-yellow-400",
-      "title": "1st Place",
-      "description": "Breaking Enigma Hackathon, Sustainability Category"
+      "title": "2× First Runner-Up",
+      "description": "Breaking Enigma National Hackathon & Residency — Karbono"
     },
     {
       "icon": "🎖",
@@ -123,13 +135,58 @@
       "description": "Issued by Certiport, a Pearson VUE business"
     },
     {
+      "icon": "🎖",
+      "iconBg": "bg-indigo-400/20",
+      "iconBorder": "border-indigo-400/40",
+      "iconTextDark": "text-indigo-500",
+      "iconTextLight": "dark:text-indigo-300",
+      "title": "IC3 Digital Literacy GS6",
+      "description": "Level 1 — Certiport, a Pearson VUE business"
+    },
+    {
+      "icon": "📜",
+      "iconBg": "bg-cyan-400/20",
+      "iconBorder": "border-cyan-400/40",
+      "iconTextDark": "text-cyan-600",
+      "iconTextLight": "dark:text-cyan-300",
+      "title": "CSS Mastery",
+      "description": "Issued by CodeCred — modern layout, responsive design & animation"
+    },
+    {
+      "icon": "📜",
+      "iconBg": "bg-cyan-400/20",
+      "iconBorder": "border-cyan-400/40",
+      "iconTextDark": "text-cyan-600",
+      "iconTextLight": "dark:text-cyan-300",
+      "title": "HTML Fundamentals",
+      "description": "Issued by CodeCred — structure, elements & semantic markup"
+    },
+    {
+      "icon": "📜",
+      "iconBg": "bg-cyan-400/20",
+      "iconBorder": "border-cyan-400/40",
+      "iconTextDark": "text-cyan-600",
+      "iconTextLight": "dark:text-cyan-300",
+      "title": "SQL Fundamentals",
+      "description": "Issued by CodeCred — querying, joins & database design"
+    },
+    {
       "icon": "📜",
       "iconBg": "bg-green-400/20",
       "iconBorder": "border-green-400/40",
       "iconTextDark": "text-green-600",
       "iconTextLight": "dark:text-green-300",
       "title": "First Honor Dean's Lister",
-      "description": "A.Y. 2023-2024<br>A.Y. 2024-2025<br>A.Y. 2025-2026 (Ongoing)"
+      "description": "A.Y. 2023–2024<br>A.Y. 2024–2025<br>A.Y. 2025–2026 (Ongoing)"
+    },
+    {
+      "icon": "🚀",
+      "iconBg": "bg-orange-400/20",
+      "iconBorder": "border-orange-400/40",
+      "iconTextDark": "text-orange-500",
+      "iconTextLight": "dark:text-orange-300",
+      "title": "2× Participant",
+      "description": "DICT Philippine Startup Challenge"
     }
   ],
   "recommendations": [
