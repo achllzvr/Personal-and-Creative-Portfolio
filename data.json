@@ -1,0 +1,233 @@
+{
+  "experience": [
+    {
+      "role": "Founder & CEO",
+      "organization": "Karbono",
+      "year": "2025",
+      "dotColor": "bg-green-300",
+      "borderColor": "border-green-500"
+    },
+    {
+      "role": "Founder & Owner",
+      "organization": "TAPUS!",
+      "year": "2025",
+      "dotColor": "bg-green-300",
+      "borderColor": "border-green-500"
+    },
+    {
+      "role": "President",
+      "organization": "SOITS",
+      "year": "2025",
+      "dotColor": "bg-green-300",
+      "borderColor": "border-green-500"
+    },
+    {
+      "role": "Creatives Director",
+      "organization": "SOITS",
+      "year": "2024",
+      "dotColor": "bg-blue-300",
+      "borderColor": "border-blue-500"
+    },
+    {
+      "role": "Secretary",
+      "organization": "SOITS",
+      "year": "2023",
+      "dotColor": "bg-blue-300",
+      "borderColor": "border-blue-500"
+    },
+    {
+      "role": "Student",
+      "organization": "BSIT – MWA",
+      "year": "2023",
+      "dotColor": "bg-green-300",
+      "borderColor": "border-green-500"
+    }
+  ],
+  "projects": [
+    {
+      "title": "LUMI (SIGHT Thesis)",
+      "description": "Offline-first Assistive AI for Eye Health Monitoring & Children's Device Usage with Data Syncing for Guardians and Healthcare Professionals",
+      "status": "In Active Development"
+    },
+    {
+      "title": "TAPUS!",
+      "description": "Business Management and NFC Redirect System for TAPUS!",
+      "status": "tapus.ph"
+    },
+    {
+      "title": "Karbono",
+      "description": "World's First Offline-first Carbon Footprint Tracker for Mobile Devices",
+      "status": "karbono.com.ph"
+    },
+    {
+      "title": "CHED PRISM",
+      "description": "CHED Region IV-A's Portal for Repository, Insights, and Submission Management",
+      "status": "Private Client"
+    },
+    {
+      "title": "NULP 2025 Student Heatmap",
+      "description": "Interactive Heatmap Visualizing Student Distribution and Demographics of NU Lipa used for demonstration to National University's President",
+      "status": "Short-term Launch"
+    },
+    {
+      "title": "NUtify",
+      "description": "Faculty and Student Information and Appointment Management System for NU Lipa's Students, Faculty, and HR",
+      "status": "Private Client"
+    },
+    {
+      "title": "NULP Tabulation System (2025)",
+      "description": "Tabulation System for NU Lipa's Pageant (Ambassador and Ambassadress) 2025",
+      "status": "Private Client"
+    },
+    {
+      "title": "Washette",
+      "description": "Business and Order Management System for Washette Laundry Services",
+      "status": "Private Client"
+    }
+  ],
+  "certifications": [
+    {
+      "icon": "🏆",
+      "iconBg": "bg-yellow-400/20",
+      "iconBorder": "border-yellow-400/40",
+      "iconTextDark": "text-yellow-500",
+      "iconTextLight": "dark:text-yellow-400",
+      "title": "Champion - Gold Medalist",
+      "description": "WorldSkills Batangas 2026, Digital Interactive Media Design (UI/UX)"
+    },
+    {
+      "icon": "🏆",
+      "iconBg": "bg-yellow-400/20",
+      "iconBorder": "border-yellow-400/40",
+      "iconTextDark": "text-yellow-500",
+      "iconTextLight": "dark:text-yellow-400",
+      "title": "1st Place",
+      "description": "Breaking Enigma Hackathon, Sustainability Category"
+    },
+    {
+      "icon": "🎖",
+      "iconBg": "bg-blue-400/20",
+      "iconBorder": "border-blue-400/40",
+      "iconTextDark": "text-blue-500",
+      "iconTextLight": "dark:text-blue-300",
+      "title": "IT Specialist – Java",
+      "description": "Issued by Certiport, a Pearson VUE business"
+    },
+    {
+      "icon": "🎖",
+      "iconBg": "bg-blue-400/20",
+      "iconBorder": "border-blue-400/40",
+      "iconTextDark": "text-blue-500",
+      "iconTextLight": "dark:text-blue-300",
+      "title": "IT Specialist – Networking",
+      "description": "Issued by Certiport, a Pearson VUE business"
+    },
+    {
+      "icon": "📜",
+      "iconBg": "bg-green-400/20",
+      "iconBorder": "border-green-400/40",
+      "iconTextDark": "text-green-600",
+      "iconTextLight": "dark:text-green-300",
+      "title": "First Honor Dean's Lister",
+      "description": "A.Y. 2023-2024<br>A.Y. 2024-2025<br>A.Y. 2025-2026 (Ongoing)"
+    }
+  ],
+  "recommendations": [
+    {
+      "initials": "JD",
+      "bgGradient": "from-blue-400 to-blue-700",
+      "name": "Mr. John Doe",
+      "role": "Full-time Professor at NU Lipa",
+      "text": "\"As his Mobile and Web Development professor, I have had the privilege of watching <strong class=\\\"dark:text-yellow-400 text-gray-900\\\">Achilles</strong> evolve from an exceptional student into a visionary technologist. He does not just write code; he engineers comprehensive solutions, seamlessly mastering the MERN stack and transitioning brilliantly to Laravel-React-MySQL hybrid architectures. His technical acumen, combined with his collaborative spirit, makes him an invaluable asset to any team.\""
+    },
+    {
+      "initials": "MP",
+      "bgGradient": "from-purple-400 to-purple-700",
+      "name": "Maria P.",
+      "role": "Industry Mentor",
+      "text": "\"Achilles demonstrated exceptional initiative and technical depth during our collaboration. His ability to learn quickly and deliver polished results is truly impressive. His expertise in modern full-stack development is remarkable.\""
+    }
+  ],
+  "gallery": [
+    {
+      "image": "https://scontent.fmnl13-2.fna.fbcdn.net/v/t39.30808-6/629237072_122102474055247707_7896549607727921496_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeFta52No22wIbiEol81YacnZJnQqxlMJ8RkmdCrGUwnxJ7MwZ9UeCxRNQaQyyDVeh900FCa1lamtvVkl51OCJ92&_nc_ohc=0DmGxXaEF5QQ7kNvwHYrzpL&_nc_oc=AdodjcYhI0CZLGbRymYLbkqU9wsZI1GABtwUdCU4j88kP0zbgHP5PE0FMZyF_qgUC5g&_nc_zt=23&_nc_ht=scontent.fmnl13-2.fna&_nc_gid=sV124mLFPKgLjt9eKcliFA&_nc_ss=7b2a8&oh=00_Af15tEA28lZkamLJ8iYpjiQ-AQxiy58XVOcvBfqEENnItg&oe=69F60240",
+      "fallbackImage": "",
+      "alt": "TAPUS! Soft Launch",
+      "initial": "A",
+      "title": "TAPUS!",
+      "subtitle": "",
+      "quote": "\"Soft launch of my own small business.\"",
+      "year": "2025"
+    },
+    {
+      "image": "https://scontent.fmnl13-2.fna.fbcdn.net/v/t39.30808-6/668594925_963656356183328_5163770343148620755_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGGwNhtkDZOBk8P75627RXQXsYcFOBVeaVexhwU4FV5pWNy_us5frcWAe9GpXBWvoP27f9XSDuRrGNwvMMU2X2N&_nc_ohc=58QtJpIu7GEQ7kNvwGBW7Ov&_nc_oc=AdpqF4NpRD5uguBi_2JXioVsJR6EDRXTDPD54N4CKHXWGhYQ0k-cyJZp_TEhM-Be7oo&_nc_zt=23&_nc_ht=scontent.fmnl13-2.fna&_nc_gid=f2ipuduZphS5bRFLWGAsRQ&_nc_ss=7b2a8&oh=00_Af0dnvOezmHqaIXzHrLWXTZkVXBt2PsY_lluh8gAtWymRQ&oe=69F60AAB",
+      "fallbackImage": "",
+      "alt": "Presidency",
+      "initial": "A",
+      "title": "SOITS",
+      "subtitle": "",
+      "quote": "\"Lucky to have been chosen as the President of SOITS\"",
+      "year": "2025"
+    },
+    {
+      "image": "https://scontent.fmnl13-4.fna.fbcdn.net/v/t39.30808-6/596305278_1158938003086578_4764260796874601763_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeE7lHX_FYHPD-BRrYQC-Um-ahdcb3a1M89qF1xvdrUzzxWJ2GhIHs3FBU9eEc45ebjgnkC__ENVzADroR0FkI4i&_nc_ohc=dJ8hwhUGTCEQ7kNvwGtqbUq&_nc_oc=AdoHPOtBuqTSPbbc2rVqrxukGTTGFUDqaF1DgpVgXqzZM-dnatLahZF3XZNzyH3ojRY&_nc_zt=23&_nc_ht=scontent.fmnl13-4.fna&_nc_gid=WFuxt0S8gTBK6QNPQF_E-g&_nc_ss=7b2a8&oh=00_Af3Dw47nwJPcY4A9LIF759WO5ZAv5oVAbgv-gUYMFaAk4w&oe=69F627DE",
+      "fallbackImage": "",
+      "alt": "Breaking Enigma Hackathon",
+      "initial": "A",
+      "title": "Breaking Enigma Hackathon",
+      "subtitle": "",
+      "quote": "\"Beyond blessed and grateful to have had the opportunity to participate and grow in this event.\"",
+      "year": "2025"
+    },
+    {
+      "image": "https://scontent.fmnl13-3.fna.fbcdn.net/v/t39.30808-6/584526133_1141631404817238_3282707104398509314_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGfrtzdXyh01BbGXgwHKRSDo5x0eBrb_MGjnHR4Gtv8wXH2vspkRkdhrz0a6aZoi3bGzfWBzipqV_gE04kv2RRB&_nc_ohc=ZT5SLU9RMhIQ7kNvwHYWMP2&_nc_oc=AdpDYp2AhSuqgvmciMV1ErmHXpjApc6ZWk-YDX4mIJtZnuUloSs9dM76jWyo9v0A6jk&_nc_zt=23&_nc_ht=scontent.fmnl13-3.fna&_nc_gid=MX1jgPsqWVZXtyh7_Z3XUQ&_nc_ss=7b2a8&oh=00_Af2BF_Kd9oL3Cm8FjCpPQ2czPqTWbQWY-wiksRoY-W3Dmw&oe=69F62167",
+      "fallbackImage": "",
+      "alt": "The Filipino Times!",
+      "initial": "A",
+      "title": "The Filipino Times!",
+      "subtitle": "",
+      "quote": "\"Surprisingly got features in The Filipino Times haha!\"",
+      "year": "2025"
+    },
+    {
+      "image": "https://scontent.fmnl13-1.fna.fbcdn.net/v/t39.30808-6/583237460_851006600781638_8442168557000472686_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeHxl5TBWI5A5DhaUiuP1yW2TZUa4KEdyW1NlRrgoR3JbfXcI1RcQmZU63I65rHDda0Cwa6rGWH0D1qjgvnf474C&_nc_ohc=jj1GLtozuu4Q7kNvwGJKlWC&_nc_oc=Adrjr_xme-uQ9xQ59NwJ6O0HpWAEVPTmz85tpUvdhxypouMjgAejI7dlOWKqjiTDIa4&_nc_zt=23&_nc_ht=scontent.fmnl13-1.fna&_nc_gid=6O_CTU-TWgYBviNo25iNSg&_nc_ss=7b2a8&oh=00_Af1Q3gbM7-A66-5HZ5oTILzTc3MlpFiV7bFF8tVR79dlVQ&oe=69F62484",
+      "fallbackImage": "",
+      "alt": "Won for Residency!",
+      "initial": "A",
+      "title": "Won for Residency!",
+      "subtitle": "",
+      "quote": "\"An unexpected turn of events for me and my startup, Karbono\"",
+      "year": "2025"
+    },
+    {
+      "image": "https://scontent.fmnl13-1.fna.fbcdn.net/v/t39.30808-6/652633386_944376154778015_1350856702404918713_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeEwTaCteBzZG5mnDbH1wgRE8QDGLbsn_ivxAMYtuyf-K1hcUeOk8k50pj2h0hGLALCnmqlRcT5y5JCJLdlgdFvm&_nc_ohc=cpjqY2sf4ewQ7kNvwHzZ4Wf&_nc_oc=AdoGCOzXtHgXLPYZ83fJgxBFFuWB1kPt0mg7Qwv0avcvPg19xTdVByBlCGzSUyKjdyQ&_nc_zt=23&_nc_ht=scontent.fmnl13-1.fna&_nc_gid=2_JnfVCygDz1YEi1WvlLxA&_nc_ss=7b2a8&oh=00_Af1puh5OLxM2MSwnr8jpe-f7CA8rvuhaYDXogYzJSZsCFg&oe=69F619F9",
+      "fallbackImage": "",
+      "alt": "WorldSkills Batangas 2026",
+      "initial": "A",
+      "title": "WorldSkills Batangas 2026",
+      "subtitle": "",
+      "quote": "\"Though a sole participant, I worked my hardest even though my hands were giving up to reach beyond the required score to attain the gold medal\"",
+      "year": "2025"
+    },
+    {
+      "image": "https://scontent.fmnl13-3.fna.fbcdn.net/v/t39.30808-6/657140610_898501932996142_3836251145983486559_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeFeo4mMmkRNAgXgNfjN-q9RoMALrCd8psqgwAusJ3ymyjtLeNmHqrcq0LpHNdlrQgho7tupK_O_RUg3BU9wMUzf&_nc_ohc=Qo8VvITan28Q7kNvwGocep8&_nc_oc=Ado_obVSXWkbysSspiDOQ4p8lfSbjkn59V2kOQeEfD9BbflRj1Lt75lzeumh2V-TC-4&_nc_zt=23&_nc_ht=scontent.fmnl13-3.fna&_nc_gid=rTNmgOuRmdzG_nC0_MFu_A&_nc_ss=7b2a8&oh=00_Af00r6wHiTl21wVIsgwBzV2wfP1W9G1Dl9id_7jn8KoQpg&oe=69F60A9B",
+      "fallbackImage": "",
+      "alt": "Rank 1 for the entire department!",
+      "initial": "A",
+      "title": "Rank 1 for the entire department!",
+      "subtitle": "",
+      "quote": "\"After years of trying, I finally ranked first and got a flat highest GWA among the entire department.\"",
+      "year": "2025"
+    },
+    {
+      "image": "https://scontent.fmnl13-2.fna.fbcdn.net/v/t39.30808-6/643398361_928861422996155_1305823639863511285_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeHgMO3rTWMTijOxM4CcCh6IOb5i_P5qBAQ5vmL8_moEBGTfu1WDjuQfiQ-xPwBFp10ykAUo77xqejMO-a-8Jdir&_nc_ohc=Nu7Y1EmeWw0Q7kNvwEIKa2R&_nc_oc=Adq1Vd6Bg7pwu1I88WL-IXJa-3BiN779Cl4kGvjulLfkGVvN3SPn18jgMyUevLGyREA&_nc_zt=23&_nc_ht=scontent.fmnl13-2.fna&_nc_gid=w8SjYw1KTGulwHJYHyT-qw&_nc_ss=7b2a8&oh=00_Af2qdMxMYkMFjTvJ8WIOObhjDSyeouRr5H7d8rQOsVV2oA&oe=69F60CB3",
+      "fallbackImage": "",
+      "alt": "CHED RAISE 2026",
+      "initial": "A",
+      "title": "CHED RAISE 2026!",
+      "subtitle": "",
+      "quote": "\"Got the chance of a lifetime to not just participate but also represent my school on a national platform focused on innovation!\"",
+      "year": "2025"
+    }
+  ]
+}

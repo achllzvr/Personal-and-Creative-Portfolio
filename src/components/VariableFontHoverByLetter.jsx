@@ -2,23 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion, stagger, useAnimate, useReducedMotion } from 'motion/react'
 import { cn } from '../lib/utils'
 
-const INTER_VARIABLE_FONT_FACE = `
-@font-face {
-  font-family: "InterVariableFramer";
-  src: url("https://rsms.me/inter/font-files/InterVariable.woff2?v=4.0") format("woff2-variations");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "InterVariableFramer";
-  src: url("https://rsms.me/inter/font-files/InterVariable-Italic.woff2?v=4.0") format("woff2-variations");
-  font-weight: 100 900;
-  font-style: italic;
-  font-display: swap;
-}
-`
-
 const VARIABLE_FONT_STACK =
   '"InterVariableFramer", "Inter Variable", "Inter", system-ui, sans-serif'
 
@@ -321,7 +304,6 @@ export default function VariableFontHoverByLetter(props) {
           : undefined
       }
     >
-      <style>{INTER_VARIABLE_FONT_FACE}</style>
       {letters.length === 0 ? null : (
         <span
           ref={scope}

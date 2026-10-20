@@ -1,5 +1,17 @@
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'motion/react'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  AnimatePresence,
+  LayoutGroup,
+  motion,
+  useReducedMotion,
+} from 'motion/react'
+import {
+  startTransition,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import creativeWorks from '../data/creative.json'
 import { asset } from '../utils/assets'
 import VariableFontHoverByLetter from './VariableFontHoverByLetter'
@@ -16,6 +28,7 @@ const TYPE_CHAR_MS = 36
 const HEADLINE_LAYOUT_ID = 'creative-headline'
 /** Keep one display size — no shrink on case entry */
 const DISPLAY_FONT = 'clamp(2.4rem, 9vw, 7.5rem)'
+const TRAIL_COPIES = 4
 
 /** Enter / exit timings (ms) */
 const T = {
@@ -120,6 +133,15 @@ export default function CreativeHome({ active = true }) {
 
   useEffect(() => () => clearTimers(), [clearTimers])
 
+  // Prefetch dock icons so select doesn't hitch on decode
+  useEffect(() => {
+    works.forEach((w) => {
+      const img = new Image()
+      img.decoding = 'async'
+      img.src = asset(w.icon)
+    })
+  }, [works])
+
   useEffect(() => {
     if (active) return
     clearTimers()
@@ -197,22 +219,28 @@ export default function CreativeHome({ active = true }) {
       // 3) After text lands, icon fades / slides up into place
       later(() => setShowHeroIcon(true), T.textSlide)
 
-      // Trail after icon settle
-      later(() => setTrailLive(true), T.textSlide + T.iconIn)
+      // Trail after icon settle + case ready (avoid RAF during enter choreography)
+      later(() => setTrailLive(true), T.textSlide + T.iconIn + 80)
 
       // 4) Subtext under main line
       const suffixAt = T.textSlide + T.iconIn * 0.55
       later(() => setSuffixActive(true), suffixAt)
 
-      // 5) Case study sections
+      // 5) Case study sections — startTransition keeps slide/typewriter smooth
       const containersStart = suffixAt + typedMs + 120
       for (let i = 1; i <= SECTION_COUNT; i++) {
-        later(() => setContainerStep(i), containersStart + (i - 1) * T.container)
+        later(
+          () => startTransition(() => setContainerStep(i)),
+          containersStart + (i - 1) * T.container,
+        )
       }
 
       const contentStart = containersStart + SECTION_COUNT * T.container + 40
       for (let i = 1; i <= SECTION_COUNT; i++) {
-        later(() => setContentStep(i), contentStart + (i - 1) * T.content)
+        later(
+          () => startTransition(() => setContentStep(i)),
+          contentStart + (i - 1) * T.content,
+        )
       }
 
       later(
@@ -297,6 +325,10 @@ export default function CreativeHome({ active = true }) {
 
   const caseOnPage = Boolean(selectedId) || headlineInCase
   const showCenteredHeadline = !headlineInCase && phase === 'idle'
+  const exiting = phase === 'exiting' || detailsExiting
+  const mountCaseStudy =
+    Boolean(selected) && (containerStep > 0 || detailsExiting)
+  const sliding = phase === 'entering' && !showHeroIcon
 
   return (
     <LayoutGroup>
@@ -311,7 +343,7 @@ export default function CreativeHome({ active = true }) {
               onMouseEnter={
                 !isTouch && phase === 'idle' ? openDock : undefined
               }
-              style={{ willChange: 'transform' }}
+              style={{ willChange: sliding ? 'transform' : 'auto' }}
             >
               <h2 className="sr-only">{INTRO_LABEL}</h2>
               <div
@@ -333,13 +365,13 @@ export default function CreativeHome({ active = true }) {
                 }
               >
                 <VariableFontHoverByLetter
-                  key="intro"
+                  key="headline-prefix"
                   label={INTRO_LABEL}
                   fromWeight={400}
                   toWeight={900}
                   fontSize={DISPLAY_FONT}
                   staggerDuration={30}
-                  staggerFrom="random"
+                  staggerFrom="first"
                   gradientMatch="achi"
                   className="justify-center text-center text-blue-900 dark:text-white"
                   style={{ width: 'auto', maxWidth: '100%', marginInline: 'auto' }}
@@ -358,18 +390,10 @@ export default function CreativeHome({ active = true }) {
           <motion.div
             className="relative z-[2] min-h-dvh"
             initial={false}
-            animate={
-              phase === 'exiting' || detailsExiting
-                ? { opacity: 0, y: 10, scale: 0.985 }
-                : { opacity: 1, y: 0, scale: 1 }
-            }
+            animate={exiting ? { opacity: 0 } : { opacity: 1 }}
             transition={exitT}
             style={{
-              transformOrigin: '50% 20%',
-              willChange:
-                phase === 'exiting' || detailsExiting
-                  ? 'opacity, transform'
-                  : undefined,
+              willChange: exiting ? 'opacity' : 'auto',
               pointerEvents: phase === 'exiting' ? 'none' : 'auto',
             }}
           >
@@ -386,13 +410,14 @@ export default function CreativeHome({ active = true }) {
                       className="absolute inset-0"
                       initial={reduce ? false : { opacity: 0, y: 32 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={reduce ? undefined : { opacity: 0, y: 12 }}
+                      exit={reduce ? undefined : { opacity: 0 }}
                       transition={iconInT}
                     >
                       <motion.img
                         src={asset(selected.icon)}
                         alt={`${selected.name} icon`}
                         draggable={false}
+                        decoding="async"
                         className="h-full w-full rounded-[22%] object-cover"
                         animate={{ opacity: trailLive ? 0 : 1 }}
                         transition={{ duration: 0.22, ease: EASE }}
@@ -409,9 +434,9 @@ export default function CreativeHome({ active = true }) {
                             alt: `${selected.name} icon`,
                           }}
                           alt={`${selected.name} icon`}
-                          active={active && phase !== 'exiting'}
+                          active={active && phase === 'ready'}
                           track="page"
-                          copies={reduce ? 1 : 6}
+                          copies={reduce ? 1 : TRAIL_COPIES}
                           itemWidth={trailSize}
                           itemHeight={trailSize}
                           rounded={22}
@@ -438,7 +463,7 @@ export default function CreativeHome({ active = true }) {
                   layoutId={HEADLINE_LAYOUT_ID}
                   transition={textSlideT}
                   className="mx-auto flex w-full max-w-4xl flex-col items-center text-center"
-                  style={{ willChange: 'transform' }}
+                  style={{ willChange: sliding ? 'transform' : 'auto' }}
                 >
                   <h2 className="sr-only">
                     {selected
@@ -446,13 +471,13 @@ export default function CreativeHome({ active = true }) {
                       : INTRO_LABEL}
                   </h2>
                   <VariableFontHoverByLetter
-                    key={`case-prefix-${selectedId}`}
+                    key="headline-prefix"
                     label={INTRO_LABEL}
                     fromWeight={400}
                     toWeight={900}
                     fontSize={DISPLAY_FONT}
                     staggerDuration={30}
-                    staggerFrom="random"
+                    staggerFrom="first"
                     gradientMatch="achi"
                     className="justify-center text-center text-blue-900 dark:text-white"
                     style={{
@@ -467,7 +492,7 @@ export default function CreativeHome({ active = true }) {
                         key={`suffix-${selectedId}`}
                         initial={reduce ? false : { opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={reduce ? undefined : { opacity: 0, y: -4 }}
+                        exit={reduce ? undefined : { opacity: 0 }}
                         transition={
                           reduce
                             ? { duration: 0 }
@@ -502,7 +527,7 @@ export default function CreativeHome({ active = true }) {
               ) : null}
             </div>
 
-            {selected ? (
+            {mountCaseStudy ? (
               <div className="mx-auto w-full max-w-5xl px-4 pb-36 sm:px-6 sm:pb-40">
                 <CreativeCaseStudy
                   work={selected}
@@ -539,7 +564,10 @@ export default function CreativeHome({ active = true }) {
                   style={
                     reduce
                       ? undefined
-                      : { animation: 'creative-scroll-hint-bounce 1.6s ease-in-out infinite' }
+                      : {
+                          animation:
+                            'creative-scroll-hint-bounce 1.6s ease-in-out infinite',
+                        }
                   }
                   aria-hidden
                 >
@@ -547,14 +575,6 @@ export default function CreativeHome({ active = true }) {
                 </span>
                 scroll down to see details
               </p>
-              {!reduce ? (
-                <style>{`
-                  @keyframes creative-scroll-hint-bounce {
-                    0%, 100% { transform: translateY(0); opacity: 0.8; }
-                    50% { transform: translateY(5px); opacity: 1; }
-                  }
-                `}</style>
-              ) : null}
             </motion.div>
           ) : null}
         </AnimatePresence>
@@ -569,7 +589,9 @@ export default function CreativeHome({ active = true }) {
               : { y: 88, opacity: 0 }
           }
           transition={dockT}
-          style={{ willChange: 'transform, opacity' }}
+          style={{
+            willChange: dockOpen || phase === 'entering' ? 'transform, opacity' : 'auto',
+          }}
           aria-hidden={!dockOpen || !active}
         >
           <div
@@ -583,7 +605,6 @@ export default function CreativeHome({ active = true }) {
               fadeInIcons={false}
               sharedLayout={false}
               interactive={active && phase === 'idle'}
-              showMobileLabels
               className="w-full"
             />
           </div>

@@ -9,6 +9,8 @@ const AMT_BASE = 0.05
 const BASE_FPS = 60
 const MAX_DT = 0.05
 const SPEED_REFERENCE = 50
+/** Stop RAF once layers are this close to target (px / deg) */
+const SETTLE_EPS = 0.25
 
 const DEFAULT_MOTION = {
   shiftX: 120,
@@ -44,11 +46,12 @@ function radiusFromPercent(w, h, pct) {
 /**
  * Image Motion Trail — Originkit (Vite/JSX port).
  * `track="page"` follows the cursor across the whole viewport.
+ * RAF only runs while settling or after pointer moves (no idle thrash).
  */
 export default function ImageMotionTrail({
   image,
   background = 'transparent',
-  copies = 6,
+  copies = 4,
   itemWidth = 160,
   itemHeight = 160,
   rounded = 22,
@@ -71,6 +74,9 @@ export default function ImageMotionTrail({
   const nodesRef = useRef([])
   const aimRef = useRef({ nx: 0, ny: 0 })
   const stateRef = useRef([])
+  const dirtyRef = useRef(true)
+  const rafRef = useRef(0)
+  const lastRef = useRef(0)
   const cfgRef = useRef({ copies, speed, m, hoverOut })
   cfgRef.current = { copies, speed, m, hoverOut }
 
@@ -85,73 +91,15 @@ export default function ImageMotionTrail({
   useEffect(() => {
     if (!live) return undefined
 
-    const onMove = (e) => {
-      if (track === 'page') {
-        const vw = window.innerWidth || 1
-        const vh = window.innerHeight || 1
-        // Normalize cursor in viewport to [-1, 1]
-        aimRef.current.nx = clamp((e.clientX / vw) * 2 - 1, -1, 1)
-        aimRef.current.ny = clamp((e.clientY / vh) * 2 - 1, -1, 1)
+    const tick = (now) => {
+      if (document.visibilityState !== 'visible') {
+        rafRef.current = 0
         return
       }
 
-      const root = rootRef.current
-      if (!root) return
-      const r = root.getBoundingClientRect()
-      if (r.width <= 0 || r.height <= 0) return
-      aimRef.current.nx = ((e.clientX - r.left) / r.width) * 2 - 1
-      aimRef.current.ny = ((e.clientY - r.top) / r.height) * 2 - 1
-    }
-
-    const onLeave = () => {
-      if (cfgRef.current.hoverOut !== 'reset') return
-      aimRef.current.nx = 0
-      aimRef.current.ny = 0
-    }
-
-    if (track === 'page') {
-      window.addEventListener('pointermove', onMove, { passive: true })
-      window.addEventListener('pointerleave', onLeave)
-      document.addEventListener('mouseleave', onLeave)
-      return () => {
-        window.removeEventListener('pointermove', onMove)
-        window.removeEventListener('pointerleave', onLeave)
-        document.removeEventListener('mouseleave', onLeave)
-      }
-    }
-
-    const root = rootRef.current
-    if (!root) return undefined
-    root.addEventListener('pointermove', onMove)
-    root.addEventListener('pointerleave', onLeave)
-    return () => {
-      root.removeEventListener('pointermove', onMove)
-      root.removeEventListener('pointerleave', onLeave)
-    }
-  }, [live, track])
-
-  useEffect(() => {
-    if (!live) return undefined
-
-    let raf = 0
-    let last = performance.now()
-    let running = true
-
-    const onVisibility = () => {
-      running = document.visibilityState === 'visible'
-      if (running) {
-        last = performance.now()
-        raf = requestAnimationFrame(tick)
-      } else if (raf) {
-        cancelAnimationFrame(raf)
-        raf = 0
-      }
-    }
-
-    const tick = (now) => {
-      if (!running) return
-      const dt = clamp((now - last) / 1000, 0, MAX_DT)
-      last = now
+      const dt = clamp((now - lastRef.current) / 1000, 0, MAX_DT)
+      lastRef.current = now
+      dirtyRef.current = false
 
       const { copies: n, speed: sp, m: mm } = cfgRef.current
       const total = Math.max(1, Math.round(n))
@@ -165,6 +113,8 @@ export default function ImageMotionTrail({
       const trz = nx * mm.twist
 
       const st = stateRef.current
+      let settling = false
+
       for (let i = 0; i < total; i++) {
         const node = nodesRef.current[i]
         if (!node) continue
@@ -180,6 +130,16 @@ export default function ImageMotionTrail({
         s.ry += (tryy - s.ry) * a
         s.rz += (trz - s.rz) * a
 
+        if (
+          Math.abs(tx - s.x) > SETTLE_EPS ||
+          Math.abs(ty - s.y) > SETTLE_EPS ||
+          Math.abs(trx - s.rx) > SETTLE_EPS ||
+          Math.abs(tryy - s.ry) > SETTLE_EPS ||
+          Math.abs(trz - s.rz) > SETTLE_EPS
+        ) {
+          settling = true
+        }
+
         node.style.transform =
           `translate3d(${s.x.toFixed(1)}px, ${s.y.toFixed(1)}px, 0) ` +
           `rotateX(${s.rx.toFixed(1)}deg) ` +
@@ -187,25 +147,94 @@ export default function ImageMotionTrail({
           `rotateZ(${s.rz.toFixed(1)}deg)`
       }
 
-      raf = requestAnimationFrame(tick)
+      if (settling || dirtyRef.current) {
+        rafRef.current = requestAnimationFrame(tick)
+      } else {
+        rafRef.current = 0
+      }
+    }
+
+    const kick = () => {
+      dirtyRef.current = true
+      if (!rafRef.current) {
+        lastRef.current = performance.now()
+        rafRef.current = requestAnimationFrame(tick)
+      }
+    }
+
+    const onMove = (e) => {
+      if (track === 'page') {
+        const vw = window.innerWidth || 1
+        const vh = window.innerHeight || 1
+        aimRef.current.nx = clamp((e.clientX / vw) * 2 - 1, -1, 1)
+        aimRef.current.ny = clamp((e.clientY / vh) * 2 - 1, -1, 1)
+        kick()
+        return
+      }
+
+      const root = rootRef.current
+      if (!root) return
+      const r = root.getBoundingClientRect()
+      if (r.width <= 0 || r.height <= 0) return
+      aimRef.current.nx = ((e.clientX - r.left) / r.width) * 2 - 1
+      aimRef.current.ny = ((e.clientY - r.top) / r.height) * 2 - 1
+      kick()
+    }
+
+    const onLeave = () => {
+      if (cfgRef.current.hoverOut !== 'reset') return
+      aimRef.current.nx = 0
+      aimRef.current.ny = 0
+      kick()
+    }
+
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') kick()
+      else if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+        rafRef.current = 0
+      }
+    }
+
+    if (track === 'page') {
+      window.addEventListener('pointermove', onMove, { passive: true })
+      window.addEventListener('pointerleave', onLeave)
+      document.addEventListener('mouseleave', onLeave)
+    } else {
+      const root = rootRef.current
+      if (root) {
+        root.addEventListener('pointermove', onMove)
+        root.addEventListener('pointerleave', onLeave)
+      }
     }
 
     document.addEventListener('visibilitychange', onVisibility)
-    raf = requestAnimationFrame(tick)
+    kick()
+
     return () => {
       document.removeEventListener('visibilitychange', onVisibility)
-      cancelAnimationFrame(raf)
+      if (track === 'page') {
+        window.removeEventListener('pointermove', onMove)
+        window.removeEventListener('pointerleave', onLeave)
+        document.removeEventListener('mouseleave', onLeave)
+      } else {
+        const root = rootRef.current
+        if (root) {
+          root.removeEventListener('pointermove', onMove)
+          root.removeEventListener('pointerleave', onLeave)
+        }
+      }
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      rafRef.current = 0
     }
-  }, [live])
+  }, [live, track])
 
   const src = resolveSrc(image)
   const fadeAmt = clamp(fade, 0, 100) / 100
-  // Keep layer count stable when freezing — remounting 6→1 mid-exit causes stutter
   const layerCount = reduce ? 1 : count
 
   useEffect(() => {
     if (live) return
-    // Snap trail copies home when inactive (no RAF)
     const st = stateRef.current
     for (let i = 0; i < layerCount; i++) {
       const node = nodesRef.current[i]
@@ -242,6 +271,7 @@ export default function ImageMotionTrail({
         {Array.from({ length: layerCount }, (_, i) => {
           const ramp = (i + 1) / layerCount
           const opacity = live ? 1 - fadeAmt * (1 - ramp) : i === layerCount - 1 ? 1 : 0
+          const isTop = i === layerCount - 1
 
           return (
             <div
@@ -259,17 +289,18 @@ export default function ImageMotionTrail({
                 opacity,
                 backgroundColor: src ? 'transparent' : PLACEHOLDER,
                 willChange: live ? 'transform' : undefined,
-                boxShadow:
-                  i === layerCount - 1
-                    ? '0 18px 40px rgba(0,0,0,0.28)'
-                    : undefined,
+                boxShadow: isTop ? '0 18px 40px rgba(0,0,0,0.28)' : undefined,
+                backgroundImage: !isTop && src ? `url(${src})` : undefined,
+                backgroundSize: !isTop && src ? 'cover' : undefined,
+                backgroundPosition: !isTop && src ? 'center' : undefined,
               }}
             >
-              {src ? (
+              {src && isTop ? (
                 <img
                   src={src}
-                  alt={i === layerCount - 1 ? alt : ''}
+                  alt={alt}
                   draggable={false}
+                  decoding="async"
                   style={{
                     width: '100%',
                     height: '100%',

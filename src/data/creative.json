@@ -1,155 +1,351 @@
 [
   {
     "id": "sight",
-    "name": "SIGHT",
+    "name": "SIGHT / LUMI",
     "verb": "developed",
-    "tagline": "Eye health monitoring for clinics and patients",
-    "description": "Placeholder case study for SIGHT — a mobile and web platform for eye health monitoring with clinical scoring engines, systems architecture, and academic validation. Replace this copy and assets with the real project story.",
+    "tagline": "Eye-health companion for kids, parents, and clinics",
+    "description": "LUMI (SIGHT thesis) is a Flutter eye-health companion that turns everyday screen time into measurable blink and viewing-distance data \u2014 with guardian controls and pathways for clinician review.",
+    "problem": "Children spend more time on screens than ever, but parents and clinicians rarely get continuous, device-side signals about blink rate and viewing distance while kids are actually watching. Generic screen-time timers count minutes, not eye-health behavior \u2014 and clinic visits are too sparse to catch habits forming at home.",
+    "solution": "LUMI wraps allowlisted YouTube / YouTube Kids / Playables content in a Watch Area that runs live face detection (Google ML Kit) for blink and distance monitoring. Metrics buffer offline in SQLite and sync to a Laravel backend so guardians can set limits, review charts, and share context with clinicians via OTP/QR \u2014 while kids stay engaged with pet gamification and daily goals.",
+    "features": [
+      "Watch Area media sandbox with blink & viewing-distance tracking",
+      "Guardian account, child profiles, limits, and charts (mobile-only)",
+      "Offline metric buffering with batch sync when online",
+      "Pet gamification and daily goals for child adherence",
+      "Clinician share flow via OTP / QR",
+      "Child login codes + guardian OTP onboarding"
+    ],
+    "uniqueness": "Unlike pure parental-control or screen-time apps, LUMI measures clinical-adjacent eye-behavior signals during active viewing \u2014 not just elapsed minutes \u2014 and bridges home monitoring to guardian and clinician review in one offline-first mobile product built for thesis validation.",
     "role": "Lead Mobile/Web Developer",
     "status": "In Active Development",
-    "year": "2025–2026",
-    "links": [{ "label": "Coming soon", "href": "#" }],
-    "tech": ["React", "Flutter", "Laravel", "Clinical scoring"],
-    "icon": "assets/creative/icons/sight.svg",
+    "year": "2025\u20132026",
+    "links": [
+      {
+        "label": "Coming soon",
+        "href": "#"
+      }
+    ],
+    "tech": [
+      "Flutter",
+      "Google ML Kit",
+      "SQLite",
+      "Laravel",
+      "Clinical scoring"
+    ],
+    "icon": "assets/creative/icons/sight.png",
     "images": [
-      "assets/creative/images/sight/01.svg",
-      "assets/creative/images/sight/02.svg"
-    ]
+      "assets/creative/images/sight/01.png",
+      "assets/creative/images/sight/02.png"
+    ],
+    "source": "Projects/SIGHT"
   },
   {
     "id": "nulplay",
     "name": "NULPlay",
     "verb": "created",
-    "tagline": "Campus music queuing that actually ships",
-    "description": "Placeholder case study for NULPlay — campus music queuing and playback with Laravel, real-time WebSockets, and the Spotify API. Drop real screenshots and write-up here.",
+    "tagline": "Campus music queue that actually ships",
+    "description": "SACE Cares: NULPlay is NU Lipa\u2019s campus-wide music queue and announcement system \u2014 students add and upvote Spotify tracks without accounts; admins drive playback and campus announcements from a live dashboard.",
+    "problem": "Campus events and hangouts needed a shared playlist that hundreds of students could influence without friction, while still keeping playback, volume, and announcements under student-council control. Consumer jukebox apps aren\u2019t built for open campus participation, admin Spotify Premium routing, or school-operated announcement audio.",
+    "solution": "A Laravel 13 + Inertia/React monolith where anyone on campus can browse Spotify and upvote the queue anonymously. Admins run the Spotify Web Playback SDK from a secured dashboard, broadcast announcements over the same audio path (via ffmpeg-transcoded media), and manage queue policy in real time with Reverb and Redis. Live at music.nulpsace.com.",
+    "features": [
+      "Anonymous student queue browse, add, and upvote",
+      "Admin Spotify Web Playback SDK control",
+      "Campus announcement audio over the same output",
+      "Real-time updates via Laravel Reverb + Redis",
+      "Queue policy and moderation tools for SACE admins",
+      "Hostinger production deploy with ffmpeg media pipeline"
+    ],
+    "uniqueness": "Purpose-built for a Philippine campus org (SACE) \u2014 open student participation without accounts, council-owned playback, and announcements on the same stack \u2014 instead of bolting a consumer queue onto a generic event app.",
     "role": "Full-Stack Developer",
     "status": "Campus Launch 2026",
-    "year": "2025–2026",
-    "links": [{ "label": "Coming soon", "href": "#" }],
-    "tech": ["Laravel", "WebSockets", "Spotify API", "React"],
-    "icon": "assets/creative/icons/nulplay.svg",
+    "year": "2025\u20132026",
+    "links": [
+      {
+        "label": "music.nulpsace.com",
+        "href": "https://music.nulpsace.com"
+      }
+    ],
+    "tech": [
+      "Laravel",
+      "Inertia/React",
+      "Reverb",
+      "Redis",
+      "Spotify API"
+    ],
+    "icon": "assets/creative/icons/nulplay.png",
     "images": [
-      "assets/creative/images/nulplay/01.svg",
-      "assets/creative/images/nulplay/02.svg"
-    ]
+      "assets/creative/images/nulplay/01.png",
+      "assets/creative/images/nulplay/02.png"
+    ],
+    "source": "Projects/NULPLay"
   },
   {
     "id": "tapus",
     "name": "TAPUS!",
     "verb": "created",
-    "tagline": "NFC keychains meet a custom web app",
-    "description": "Placeholder case study for TAPUS! — 3D-printed NFC-enabled keychains linked to a custom web app with Gemini chatbot support. Swap placeholders for product shots and launch story.",
+    "tagline": "Shop, ops, and NFC destinations in one system",
+    "description": "TAPUS! is a founder-built customer shop and internal management system for custom product businesses \u2014 storefront checkout and PayMongo payments alongside admin orders, BOM inventory, and finance \u2014 plus an NFC Concierge that lets buyers claim keychains and open interactive destinations (letters, capsules, graffiti, mood, memory galleries, medical cards).",
+    "problem": "Custom makers juggle a storefront, production stock, and payments in disconnected tools, while physical NFC keepsakes usually dump people on a dead URL. TAPUS! needed one system that runs the shop and the factory floor, then turns each claimed tag into a living, owner-controlled experience \u2014 not a static landing page.",
+    "solution": "A PHP/MySQL platform with a customer shop (variants, cart, delivery fees, discount codes, batch-reference tracking, PayMongo hosted checkout) and a full admin suite (orders through production statuses, materials inventory with BOM, finance ledger, audit logs, passkeys/TOTP). The NFC Concierge generates claimable devices; owners configure destinations backed by Google Drive, with pass-along transfer and privacy-hardened media streaming. A Gemini Setup Guide chat helps customers configure devices \u2014 secondary to the shop and destinations product.",
+    "features": [
+      "Customer shop with color variants, stock status, and checkout",
+      "PayMongo hosted checkout (card, GCash, Maya, QR Ph)",
+      "Admin orders, materials inventory, BOM, and finance",
+      "NFC claim flow + encoder/manager for manufacturing",
+      "Interactive destinations: letter, capsule, graffiti, mood, memory, medical",
+      "Passkeys/TOTP admin auth, Drive-backed media, pass-along ownership"
+    ],
+    "uniqueness": "Not a Shopify skin or a standalone NFC novelty \u2014 one codebase owns commerce, production math (BOM/consumption), and the post-purchase digital life of each physical tag, including first-class interactive destinations and transfer semantics.",
     "role": "Founder & Lead Developer",
     "status": "tapus.ph",
     "year": "2026",
-    "links": [{ "label": "tapus.ph", "href": "https://tapus.ph" }],
-    "tech": ["NFC", "Web app", "Gemini", "3D printing"],
-    "icon": "assets/creative/icons/tapus.svg",
+    "links": [
+      {
+        "label": "tapus.ph",
+        "href": "https://tapus.ph"
+      }
+    ],
+    "tech": [
+      "PHP",
+      "MySQL",
+      "NFC",
+      "PayMongo",
+      "Google Drive",
+      "Gemini"
+    ],
+    "icon": "assets/creative/icons/tapus.png",
     "images": [
-      "assets/creative/images/tapus/01.svg",
-      "assets/creative/images/tapus/02.svg"
-    ]
+      "assets/creative/images/tapus/01.png",
+      "assets/creative/images/tapus/02.png"
+    ],
+    "source": "Projects/TAPUS! - Customer Shop and Internal Management System"
   },
   {
     "id": "karbono",
     "name": "Karbono",
     "verb": "created",
     "tagline": "Offline-first carbon tracking",
-    "description": "Placeholder case study for Karbono — an offline-first mobile app to track and optimize individual carbon emissions, from MVP through market validation.",
+    "description": "Karbono turns everyday phone habits into an understandable carbon score \u2014 offline-first on Flutter, with aggregate sync, communities, and contribution flows toward sustainability goals.",
+    "problem": "Filipinos lack an immediate, understandable way to see how daily phone habits relate to carbon impact and take a simple next action (reduce usage or contribute). Global carbon apps often assume always-online networks, ship raw usage off-device, or speak in abstract climate jargon.",
+    "solution": "Open the app \u2192 see today\u2019s carbon score in GForest-simple terms \u2192 one clear next action. On-device usage stays in SQLite; a shared carbon engine (mobile + server audit) computes grams from usage and network multipliers; only daily aggregate grams sync. Marketplace contributions (PayMongo), leaderboards, communities, and admin-managed references/goals round out the loop. Live at karbono.com.ph.",
+    "features": [
+      "Offline carbon tracking (Flutter + SQLite)",
+      "GForest-simple dashboard (grams, points, mascot)",
+      "Privacy-first sync \u2014 aggregates only, not raw per-app logs",
+      "Leaderboards & communities",
+      "Marketplace browse + PayMongo contributions",
+      "Shared carbon-engine SSOT across mobile and web"
+    ],
+    "uniqueness": "Built for Philippine connectivity and privacy: offline-first tracking, on-device raw usage, server-audited aggregates, and a product narrative tuned to local sustainability partners \u2014 not a thin wrapper on a Western always-online footprint API.",
     "role": "Founder & Lead Developer",
     "status": "karbono.com.ph",
     "year": "2025",
-    "links": [{ "label": "karbono.com.ph", "href": "https://karbono.com.ph" }],
-    "tech": ["Flutter", "Offline-first", "MVP", "Validation"],
-    "icon": "assets/creative/icons/karbono.svg",
+    "links": [
+      {
+        "label": "karbono.com.ph",
+        "href": "https://karbono.com.ph"
+      }
+    ],
+    "tech": [
+      "Flutter",
+      "SQLite",
+      "Offline-first",
+      "PHP API",
+      "PayMongo"
+    ],
+    "icon": "assets/creative/icons/karbono.png",
     "images": [
-      "assets/creative/images/karbono/01.svg",
-      "assets/creative/images/karbono/02.svg"
-    ]
+      "assets/creative/images/karbono/01.png",
+      "assets/creative/images/karbono/02.png"
+    ],
+    "source": "Projects/Karbono"
   },
   {
     "id": "prism",
     "name": "PRISM",
     "verb": "developed",
     "tagline": "Repository, insights, and submissions",
-    "description": "Placeholder case study for PRISM — Portal for Repository, Insights, and Submission Management for CHED Region IV-A via NU Lipa CSIT Faculty.",
+    "description": "PRISM is a portal for Repository, Insights, and Submission Management scoped for CHED Region IV-A workflows, developed with NU Lipa CSIT Faculty.",
+    "problem": "Regional higher-education offices and partner campuses juggle document intakes, review cycles, and reporting across spreadsheets and email threads \u2014 making status opaque and rework common when submissions, validations, and insights live in separate tools.",
+    "solution": "A web prototype that consolidates repository storage, submission intake/review, and insight surfaces into one portal model tailored to CHED Region IV-A operational language \u2014 with schema and review artifacts iterated alongside faculty stakeholders.",
+    "features": [
+      "Centralized repository for institutional submissions",
+      "Upload / review workflow surfaces for evaluators",
+      "Insights-oriented reporting views",
+      "CHED R4A\u2013aligned data model (schema iterations)",
+      "Faculty-facing prototype for validation with NU Lipa CSIT"
+    ],
+    "uniqueness": "Not a generic DMS \u2014 PRISM is framed around CHED regional submission and insight loops, co-shaped with campus faculty rather than sold as off-the-shelf document storage.",
     "role": "Web Developer",
     "status": "Private Client",
     "year": "2025",
-    "links": [{ "label": "Private", "href": "#" }],
-    "tech": ["Web prototype", "CHED", "NU Lipa"],
-    "icon": "assets/creative/icons/prism.svg",
+    "links": [
+      {
+        "label": "Private",
+        "href": "#"
+      }
+    ],
+    "tech": [
+      "Web prototype",
+      "CHED",
+      "NU Lipa"
+    ],
+    "icon": "assets/creative/icons/prism.png",
     "images": [
-      "assets/creative/images/prism/01.svg",
-      "assets/creative/images/prism/02.svg"
-    ]
+      "assets/creative/images/prism/01.png",
+      "assets/creative/images/prism/02.png"
+    ],
+    "source": "Projects/CHED PRISM"
   },
   {
     "id": "heatmap",
     "name": "NULP Student Heatmap",
     "verb": "developed",
     "tagline": "Campus demographics, visualized",
-    "description": "Placeholder case study for the NULP 2025 Student Heatmap — interactive visualization of student distribution and demographics, demoed to National University's President.",
+    "description": "An interactive choropleth / heatmap of NU Lipa student distribution and demographics \u2014 cleaned from enrollee address data and demoed to National University\u2019s President.",
+    "problem": "Leadership needed a clear geographic picture of where NU Lipa applicants and enrollees come from. Raw spreadsheets and PDFs couldn\u2019t communicate density, municipal coverage, or outreach gaps in a meeting-ready visual.",
+    "solution": "A Python data pipeline that cleans enrollee addresses, joins Philippine municipality GeoJSON, and generates interactive choropleth / heatmap HTML maps for decision-makers \u2014 short-cycle tooling for a high-stakes campus demo.",
+    "features": [
+      "Address cleaning & mapping scripts (v1/v2)",
+      "Municipality GeoJSON choropleths",
+      "Interactive HTML heatmap outputs",
+      "Enrollee vs applicant dataset handling",
+      "Meeting-ready visuals for university leadership"
+    ],
+    "uniqueness": "Campus-specific geo analytics built from NU Lipa\u2019s own enrollee data and Philippine administrative boundaries \u2014 not a generic BI template \u2014 delivered as a focused leadership artifact.",
     "role": "Developer",
     "status": "Short-term Launch",
     "year": "2025",
-    "links": [{ "label": "Coming soon", "href": "#" }],
-    "tech": ["Data viz", "Interactive map", "Campus analytics"],
-    "icon": "assets/creative/icons/heatmap.svg",
+    "links": [
+      {
+        "label": "Coming soon",
+        "href": "#"
+      }
+    ],
+    "tech": [
+      "Python",
+      "GeoJSON",
+      "Choropleth",
+      "Campus analytics"
+    ],
+    "icon": "assets/creative/icons/heatmap.png",
     "images": [
-      "assets/creative/images/heatmap/01.svg",
-      "assets/creative/images/heatmap/02.svg"
-    ]
+      "assets/creative/images/heatmap/01.png",
+      "assets/creative/images/heatmap/02.png"
+    ],
+    "source": "Code Destinations/VSCode/heatmap"
   },
   {
     "id": "nutify",
     "name": "NUtify",
     "verb": "developed",
     "tagline": "Appointments and campus information",
-    "description": "Placeholder case study for NUtify — faculty and student information and appointment management for NU Lipa's students, faculty, and HR.",
+    "description": "NUtify v2 is NU Lipa\u2019s unified faculty-appointment platform \u2014 students book, teachers manage queues, moderators run the front desk, and admins operate the system \u2014 as a PWA with optional AI guidance.",
+    "problem": "Faculty consultation and appointment flows were fragmented across chat threads, walk-ins, and legacy mobile clients. Students needed reliable booking; teachers needed queues and schedules; front desk needed approvals \u2014 without maintaining brittle Flutter apps.",
+    "solution": "A Laravel 13 + Inertia/React web platform with role-based spaces (student / teacher / moderator / admin), session auth, OTP reset, FCM web push + PWA, optional Reverb realtime, and a Gemini-backed NUtify Guide \u2014 porting legacy API behavior into a maintainable service layer.",
+    "features": [
+      "Role-based portals for students, teachers, moderators, admins",
+      "Faculty search, booking, inbox, and teacher queues",
+      "Front-desk approvals for moderators",
+      "FCM web push + installable PWA",
+      "OTP password reset and session auth",
+      "NUtify Guide AI router (Gemini + safe fallback)"
+    ],
+    "uniqueness": "White-label campus ops for NU Lipa (branded theme/copy) with four real operational roles and a PWA path that replaces deprecated mobile clients \u2014 not a generic Calendly clone.",
     "role": "Developer",
     "status": "Private Client",
-    "year": "2024–2025",
-    "links": [{ "label": "Private", "href": "#" }],
-    "tech": ["Web app", "Appointments", "HR workflows"],
-    "icon": "assets/creative/icons/nutify.svg",
+    "year": "2024\u20132025",
+    "links": [
+      {
+        "label": "Private",
+        "href": "#"
+      }
+    ],
+    "tech": [
+      "Laravel",
+      "Inertia/React",
+      "FCM",
+      "PWA",
+      "Gemini"
+    ],
+    "icon": "assets/creative/icons/nutify.png",
     "images": [
-      "assets/creative/images/nutify/01.svg",
-      "assets/creative/images/nutify/02.svg"
-    ]
+      "assets/creative/images/nutify/01.png",
+      "assets/creative/images/nutify/02.png"
+    ],
+    "source": "Projects/NUtify '26 (Mobile)"
   },
   {
     "id": "tabulation",
     "name": "NULP Tabulation",
     "verb": "developed",
     "tagline": "Live pageant scoring, done cleanly",
-    "description": "Placeholder case study for the NULP Tabulation System — scoring for NU Lipa's Ambassador and Ambassadress pageant 2025.",
+    "description": "A dedicated tabulation system for NU Lipa\u2019s Ambassador and Ambassadress pageant \u2014 built for live event scoring reliability under stage pressure.",
+    "problem": "Pageant nights demand fast, trustworthy score aggregation across judges and categories. Spreadsheets and ad-hoc forms break under pressure \u2014 ties, late scores, and public reveals need a system that won\u2019t scramble mid-show.",
+    "solution": "A private web tabulation system tailored to NU Lipa\u2019s pageant flow: structured judge inputs, category tallies, and controlled reveal-ready results for organizers running Ambassador / Ambassadress 2025.",
+    "features": [
+      "Judge score capture for pageant categories",
+      "Realtime / event-night tabulation workflow",
+      "Organizer-controlled result views",
+      "Private client deployment for campus events",
+      "Scoring model aligned to NU Lipa pageant rules"
+    ],
+    "uniqueness": "Event-specific scoring software for a campus pageant \u2014 not a generic contest SaaS \u2014 optimized for one night\u2019s operational reality rather than multi-tenant gymnastics.",
     "role": "Developer",
     "status": "Private Client",
     "year": "2025",
-    "links": [{ "label": "Private", "href": "#" }],
-    "tech": ["Realtime scoring", "Events", "Web"],
-    "icon": "assets/creative/icons/tabulation.svg",
+    "links": [
+      {
+        "label": "Private",
+        "href": "#"
+      }
+    ],
+    "tech": [
+      "Realtime scoring",
+      "Events",
+      "Web"
+    ],
+    "icon": "assets/creative/icons/tabulation.png",
     "images": [
       "assets/creative/images/tabulation/01.svg",
       "assets/creative/images/tabulation/02.svg"
-    ]
+    ],
+    "source": null
   },
   {
     "id": "washette",
     "name": "Washette",
     "verb": "developed",
     "tagline": "Laundry ops, ordered",
-    "description": "Placeholder case study for Washette — business and order management for Washette Laundry Services.",
+    "description": "Washette is a business and order-management system for Washette Laundry Services \u2014 tracking orders and day-to-day laundry operations in a structured database-backed flow.",
+    "problem": "A local laundry service needed more than handwritten slips and chat orders \u2014 staff needed consistent order records, status, and operational queries without a heavy enterprise suite.",
+    "solution": "A focused order and business-management system grounded in a relational schema for Washette\u2019s laundry workflows \u2014 capturing orders and operational data so the business can track work beyond paper notebooks.",
+    "features": [
+      "Order capture and status tracking for laundry jobs",
+      "Relational schema for Washette business entities",
+      "Operational queries for day-to-day service work",
+      "Lightweight footprint suited to a small local business"
+    ],
+    "uniqueness": "Scoped to a single laundry SME\u2019s real order vocabulary \u2014 not a multipurpose POS \u2014 emphasizing operational clarity over retail feature bloat.",
     "role": "Developer",
     "status": "Private Client",
     "year": "2024",
-    "links": [{ "label": "Private", "href": "#" }],
-    "tech": ["Orders", "Business ops", "Web"],
+    "links": [
+      {
+        "label": "Private",
+        "href": "#"
+      }
+    ],
+    "tech": [
+      "Orders",
+      "Business ops",
+      "MySQL"
+    ],
     "icon": "assets/creative/icons/washette.svg",
     "images": [
       "assets/creative/images/washette/01.svg",
       "assets/creative/images/washette/02.svg"
-    ]
+    ],
+    "source": null
   }
 ]

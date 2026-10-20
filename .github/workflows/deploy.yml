@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to Hostinger (avrabina.com)
 
 on:
   push:
@@ -7,16 +7,18 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
+# One production deploy at a time; a newer push supersedes a running one.
 concurrency:
-  group: pages
+  group: hostinger-prod
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://avrabina.com
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,23 +32,37 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Lint
+        run: npm run lint
+
       - name: Build
         run: npm run build
         env:
           VITE_FORMSPREE_ENDPOINT: ${{ secrets.VITE_FORMSPREE_ENDPOINT }}
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      # Hostinger shared hosting serves static files only — it never runs
+      # `npm run build`. Upload the built dist/ (FTPS, incremental sync).
+      # Required repo secrets (Settings -> Secrets and variables -> Actions):
+      #   HOSTINGER_FTP_SERVER    e.g. ftp.avrabina.com or the server host in
+      #                           hPanel -> Files -> FTP Accounts
+      #   HOSTINGER_FTP_USERNAME  the FTP account username (often uXXXXXXXXX)
+      #   HOSTINGER_FTP_PASSWORD  that account's password
+      # server-dir is relative to the FTP account's home. Adjust if the
+      # domain's document root is domains/avrabina.com/public_html instead.
+      - name: Deploy dist to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          path: dist
+          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./dist/
+          server-dir: /public_html/
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Smoke check
+        run: |
+          sleep 10
+          curl -fsS https://avrabina.com/ | grep -q '<div id="root">' \
+            && echo "avrabina.com is serving the app shell." \
+            || (echo "Smoke check failed: app shell not found at avrabina.com" && exit 1)

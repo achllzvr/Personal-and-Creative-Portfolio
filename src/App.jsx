@@ -40,6 +40,21 @@ function AppShell() {
     window.scrollTo(0, 0)
   }, [isCreative])
 
+  // After crossfade, hide inactive view from paint (keeps mount for instant return)
+  const [paintCreative, setPaintCreative] = useState(isCreative)
+  const [paintPersonal, setPaintPersonal] = useState(!isCreative)
+
+  useEffect(() => {
+    if (isCreative) {
+      setPaintCreative(true)
+      const t = window.setTimeout(() => setPaintPersonal(false), reduce ? 0 : VIEW_MS)
+      return () => window.clearTimeout(t)
+    }
+    setPaintPersonal(true)
+    const t = window.setTimeout(() => setPaintCreative(false), reduce ? 0 : VIEW_MS)
+    return () => window.clearTimeout(t)
+  }, [isCreative, reduce])
+
   const fadeStyle = {
     transition: reduce ? 'none' : `opacity ${VIEW_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
   }
@@ -71,13 +86,18 @@ function AppShell() {
           <div
             key="creative"
             aria-hidden={!isCreative}
+            inert={!isCreative || undefined}
             className={cn(
               'min-h-dvh',
               isCreative
                 ? 'relative opacity-100'
                 : 'pointer-events-none absolute inset-0 overflow-hidden opacity-0',
             )}
-            style={{ ...fadeStyle, zIndex: isCreative ? 2 : 1 }}
+            style={{
+              ...fadeStyle,
+              zIndex: isCreative ? 2 : 1,
+              visibility: paintCreative ? 'visible' : 'hidden',
+            }}
           >
             <CreativeHome active={isCreative} />
           </div>
@@ -87,13 +107,19 @@ function AppShell() {
           <div
             key="personal"
             aria-hidden={isCreative}
+            inert={isCreative || undefined}
             className={cn(
-              'mx-auto w-full max-w-[1400px] px-4 pb-6 pt-24 sm:px-6',
+              /* Desktop classes unchanged — mobile overrides live in .personal-shell CSS */
+              'personal-shell mx-auto w-full max-w-[1400px] px-4 pb-6 pt-24 sm:px-6',
               isCreative
                 ? 'pointer-events-none absolute inset-0 overflow-hidden opacity-0'
                 : 'relative opacity-100',
             )}
-            style={{ ...fadeStyle, zIndex: isCreative ? 1 : 2 }}
+            style={{
+              ...fadeStyle,
+              zIndex: isCreative ? 1 : 2,
+              visibility: paintPersonal ? 'visible' : 'hidden',
+            }}
           >
             <BentoGrid onOpenContact={openContact} skipEnter={skipBentoEnter} />
           </div>

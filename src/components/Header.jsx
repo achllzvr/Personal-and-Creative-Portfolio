@@ -8,6 +8,8 @@ import { cn } from '../lib/utils'
 const HOTZONE_PX = 18
 const HIDE_DELAY_MS = 380
 const INTRO_SHOW_MS = 1100
+/** Auto-hide only where hover can reveal the bar (desktop width) */
+const DESKTOP_MQ = '(min-width: 1025px)'
 
 const SLIDE = {
   type: 'tween',
@@ -15,12 +17,31 @@ const SLIDE = {
   ease: [0.22, 1, 0.36, 1],
 }
 
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia(query).matches : false,
+  )
+
+  useEffect(() => {
+    const mq = window.matchMedia(query)
+    const update = () => setMatches(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [query])
+
+  return matches
+}
+
 export default function Header() {
   const { isDark, isTransitioning, toggleTheme } = useTheme()
   const { mode, isCreative, setPortfolioMode } = useMode()
+  const isDesktop = useMediaQuery(DESKTOP_MQ)
   const [revealed, setRevealed] = useState(true)
   const hideTimerRef = useRef(null)
   const introTimerRef = useRef(null)
+
+  const autoHide = isCreative && isDesktop
 
   const clearHideTimer = () => {
     if (hideTimerRef.current) {
@@ -35,7 +56,7 @@ export default function Header() {
   }
 
   const scheduleHide = () => {
-    if (!isCreative) return
+    if (!autoHide) return
     clearHideTimer()
     hideTimerRef.current = setTimeout(() => {
       setRevealed(false)
@@ -50,7 +71,7 @@ export default function Header() {
       introTimerRef.current = null
     }
 
-    if (!isCreative) {
+    if (!autoHide) {
       setRevealed(true)
       return undefined
     }
@@ -65,39 +86,36 @@ export default function Header() {
       clearHideTimer()
       if (introTimerRef.current) clearTimeout(introTimerRef.current)
     }
-  }, [isCreative])
+  }, [autoHide])
 
-  const barVisible = !isCreative || revealed
+  const barVisible = !autoHide || revealed
   const title = mode === 'creative' ? 'Creative Portfolio' : site.title
 
   return (
     <>
-      {isCreative ? (
+      {autoHide ? (
         <div
-          className="fixed inset-x-0 top-0 z-[60] pointer-events-auto"
+          className="pointer-events-auto fixed inset-x-0 top-0 z-[60]"
           style={{ height: HOTZONE_PX }}
           onMouseEnter={showBar}
           aria-hidden="true"
         />
       ) : null}
 
-      {/*
-        Transform-only slide (no opacity). Opacity + backdrop-filter together
-        forces expensive per-frame reblurs and feels stuttery.
-      */}
       <motion.header
         initial={false}
         animate={{ y: barVisible ? 0 : '-105%' }}
         transition={SLIDE}
         className={cn(
-          'fixed inset-x-0 top-0 z-[61] top-bar-glass pointer-events-auto',
+          'top-bar-glass pointer-events-auto fixed inset-x-0 top-0 z-[61]',
           !barVisible && 'pointer-events-none',
         )}
         style={{ willChange: 'transform', backfaceVisibility: 'hidden' }}
-        onMouseEnter={isCreative ? showBar : undefined}
-        onMouseLeave={isCreative ? scheduleHide : undefined}
+        onMouseEnter={autoHide ? showBar : undefined}
+        onMouseLeave={autoHide ? scheduleHide : undefined}
       >
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-4 sm:px-6">
+        {/* Desktop markup/classes preserved — mobile sizing via CSS */}
+        <div className="header-inner mx-auto flex max-w-[1400px] items-center justify-between px-4 py-4 sm:px-6">
           <div className="relative min-h-[2.25rem] min-w-0 flex-1 overflow-hidden pr-4 sm:min-h-[2.5rem]">
             <AnimatePresence mode="wait" initial={false}>
               <motion.h1
@@ -113,12 +131,12 @@ export default function Header() {
             </AnimatePresence>
           </div>
 
-          <div className="flex shrink-0 items-center gap-3">
+          <div className="header-controls flex shrink-0 items-center gap-3">
             <button
               type="button"
               onClick={toggleTheme}
               disabled={isTransitioning}
-              className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full
+              className="header-theme-btn flex h-11 w-11 cursor-pointer items-center justify-center rounded-full
                          border border-slate-200/80 bg-white/70 shadow-lg
                          transition-transform duration-200 hover:scale-105
                          disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100
@@ -145,7 +163,7 @@ export default function Header() {
             </button>
 
             <div
-              className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-white/70 p-1.5 shadow-lg
+              className="header-mode-toggle flex items-center gap-1 rounded-full border border-slate-200/80 bg-white/70 p-1.5 shadow-lg
                          dark:border-blue-500/40 dark:bg-navy-900/80"
               role="group"
               aria-label="Portfolio mode"
@@ -166,7 +184,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setPortfolioMode('creative')}
-                className={`flex h-9 w-9 items-center justify-center rounded-full text-base transition-colors duration-200 ${
+                className={`flex h-9 w-9 items-center justify-center rounded-full text-base leading-none transition-colors duration-200 ${
                   mode === 'creative'
                     ? 'bg-blue-600 text-white'
                     : 'bg-transparent text-blue-800/55 hover:text-blue-900 dark:text-slate-500 dark:hover:text-slate-300'

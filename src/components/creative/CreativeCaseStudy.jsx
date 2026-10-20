@@ -10,6 +10,9 @@ export const SECTION_KEYS = [
   'tagline',
   'badges',
   'overview',
+  'problem',
+  'solution',
+  'uniqueness',
   'gallery',
   'links',
   'tech',
@@ -43,6 +46,64 @@ function SectionShell({ visible, exiting, reduce, className, children }) {
   )
 }
 
+function SectionHeading({ active, text }) {
+  return (
+    <RollingLetters
+      active={active}
+      text={text}
+      tag="h3"
+      startFrom="bottom"
+      staggerFrom="start"
+      className="mb-3 text-sm font-semibold uppercase tracking-wider text-blue-900/50 dark:text-white/40"
+      transition={{ duration: 0.3, staggerChildren: 0.025 }}
+    />
+  )
+}
+
+function BodyText({ active, text, className }) {
+  return (
+    <TextEmerge
+      active={active}
+      text={text}
+      tag="p"
+      staggerFrom="start"
+      className={
+        className ||
+        'text-base leading-relaxed text-blue-950/85 dark:text-white/80 sm:text-lg'
+      }
+      transition={{ duration: 0.4, delay: 0.08, staggerChildren: 0.02, ease: 'easeOut' }}
+    />
+  )
+}
+
+function FeatureList({ active, features, reduce }) {
+  if (!features?.length) return null
+
+  return (
+    <ul className="mt-4 space-y-2.5">
+      {features.map((feature, i) => (
+        <motion.li
+          key={feature}
+          initial={false}
+          animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
+          transition={
+            reduce
+              ? { duration: 0 }
+              : { duration: 0.28, delay: active ? 0.12 + i * 0.04 : 0, ease: EASE }
+          }
+          className="flex gap-2.5 text-sm leading-relaxed text-blue-950/80 dark:text-white/75 sm:text-base"
+        >
+          <span
+            className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600 dark:bg-blue-300"
+            aria-hidden
+          />
+          <span>{feature}</span>
+        </motion.li>
+      ))}
+    </ul>
+  )
+}
+
 /**
  * Shells appear first; content stays mounted and plays in via `active`.
  */
@@ -61,6 +122,10 @@ export default function CreativeCaseStudy({
   const shell = (index) => containerStep > index
   // Keep content "filled" while exiting so letter/gallery tweens don't reverse under the stage fade
   const filled = (index) => exiting || contentStep > index
+
+  const hasProblem = Boolean(work.problem)
+  const hasSolution = Boolean(work.solution || work.features?.length)
+  const hasUniqueness = Boolean(work.uniqueness)
 
   return (
     <div className="mt-10 w-full space-y-8" aria-label={`${work.name} details`}>
@@ -137,38 +202,43 @@ export default function CreativeCaseStudy({
 
       <SectionShell visible={shell(3)} exiting={exiting} reduce={reduce}>
         <section>
-          <RollingLetters
-            active={filled(3)}
-            text="Overview"
-            tag="h3"
-            startFrom="bottom"
-            staggerFrom="start"
-            className="mb-3 text-sm font-semibold uppercase tracking-wider text-blue-900/50 dark:text-white/40"
-            transition={{ duration: 0.3, staggerChildren: 0.025 }}
-          />
-          <TextEmerge
-            active={filled(3)}
-            text={work.description}
-            tag="p"
-            staggerFrom="start"
-            className="text-base leading-relaxed text-blue-950/85 dark:text-white/80 sm:text-lg"
-            transition={{ duration: 0.4, delay: 0.08, staggerChildren: 0.02, ease: 'easeOut' }}
-          />
+          <SectionHeading active={filled(3)} text="Overview" />
+          <BodyText active={filled(3)} text={work.description} />
         </section>
       </SectionShell>
 
-      {work.images?.length ? (
+      {hasProblem ? (
         <SectionShell visible={shell(4)} exiting={exiting} reduce={reduce}>
           <section>
-            <RollingLetters
-              active={filled(4)}
-              text="Gallery"
-              tag="h3"
-              startFrom="bottom"
-              staggerFrom="start"
-              className="mb-4 text-sm font-semibold uppercase tracking-wider text-blue-900/50 dark:text-white/40"
-              transition={{ duration: 0.3, staggerChildren: 0.025 }}
-            />
+            <SectionHeading active={filled(4)} text="Problem" />
+            <BodyText active={filled(4)} text={work.problem} />
+          </section>
+        </SectionShell>
+      ) : null}
+
+      {hasSolution ? (
+        <SectionShell visible={shell(5)} exiting={exiting} reduce={reduce}>
+          <section>
+            <SectionHeading active={filled(5)} text="Solution & Features" />
+            {work.solution ? <BodyText active={filled(5)} text={work.solution} /> : null}
+            <FeatureList active={filled(5)} features={work.features} reduce={reduce} />
+          </section>
+        </SectionShell>
+      ) : null}
+
+      {hasUniqueness ? (
+        <SectionShell visible={shell(6)} exiting={exiting} reduce={reduce}>
+          <section>
+            <SectionHeading active={filled(6)} text="What Makes It Unique" />
+            <BodyText active={filled(6)} text={work.uniqueness} />
+          </section>
+        </SectionShell>
+      ) : null}
+
+      {work.images?.length ? (
+        <SectionShell visible={shell(7)} exiting={exiting} reduce={reduce}>
+          <section>
+            <SectionHeading active={filled(7)} text="Gallery" />
             <div className="grid gap-4 sm:grid-cols-2">
               {work.images.map((src, i) => (
                 <motion.div
@@ -176,14 +246,14 @@ export default function CreativeCaseStudy({
                   className="overflow-hidden rounded-2xl bg-blue-900/5 ring-1 ring-blue-900/10 dark:bg-white/5 dark:ring-white/10"
                   initial={false}
                   animate={
-                    filled(4)
+                    filled(7)
                       ? { opacity: 1, y: 0 }
                       : { opacity: 0, y: 8 }
                   }
                   transition={
                     reduce
                       ? { duration: 0 }
-                      : { duration: 0.32, delay: filled(4) ? i * 0.07 : 0, ease: EASE }
+                      : { duration: 0.32, delay: filled(7) ? i * 0.07 : 0, ease: EASE }
                   }
                 >
                   <img
@@ -200,31 +270,23 @@ export default function CreativeCaseStudy({
       ) : null}
 
       {work.links?.length ? (
-        <SectionShell visible={shell(5)} exiting={exiting} reduce={reduce}>
+        <SectionShell visible={shell(8)} exiting={exiting} reduce={reduce}>
           <section>
-            <RollingLetters
-              active={filled(5)}
-              text="Links"
-              tag="h3"
-              startFrom="bottom"
-              staggerFrom="start"
-              className="mb-3 text-sm font-semibold uppercase tracking-wider text-blue-900/50 dark:text-white/40"
-              transition={{ duration: 0.3, staggerChildren: 0.025 }}
-            />
+            <SectionHeading active={filled(8)} text="Links" />
             <ul className="flex flex-wrap gap-3">
               {work.links.map((link, i) => (
                 <motion.li
                   key={`${link.label}-${link.href}`}
                   initial={false}
                   animate={
-                    filled(5)
+                    filled(8)
                       ? { opacity: 1, y: 0 }
                       : { opacity: 0, y: 6 }
                   }
                   transition={
                     reduce
                       ? { duration: 0 }
-                      : { duration: 0.28, delay: filled(5) ? i * 0.05 : 0, ease: EASE }
+                      : { duration: 0.28, delay: filled(8) ? i * 0.05 : 0, ease: EASE }
                   }
                 >
                   <a
@@ -247,19 +309,11 @@ export default function CreativeCaseStudy({
       ) : null}
 
       {work.tech?.length ? (
-        <SectionShell visible={shell(6)} exiting={exiting} reduce={reduce}>
+        <SectionShell visible={shell(9)} exiting={exiting} reduce={reduce}>
           <section>
-            <RollingLetters
-              active={filled(6)}
-              text="Tech"
-              tag="h3"
-              startFrom="bottom"
-              staggerFrom="start"
-              className="mb-3 text-sm font-semibold uppercase tracking-wider text-blue-900/50 dark:text-white/40"
-              transition={{ duration: 0.3, staggerChildren: 0.025 }}
-            />
+            <SectionHeading active={filled(9)} text="Tech" />
             <TextEmerge
-              active={filled(6)}
+              active={filled(9)}
               text={work.tech.join(' · ')}
               tag="p"
               staggerFrom="start"
