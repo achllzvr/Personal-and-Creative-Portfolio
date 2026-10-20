@@ -1,0 +1,27 @@
+# Hostinger serves this repository clone at the domain root and leaves
+# the Vite build output in dist/ (verified live: / serves the source
+# index.html while /dist/index.html is the real built page).
+# Internally map the domain root onto dist/ so avrabina.com serves the
+# built app — no /dist/ in the URL. If Hostinger later promotes dist/
+# to the web root itself, this file simply won't be in the way.
+
+RewriteEngine On
+
+# --- Built app shell at the domain root ---
+RewriteRule ^$ dist/index.html [L]
+RewriteRule ^index\.html$ dist/index.html [L]
+
+# --- Built assets ---
+# dist/index.html references /assets/index-*.js|css and /assets/images/…
+# with base '/', but the files physically live under dist/assets/.
+RewriteRule ^assets/(.*)$ dist/assets/$1 [L,QSA]
+
+# --- Block source / config files that share this web root ---
+RewriteRule ^(?:src|node_modules|\.git|\.github)(?:/|$) - [F,L]
+RewriteRule (?:^|/)(?:package(?:-lock)?\.json|vite\.config\.js|\.env(?:\..*)?)$ - [F,L]
+
+# --- SPA fallback for everything else ---
+RewriteCond %{REQUEST_URI} !^/dist/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ dist/index.html [L]
