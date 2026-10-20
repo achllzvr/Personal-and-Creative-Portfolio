@@ -1,24 +1,33 @@
-name: Deploy to Hostinger (avrabina.com)
+name: Build check (Hostinger deploys production)
+
+# Production deployment is handled by Hostinger's native Node/Vite
+# deployment for avrabina.com (hPanel -> Deployments, branch: main).
+# It builds on every push with:
+#   Root directory:  .            <-- repo root, NOT "public"
+#   Build command:   npm run build
+#   Output directory: dist
+#   Node version:    22.x
+# This workflow is only a pre-flight check that the commit builds
+# cleanly. It does NOT upload anything, so it can't conflict with
+# Hostinger's own deploy (no FTP secrets needed).
 
 on:
   push:
+    branches: [main]
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
 
-# One production deploy at a time; a newer push supersedes a running one.
 concurrency:
-  group: hostinger-prod
+  group: build-check-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: production
-      url: https://avrabina.com
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,30 +48,3 @@ jobs:
         run: npm run build
         env:
           VITE_FORMSPREE_ENDPOINT: ${{ secrets.VITE_FORMSPREE_ENDPOINT }}
-
-      # Hostinger shared hosting serves static files only — it never runs
-      # `npm run build`. Upload the built dist/ (FTPS, incremental sync).
-      # Required repo secrets (Settings -> Secrets and variables -> Actions):
-      #   HOSTINGER_FTP_SERVER    e.g. ftp.avrabina.com or the server host in
-      #                           hPanel -> Files -> FTP Accounts
-      #   HOSTINGER_FTP_USERNAME  the FTP account username (often uXXXXXXXXX)
-      #   HOSTINGER_FTP_PASSWORD  that account's password
-      # server-dir is relative to the FTP account's home. Adjust if the
-      # domain's document root is domains/avrabina.com/public_html instead.
-      - name: Deploy dist to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
-          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
-          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./dist/
-          server-dir: /public_html/
-
-      - name: Smoke check
-        run: |
-          sleep 10
-          curl -fsS https://avrabina.com/ | grep -q '<div id="root">' \
-            && echo "avrabina.com is serving the app shell." \
-            || (echo "Smoke check failed: app shell not found at avrabina.com" && exit 1)
