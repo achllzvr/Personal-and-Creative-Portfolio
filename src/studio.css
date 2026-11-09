@@ -60,22 +60,19 @@
   background: var(--bg);
 }
 
-/* Inner shell: ~80% visual scale while the pin still fills the viewport */
+/*
+  Inner shell ≈ browser zoom-out. Use transform (not CSS zoom):
+  zoom + width/height compensation overflows the pin and clips the footer.
+*/
 .studio-scale {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   width: calc(100% / var(--ui-zoom));
   height: calc(100% / var(--ui-zoom));
   transform: scale(var(--ui-zoom));
   transform-origin: top left;
   background: var(--bg);
-}
-
-@supports (zoom: 1) {
-  .studio-scale {
-    transform: none;
-    zoom: var(--ui-zoom);
-  }
 }
 
 .studio-grid {
@@ -1430,8 +1427,8 @@ html:not(.dark) .form-note--error { color: #9f1d1d; }
   pointer-events: none;
   overflow: visible;
   /* Keep the form center clear — no photos bleeding through the inquiry card */
-  -webkit-mask-image: radial-gradient(ellipse 42% 58% at 50% 50%, transparent 0 52%, #000 78%);
-  mask-image: radial-gradient(ellipse 42% 58% at 50% 50%, transparent 0 52%, #000 78%);
+  -webkit-mask-image: radial-gradient(ellipse 48% 62% at 50% 48%, transparent 0 58%, #000 82%);
+  mask-image: radial-gradient(ellipse 48% 62% at 50% 48%, transparent 0 58%, #000 82%);
 }
 
 .contact-scatter-field .polaroid {
@@ -1809,9 +1806,13 @@ html:not(.dark) .studio {
     gap: 10px;
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding: 6px 2px 4px;
+    padding: 4px 2px 2px;
+    margin-bottom: 2px;
+    max-width: 100%;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  .contact-band--mobile::-webkit-scrollbar { display: none; }
   .contact-band--mobile .polaroid {
     width: 78px;
     flex: none;
