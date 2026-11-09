@@ -15,6 +15,7 @@ import {
 } from '../../data/studioContent'
 import { BrandMark } from './BrandMark'
 import ProjectCaseModal from './ProjectCaseModal'
+import RecognitionModal from './RecognitionModal'
 import { SolarIcon } from './SolarDuotoneIcons'
 
 const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)'
@@ -279,12 +280,18 @@ function splitTitle(title = '') {
 
 function AboutView({ active, sectionProgress }) {
   const reduce = usePrefersReducedMotion()
-  const [achIndex, setAchIndex] = useAutoIndex(achievements.length, active && !reduce, AUTO_MS)
-  const [certIndex, setCertIndex] = useAutoIndex(
-    certifications.length,
-    active && !reduce,
-    AUTO_MS + 400,
-  )
+  // 'awards' | 'certifications' while the click-through list is open
+  const [recogOpen, setRecogOpen] = useState(null)
+  const looping = active && !reduce && !recogOpen
+  const [achIndex, setAchIndex] = useAutoIndex(achievements.length, looping, AUTO_MS)
+  const [certIndex, setCertIndex] = useAutoIndex(certifications.length, looping, AUTO_MS + 400)
+  const closeRecog = useCallback(() => setRecogOpen(null), [])
+  const openOnKey = (kind) => (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      setRecogOpen(kind)
+    }
+  }
   const achievement = achievements[achIndex] || achievements[0]
   const certification = certifications[certIndex] || certifications[0]
   const total = Math.max(achievements.length, certifications.length, 1)
@@ -332,7 +339,14 @@ function AboutView({ active, sectionProgress }) {
           <div className="recognition-col">
             <p className="recognition-label">Awards</p>
             <FlipSwap swapKey={`ach-${achIndex}`} shade={achIndex} className="flip-mini">
-              <article className="mini">
+              <article
+                className="mini mini--clickable"
+                role="button"
+                tabIndex={0}
+                aria-label="View all awards"
+                onClick={() => setRecogOpen('awards')}
+                onKeyDown={openOnKey('awards')}
+              >
                 {achievement?.image ? (
                   <img src={achievement.image} alt="" />
                 ) : (
@@ -344,6 +358,7 @@ function AboutView({ active, sectionProgress }) {
                   <h3>{achievement?.title}</h3>
                   <p>{achievement?.detail}</p>
                 </div>
+                <span className="mini-more" aria-hidden="true">↗</span>
               </article>
             </FlipSwap>
             <LoopIndicator
@@ -356,7 +371,14 @@ function AboutView({ active, sectionProgress }) {
           <div className="recognition-col">
             <p className="recognition-label">Certifications</p>
             <FlipSwap swapKey={`cert-${certIndex}`} shade={certIndex + 1} className="flip-mini">
-              <article className="mini">
+              <article
+                className="mini mini--clickable"
+                role="button"
+                tabIndex={0}
+                aria-label="View all certifications"
+                onClick={() => setRecogOpen('certifications')}
+                onKeyDown={openOnKey('certifications')}
+              >
                 {certification?.image ? (
                   <img src={certification.image} alt="" />
                 ) : (
@@ -369,6 +391,7 @@ function AboutView({ active, sectionProgress }) {
                   <h3>{certification?.title}</h3>
                   <p>{certification?.detail}</p>
                 </div>
+                <span className="mini-more" aria-hidden="true">↗</span>
               </article>
             </FlipSwap>
             <LoopIndicator
@@ -386,6 +409,13 @@ function AboutView({ active, sectionProgress }) {
           label="Scroll progress to Experience"
         />
       </div>
+
+      <RecognitionModal
+        kind={recogOpen}
+        items={recogOpen === 'certifications' ? certifications : achievements}
+        open={Boolean(recogOpen)}
+        onClose={closeRecog}
+      />
     </div>
   )
 }
@@ -1116,7 +1146,7 @@ export default function StudioPortfolio() {
             />
           </div>
           <div
-            className={`stage-layer${phase.id === 'contact' ? ' is-active' : ''}`}
+            className={`stage-layer stage-layer--contact${phase.id === 'contact' ? ' is-active' : ''}`}
             aria-hidden={phase.id !== 'contact'}
           >
             <ContactView />

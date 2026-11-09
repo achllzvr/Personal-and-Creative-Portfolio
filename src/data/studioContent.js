@@ -134,12 +134,17 @@ function achievementImage(item, index) {
   return hit.images[index % hit.images.length]
 }
 
-export const achievements = certs.filter(isAchievement).map((item, i) => ({
-  title: item.title,
-  detail: stripHtml(item.description),
-  image: achievementImage(item, i),
-  icon: 'award',
-}))
+export const achievements = certs.filter(isAchievement).map((item, i) => {
+  const hit = achievementPhotoMap.find((row) => row.match.test(`${item.title} ${item.description}`))
+  return {
+    title: item.title,
+    detail: stripHtml(item.description),
+    image: achievementImage(item, i),
+    // every photo we have for this award (used by the detail view)
+    images: hit ? hit.images : [],
+    icon: 'award',
+  }
+})
 
 const certPhotoMap = [{ match: /ic3/i, image: photo('IC3.jpg') }]
 
