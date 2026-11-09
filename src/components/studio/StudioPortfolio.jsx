@@ -22,8 +22,6 @@ const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)'
 const EASE_IN_OUT = 'cubic-bezier(0.45, 0.05, 0.25, 1)'
 const AUTO_MS = 3400
 const STACK_SPEED = 28 // px/s
-const SLIDE_MS = 520
-const PROMOTE_MS = 480
 
 function pad(n) {
   return String(n).padStart(2, '0')
@@ -84,11 +82,11 @@ function AccentDot() {
   return <span className="accent-dot" aria-hidden="true" />
 }
 
-/** Soft top-axis flip + fade — shade cycles three blues. */
-function FlipSwap({ swapKey, shade = 0, className = '', children }) {
+/** Quick fade-up swap (remounts on key change) — shade cycles three blues. */
+function FadeSwap({ swapKey, shade = 0, className = '', children }) {
   return (
-    <div className={`flip-scene ${className}`.trim()} data-shade={shade % 3}>
-      <div key={swapKey} className="flip-face">
+    <div className={`swap-scene ${className}`.trim()} data-shade={shade % 3}>
+      <div key={swapKey} className="swap-face">
         {children}
       </div>
     </div>
@@ -338,7 +336,7 @@ function AboutView({ active, sectionProgress }) {
         <div className="rail-grid rail-grid--2 recognition-grid">
           <div className="recognition-col">
             <p className="recognition-label">Awards</p>
-            <FlipSwap swapKey={`ach-${achIndex}`} shade={achIndex} className="flip-mini">
+            <FadeSwap swapKey={`ach-${achIndex}`} shade={achIndex} className="swap-mini">
               <article
                 className="mini mini--clickable"
                 role="button"
@@ -360,7 +358,7 @@ function AboutView({ active, sectionProgress }) {
                 </div>
                 <span className="mini-more" aria-hidden="true">↗</span>
               </article>
-            </FlipSwap>
+            </FadeSwap>
             <LoopIndicator
               index={achIndex}
               total={achievements.length}
@@ -370,7 +368,7 @@ function AboutView({ active, sectionProgress }) {
           </div>
           <div className="recognition-col">
             <p className="recognition-label">Certifications</p>
-            <FlipSwap swapKey={`cert-${certIndex}`} shade={certIndex + 1} className="flip-mini">
+            <FadeSwap swapKey={`cert-${certIndex}`} shade={certIndex + 1} className="swap-mini">
               <article
                 className="mini mini--clickable"
                 role="button"
@@ -393,7 +391,7 @@ function AboutView({ active, sectionProgress }) {
                 </div>
                 <span className="mini-more" aria-hidden="true">↗</span>
               </article>
-            </FlipSwap>
+            </FadeSwap>
             <LoopIndicator
               index={certIndex}
               total={certifications.length}
@@ -422,60 +420,19 @@ function AboutView({ active, sectionProgress }) {
 
 function ExperienceView({ index, itemProgress, onStep }) {
   const roles = experience.roles
-  const reduce = usePrefersReducedMotion()
-  const [contentIndex, setContentIndex] = useState(index)
-  const [slideFrom, setSlideFrom] = useState(index)
-  const [stage, setStage] = useState('idle') // idle | sliding | promoting
-  const contentRef = useRef(index)
-
-  useEffect(() => {
-    if (index === contentRef.current) return undefined
-
-    if (reduce) {
-      contentRef.current = index
-      setContentIndex(index)
-      setSlideFrom(index)
-      setStage('idle')
-      return undefined
-    }
-
-    const from = contentRef.current
-    setSlideFrom(from)
-    setStage('sliding')
-
-    let promoteTimer = 0
-    const slideTimer = window.setTimeout(() => {
-      contentRef.current = index
-      setContentIndex(index)
-      setStage('promoting')
-      promoteTimer = window.setTimeout(() => setStage('idle'), PROMOTE_MS)
-    }, SLIDE_MS)
-
-    return () => {
-      window.clearTimeout(slideTimer)
-      window.clearTimeout(promoteTimer)
-    }
-  }, [index, reduce])
-
+  // Content follows the scroll position directly; each change simply fades up (see .fade-swap).
+  const contentIndex = index
   const role = roles[contentIndex] || roles[0]
-  const railBase = stage === 'sliding' ? slideFrom : contentIndex
-  const forward = index >= slideFrom
   const upcoming = [1, 2, 3]
-    .map((offset) => roles[(railBase + offset) % roles.length])
+    .map((offset) => roles[(contentIndex + offset) % roles.length])
     .filter(Boolean)
   const showPositionHeading = contentIndex > 0
   const split = splitTitle(role.title)
-  const mainReady = stage !== 'sliding'
 
   return (
-    <div
-      className={`view experience-view${stage === 'sliding' ? ' is-sliding' : ''}${stage === 'promoting' ? ' is-promoting' : ''}`}
-      data-dir={forward ? 'forward' : 'back'}
-    >
-      <div className={`split${mainReady ? '' : ' split--hold'}`}>
-        {mainReady ? (
-          <>
-            <FlipSwap swapKey={`role-card-${contentIndex}`} shade={contentIndex} className="flip-feature">
+    <div className="view experience-view">
+      <div className="split">
+            <FadeSwap swapKey={`role-card-${contentIndex}`} shade={contentIndex} className="swap-feature">
               <article
                 className="feature-card"
                 style={{
@@ -500,8 +457,8 @@ function ExperienceView({ index, itemProgress, onStep }) {
                   <AccentDot />
                 </footer>
               </article>
-            </FlipSwap>
-            <FlipSwap swapKey={`role-copy-${contentIndex}`} shade={contentIndex + 1} className="flip-copy">
+            </FadeSwap>
+            <FadeSwap swapKey={`role-copy-${contentIndex}`} shade={contentIndex + 1} className="swap-copy">
               <div className="copy">
                 <p className="kicker">
                   {experience.kicker}
@@ -545,64 +502,7 @@ function ExperienceView({ index, itemProgress, onStep }) {
                   <AccentDot /> {role.tag}
                 </p>
               </div>
-            </FlipSwap>
-          </>
-        ) : (
-          <>
-            <div className="flip-scene flip-feature">
-              <div className="flip-face flip-face--static">
-                <article
-                  className="feature-card"
-                  style={{
-                    '--brand': (roles[slideFrom] || role).brandColor,
-                    background: `linear-gradient(160deg, color-mix(in srgb, ${(roles[slideFrom] || role).brandColor} 18%, var(--card)) 0%, var(--card) 55%)`,
-                  }}
-                >
-                  <header>
-                    <p>{(roles[slideFrom] || role).org}</p>
-                    <BrandMark
-                      logo={(roles[slideFrom] || role).logo}
-                      mark={(roles[slideFrom] || role).mark}
-                      color={(roles[slideFrom] || role).brandColor}
-                      label={(roles[slideFrom] || role).org}
-                      size="sm"
-                    />
-                  </header>
-                  <p className="feature-year">{(roles[slideFrom] || role).year}</p>
-                  <h2>{(roles[slideFrom] || role).title}</h2>
-                  <footer>
-                    <p>{(roles[slideFrom] || role).foot}</p>
-                    <AccentDot />
-                  </footer>
-                </article>
-              </div>
-            </div>
-            <div className="flip-scene flip-copy">
-              <div className="flip-face flip-face--static">
-                <div className="copy">
-                  <p className="kicker">
-                    {experience.kicker}
-                    <span className="kicker-split">
-                      {' '}
-                      ·  {(roles[slideFrom] || role).categoryLabel}
-                    </span>
-                  </p>
-                  <h2 className="display">
-                    {slideFrom > 0 ? (roles[slideFrom] || role).title : (
-                      <>
-                        {experience.headlineLead}
-                        <br />
-                        {experience.headlineTail}
-                      </>
-                    )}
-                  </h2>
-                  <p className="org-line">{(roles[slideFrom] || role).org}</p>
-                  <p className="body">{(roles[slideFrom] || role).body}</p>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
+            </FadeSwap>
       </div>
 
       <div className="rail">
@@ -615,13 +515,13 @@ function ExperienceView({ index, itemProgress, onStep }) {
         />
         <div className="journey-rail" aria-label="Upcoming experience roles">
           <div
-            key={`journey-${stage}-${railBase}`}
-            className={`journey-rail-track${stage === 'sliding' ? (forward ? ' is-sliding-forward' : ' is-sliding-back') : ''}`}
+            key={`journey-${contentIndex}`}
+            className="journey-rail-track"
           >
             {upcoming.map((item, i) => (
               <div
-                key={`${railBase}-up-${i}-${item.year}-${item.title}`}
-                className={`journey-flip${i === 0 && stage === 'sliding' && forward ? ' journey-flip--depart' : ''}`}
+                key={`${contentIndex}-up-${i}-${item.year}-${item.title}`}
+                className="journey-item"
               >
                 <div className={`journey${i === 0 ? ' journey--next' : ''}`}>
                   <div className="journey-top">
@@ -773,9 +673,9 @@ function ProjectsView({ index, scrollOffset, itemProgress, active, onStep }) {
   return (
     <div className="view projects-view">
       <div className="split">
-        <FlipSwap swapKey={`proj-card-${project.id}`} shade={cardIndex} className="flip-feature">
+        <FadeSwap swapKey={`proj-card-${project.id}`} shade={cardIndex} className="swap-feature">
           <ProjectCard project={project} index={cardIndex} onOpen={openCase} />
-        </FlipSwap>
+        </FadeSwap>
 
         <div className="copy project-list">
           <p className="kicker">{projects.kicker}</p>

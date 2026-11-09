@@ -624,7 +624,7 @@ html.dark body { background-color: #1e4fe0; }
   border-right: 0;
 }
 
-.recognition-col .flip-mini {
+.recognition-col .swap-mini {
   border-right: 0;
   flex: 1;
 }
@@ -967,25 +967,25 @@ html.dark body { background-color: #1e4fe0; }
 
 .mini,
 .journey,
-.flip-mini {
+.swap-mini {
   padding: calc(16 * var(--u)) calc(18 * var(--u)) calc(18 * var(--u));
   text-align: left;
   border-right: 1px solid var(--line);
   min-height: calc(92 * var(--u));
 }
 
-.flip-mini {
+.swap-mini {
   padding: 0;
   border-right: 1px solid var(--line);
 }
 
-.flip-mini .mini {
+.swap-mini .mini {
   border-right: 0;
   height: 100%;
   box-sizing: border-box;
 }
 
-.flip-mini:last-child,
+.swap-mini:last-child,
 .mini:last-child,
 .journey:last-child { border-right: 0; }
 
@@ -1900,91 +1900,78 @@ html:not(.dark) .form-note--error { color: #9f1d1d; }
 .section-foot p { margin: 0; }
 .section-foot-hint { color: var(--accent); }
 
-/* Flip-card scroll swaps — three blues from the current blueprint hue */
+/* Scroll swaps — a quick, quiet fade-up; three blues from the current blueprint hue */
 .studio {
-  --flip-a: #1e4fe0;
-  --flip-b: #3d6ff0;
-  --flip-c: #7aa8ff;
+  --swap-a: #1e4fe0;
+  --swap-b: #3d6ff0;
+  --swap-c: #7aa8ff;
 }
 
 html:not(.dark) .studio {
-  --flip-a: #1e4fe0;
-  --flip-b: #2f6fed;
-  --flip-c: #8eb6ff;
+  --swap-a: #1e4fe0;
+  --swap-b: #2f6fed;
+  --swap-c: #8eb6ff;
 }
 
-.flip-scene {
-  perspective: calc(1400 * var(--u));
-  transform-style: preserve-3d;
-}
 
-.flip-feature,
-.flip-copy,
-.flip-mini {
+.swap-feature,
+.swap-copy,
+.swap-mini {
   width: 100%;
 }
 
-.flip-face {
-  transform-origin: center top;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  animation: flip-card-in 640ms var(--ease) both;
-  will-change: transform, opacity;
+.swap-face {
+  animation: fade-up-in 300ms var(--ease) both;
+}
+.swap-scene[data-shade='0'] .swap-face {
+  --swap-tint: var(--swap-a);
+}
+.swap-scene[data-shade='1'] .swap-face {
+  --swap-tint: var(--swap-b);
+}
+.swap-scene[data-shade='2'] .swap-face {
+  --swap-tint: var(--swap-c);
 }
 
-.flip-scene[data-shade='0'] .flip-face {
-  --flip-tint: var(--flip-a);
-}
-.flip-scene[data-shade='1'] .flip-face {
-  --flip-tint: var(--flip-b);
-}
-.flip-scene[data-shade='2'] .flip-face {
-  --flip-tint: var(--flip-c);
-}
-
-.flip-feature .feature-card {
+.swap-feature .feature-card {
   box-shadow:
     0 calc(18 * var(--u)) calc(40 * var(--u)) rgba(20, 20, 20, 0.08),
-    inset 0 0 0 1px color-mix(in srgb, var(--flip-tint) 35%, transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--swap-tint) 35%, transparent);
 }
 
-.dark .flip-feature .feature-card {
-  background: color-mix(in srgb, var(--flip-tint) 28%, rgba(10, 36, 140, 0.35));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--flip-tint) 55%, #fff);
+.dark .swap-feature .feature-card {
+  background: color-mix(in srgb, var(--swap-tint) 28%, rgba(10, 36, 140, 0.35));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--swap-tint) 55%, #fff);
 }
 
-.flip-copy .role-line strong,
-.flip-copy .project-entry.is-active h2,
-.flip-mini .mini h3 {
+.swap-copy .role-line strong,
+.swap-copy .project-entry.is-active h2,
+.swap-mini .mini h3 {
   text-shadow: 0 0 0 transparent;
   transition: color 220ms var(--ease);
 }
 
-.flip-scene[data-shade='0'] .flip-copy .role-line strong,
-.flip-scene[data-shade='0'] .flip-copy .project-entry.is-active h2 {
-  color: color-mix(in srgb, var(--ink) 88%, var(--flip-a));
+.swap-scene[data-shade='0'] .swap-copy .role-line strong,
+.swap-scene[data-shade='0'] .swap-copy .project-entry.is-active h2 {
+  color: color-mix(in srgb, var(--ink) 88%, var(--swap-a));
 }
-.flip-scene[data-shade='1'] .flip-copy .role-line strong,
-.flip-scene[data-shade='1'] .flip-copy .project-entry.is-active h2 {
-  color: color-mix(in srgb, var(--ink) 82%, var(--flip-b));
+.swap-scene[data-shade='1'] .swap-copy .role-line strong,
+.swap-scene[data-shade='1'] .swap-copy .project-entry.is-active h2 {
+  color: color-mix(in srgb, var(--ink) 82%, var(--swap-b));
 }
-.flip-scene[data-shade='2'] .flip-copy .role-line strong,
-.flip-scene[data-shade='2'] .flip-copy .project-entry.is-active h2 {
-  color: color-mix(in srgb, var(--ink) 78%, var(--flip-c));
+.swap-scene[data-shade='2'] .swap-copy .role-line strong,
+.swap-scene[data-shade='2'] .swap-copy .project-entry.is-active h2 {
+  color: color-mix(in srgb, var(--ink) 78%, var(--swap-c));
 }
 
-@keyframes flip-card-in {
-  0% {
+@keyframes fade-up-in {
+  from {
     opacity: 0;
-    transform: rotateX(28deg) translateY(calc(12 * var(--u))) scale(0.985);
+    transform: translateY(calc(10 * var(--u)));
   }
-  55% {
+  to {
     opacity: 1;
-    transform: rotateX(-4deg) translateY(-2px) scale(1);
-  }
-  100% {
-    opacity: 1;
-    transform: rotateX(0deg) translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
@@ -1999,15 +1986,14 @@ html:not(.dark) .studio {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
   width: 100%;
-  will-change: transform;
 }
 
-.journey-rail .journey-flip {
+.journey-rail .journey-item {
   border-right: 1px solid var(--line);
   min-height: calc(92 * var(--u));
 }
 
-.journey-rail .journey-flip:last-child {
+.journey-rail .journey-item:last-child {
   border-right: 0;
 }
 
@@ -2021,52 +2007,13 @@ html:not(.dark) .studio {
   background: color-mix(in srgb, var(--accent) 6%, transparent);
 }
 
-/* Step 1: carousel shifts right → left; leftmost peels toward main */
-.journey-rail-track.is-sliding-forward {
-  animation: journey-shift-left 520ms var(--ease) both;
-}
+/* Upcoming roles fade up together, lightly staggered */
+.journey-rail-track .journey-item { animation: fade-up-in 300ms var(--ease) both; }
+.journey-rail-track .journey-item:nth-child(2) { animation: fade-up-in 300ms var(--ease) 40ms both; }
+.journey-rail-track .journey-item:nth-child(3) { animation: fade-up-in 300ms var(--ease) 80ms both; }
 
-.journey-rail-track.is-sliding-back {
-  animation: journey-shift-right 520ms var(--ease) both;
-}
 
-.journey-flip--depart .journey {
-  animation: journey-depart-up 520ms var(--ease) both;
-  transform-origin: center top;
-}
-
-.experience-view.is-sliding .split--hold {
-  opacity: 0.94;
-  transition: opacity 320ms var(--ease);
-}
-
-.flip-face--static {
-  animation: none !important;
-  opacity: 1;
-}
-
-@keyframes journey-shift-left {
-  0% { transform: translateX(0); opacity: 1; }
-  100% { transform: translateX(-33.333%); opacity: 0.92; }
-}
-
-@keyframes journey-shift-right {
-  0% { transform: translateX(0); opacity: 1; }
-  100% { transform: translateX(33.333%); opacity: 0.92; }
-}
-
-@keyframes journey-depart-up {
-  0% {
-    opacity: 1;
-    transform: translateY(0) rotateX(0deg) scale(1);
-  }
-  100% {
-    opacity: 0.2;
-    transform: translateY(calc(-16 * var(--u))) rotateX(-22deg) scale(0.97);
-  }
-}
-
-.flip-mini .mini-fallback {
+.swap-mini .mini-fallback {
   flex-direction: column;
   gap: calc(4 * var(--u));
   min-width: calc(72 * var(--u));
@@ -2078,25 +2025,25 @@ html:not(.dark) .studio {
   color: var(--faint);
 }
 
-.flip-mini .mini-fallback span {
-  color: var(--flip-tint, var(--accent));
+.swap-mini .mini-fallback span {
+  color: var(--swap-tint, var(--accent));
   font-size: max(12px, calc(16 * var(--u)));
   line-height: 1;
 }
 
-.flip-mini .mini-fallback small {
+.swap-mini .mini-fallback small {
   font-size: max(10px, calc(9 * var(--u)));
   letter-spacing: 0.1em;
 }
 
-.flip-mini .mini-icon {
-  background: color-mix(in srgb, var(--flip-tint, var(--accent)) 16%, transparent);
-  border-color: color-mix(in srgb, var(--flip-tint, var(--accent)) 42%, transparent);
-  color: var(--flip-tint, var(--accent));
+.swap-mini .mini-icon {
+  background: color-mix(in srgb, var(--swap-tint, var(--accent)) 16%, transparent);
+  border-color: color-mix(in srgb, var(--swap-tint, var(--accent)) 42%, transparent);
+  color: var(--swap-tint, var(--accent));
 }
 
-.flip-mini .mini-icon .solar-duotone {
-  color: var(--flip-tint, var(--accent));
+.swap-mini .mini-icon .solar-duotone {
+  color: var(--swap-tint, var(--accent));
 }
 
 /* ==========================================================================
@@ -2244,7 +2191,7 @@ html:not(.dark) .studio {
   }
   .recognition-col:last-child { border-bottom: 0; }
   .recognition-label { grid-area: label; margin: calc(8 * var(--u)) calc(2 * var(--u)) calc(2 * var(--u)); }
-  .recognition-col .flip-mini { grid-area: card; flex: none; }
+  .recognition-col .swap-mini { grid-area: card; flex: none; }
   .loop-indicator {
     grid-area: dots;
     justify-self: end;
@@ -2271,8 +2218,8 @@ html:not(.dark) .studio {
   .role-line { margin: 0; font-size: max(13px, calc(15 * var(--u))); flex-wrap: wrap; gap: calc(6 * var(--u)); }
   .tag-line { margin-top: calc(10 * var(--u)); }
   .journey-rail-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .journey-rail .journey-flip { min-height: 0; }
-  .journey-rail .journey-flip:nth-child(3) { display: none; }
+  .journey-rail .journey-item { min-height: 0; }
+  .journey-rail .journey-item:nth-child(3) { display: none; }
   .journey { padding: calc(10 * var(--u)) calc(12 * var(--u)); min-height: 0; }
   .journey h3 { font-size: max(12px, calc(14 * var(--u))); }
 
@@ -2284,12 +2231,12 @@ html:not(.dark) .studio {
     grid-template-rows: minmax(auto, 1fr) auto;
     align-content: stretch;
   }
-  .experience-view .flip-feature,
-  .projects-view .flip-feature,
-  .experience-view .flip-feature > .flip-face,
-  .projects-view .flip-feature > .flip-face,
-  .experience-view .flip-feature .feature-card,
-  .projects-view .flip-feature .feature-card {
+  .experience-view .swap-feature,
+  .projects-view .swap-feature,
+  .experience-view .swap-feature > .swap-face,
+  .projects-view .swap-feature > .swap-face,
+  .experience-view .swap-feature .feature-card,
+  .projects-view .swap-feature .feature-card {
     height: 100%;
     box-sizing: border-box;
   }
@@ -2392,9 +2339,8 @@ html:not(.dark) .studio {
 
 @media (prefers-reduced-motion: reduce) {
   .stage-layer,
-  .flip-face,
-  .journey-rail-track,
-  .journey-flip--depart .journey,
+  .swap-face,
+  .journey-rail-track .journey-item,
   .project-list-track,
   .case-modal-overlay,
   .case-modal,
