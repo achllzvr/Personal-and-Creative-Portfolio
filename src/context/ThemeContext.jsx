@@ -36,7 +36,8 @@ function applyDarkClass(isDark) {
 }
 
 export function ThemeProvider({ children }) {
-  const [isDark, setIsDark] = useState(true)
+  // Default to the Light theme; Blueprint is the opt-in toggle.
+  const [isDark, setIsDark] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [gifReady, setGifReady] = useState(false)
   const [transitionState, setTransitionState] = useState(INITIAL_TRANSITION)
@@ -71,20 +72,8 @@ export function ThemeProvider({ children }) {
     photo.decoding = 'async'
     photo.src = site.photo
 
-    if (!canPlayDesktopGif()) {
-      setGifReady(true)
-      return undefined
-    }
-
-    const gif = new Image()
-    gif.decoding = 'async'
-    gif.src = site.transitionGif
-    const done = () => setGifReady(true)
-    if (gif.complete) done()
-    else {
-      gif.onload = done
-      gif.onerror = done
-    }
+    // The transition GIF was removed from the studio build (it was 40MB) — don't request it.
+    setGifReady(true)
     return undefined
   }, [])
 

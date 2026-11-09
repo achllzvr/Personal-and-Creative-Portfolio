@@ -106,7 +106,7 @@ function Polaroid({ item, style }) {
       className={`polaroid${show ? ' polaroid--photo' : ' polaroid--slot'}${enlarged ? ' polaroid--enlarged' : ''}${pinned ? ' polaroid--pinned' : ''}`}
       style={{
         '--tilt': `${item.rotate || 0}deg`,
-        width: item.w ? `${item.w}px` : undefined,
+        width: item.w ? `calc(${item.w} * var(--u))` : undefined,
         ...style,
       }}
       onMouseEnter={() => setHovered(true)}
@@ -853,7 +853,12 @@ function ContactView() {
     }
   }
 
-  const mobileStrip = [...contactBands.top.slice(0, 2), ...contactBands.bottom.slice(0, 3)]
+  // Mobile: every photo, flat (no tilt / no fixed width) in one slow marquee strip
+  const mobileStrip = [...contactBands.top, ...contactBands.bottom].map((item) => ({
+    ...item,
+    w: undefined,
+    rotate: 0,
+  }))
 
   return (
     <div className="view contact-view">
@@ -933,10 +938,17 @@ function ContactView() {
       </div>
 
       {/* Mobile-only compact strip — desktop uses the scatter field around the form */}
-      <div className="contact-band contact-band--mobile" aria-label="Photos">
-        {mobileStrip.map((item, i) => (
-          <Polaroid key={`m-${i}`} item={item} />
-        ))}
+      <div className="contact-band--mobile" aria-label="Photos">
+        <div className="contact-band-track">
+          {mobileStrip.map((item, i) => (
+            <Polaroid key={`m-${i}`} item={item} />
+          ))}
+          {mobileStrip.map((item, i) => (
+            <div key={`m2-${i}`} className="contact-band-dup" aria-hidden="true">
+              <Polaroid item={item} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
@@ -1064,9 +1076,13 @@ export default function StudioPortfolio() {
           </nav>
           <div className="header-meta">
             <p>Personal  /  2026</p>
-            <button type="button" className="mode-toggle" onClick={toggleTheme}>
-              {isDark ? 'Light' : 'Blueprint'}
-            </button>
+              <button
+                type="button"
+                className={`mode-toggle${isDark ? '' : ' mode-toggle--shine'}`}
+                onClick={toggleTheme}
+              >
+                {isDark ? 'Light' : 'Blueprint'}
+              </button>
           </div>
         </header>
 
