@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useTheme } from '../../context/ThemeContext'
 import { site } from '../../data/site'
 import {
@@ -82,10 +82,40 @@ function AccentDot() {
   return <span className="accent-dot" aria-hidden="true" />
 }
 
-/** Quick fade-up swap (remounts on key change) — shade cycles three blues. */
+const SWAP_OUT_MS = 340
+
+/**
+ * Cross-fade swap. When the key changes, the previous content stays in place and
+ * fades out while the new content eases in (fade + gentle rise) — never a hard cut,
+ * so rapid scrolling reads as a soft blend instead of a flicker.
+ */
 function FadeSwap({ swapKey, shade = 0, className = '', children }) {
+  const last = useRef({ key: swapKey, node: children })
+  const [leaving, setLeaving] = useState(null)
+
+  useLayoutEffect(() => {
+    if (last.current.key !== swapKey) setLeaving(last.current)
+    last.current = { key: swapKey, node: children }
+  })
+
+  useEffect(() => {
+    if (!leaving) return undefined
+    const t = window.setTimeout(() => setLeaving(null), SWAP_OUT_MS + 60)
+    return () => window.clearTimeout(t)
+  }, [leaving])
+
   return (
     <div className={`swap-scene ${className}`.trim()} data-shade={shade % 3}>
+      {leaving ? (
+        <div
+          key={`out-${leaving.key}`}
+          className="swap-face swap-face--out"
+          aria-hidden="true"
+          ref={(el) => el?.setAttribute('inert', '')}
+        >
+          {leaving.node}
+        </div>
+      ) : null}
       <div key={swapKey} className="swap-face">
         {children}
       </div>
@@ -514,13 +544,12 @@ function ExperienceView({ index, itemProgress, onStep }) {
           onNext={() => onStep(1)}
         />
         <div className="journey-rail" aria-label="Upcoming experience roles">
-          <div
-            key={`journey-${contentIndex}`}
-            className="journey-rail-track"
-          >
+          <div className="journey-rail-track">
             {upcoming.map((item, i) => (
-              <div
-                key={`${contentIndex}-up-${i}-${item.year}-${item.title}`}
+              <FadeSwap
+                key={i}
+                swapKey={`${item.year}-${item.title}-${item.org}`}
+                shade={i}
                 className="journey-item"
               >
                 <div className={`journey${i === 0 ? ' journey--next' : ''}`}>
@@ -540,7 +569,7 @@ function ExperienceView({ index, itemProgress, onStep }) {
                   <h3>{item.title}</h3>
                   <p>{item.org}</p>
                 </div>
-              </div>
+              </FadeSwap>
             ))}
           </div>
         </div>

@@ -1920,8 +1920,31 @@ html:not(.dark) .studio {
   width: 100%;
 }
 
+.swap-scene {
+  position: relative;
+}
+
+/* Incoming: soft fade + gentle rise, starting just as the outgoing content is fading away */
 .swap-face {
-  animation: fade-up-in 300ms var(--ease) both;
+  animation: fade-up-in 720ms var(--ease) var(--swap-delay, 140ms) both;
+}
+
+/* Outgoing: stays put, fades out underneath/over the incoming content */
+.swap-face--out {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  animation: fade-out 340ms ease-out both;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swap-face--out { display: none; }
 }
 .swap-scene[data-shade='0'] .swap-face {
   --swap-tint: var(--swap-a);
@@ -1967,7 +1990,7 @@ html:not(.dark) .studio {
 @keyframes fade-up-in {
   from {
     opacity: 0;
-    transform: translateY(calc(10 * var(--u)));
+    transform: translateY(calc(14 * var(--u)));
   }
   to {
     opacity: 1;
@@ -2007,10 +2030,11 @@ html:not(.dark) .studio {
   background: color-mix(in srgb, var(--accent) 6%, transparent);
 }
 
-/* Upcoming roles fade up together, lightly staggered */
-.journey-rail-track .journey-item { animation: fade-up-in 300ms var(--ease) both; }
-.journey-rail-track .journey-item:nth-child(2) { animation: fade-up-in 300ms var(--ease) 40ms both; }
-.journey-rail-track .journey-item:nth-child(3) { animation: fade-up-in 300ms var(--ease) 80ms both; }
+/* Upcoming roles: each slot cross-fades, lightly staggered */
+.journey-rail .swap-face,
+.journey-rail .journey { height: 100%; box-sizing: border-box; }
+.journey-rail .journey-item:nth-child(2) { --swap-delay: 220ms; }
+.journey-rail .journey-item:nth-child(3) { --swap-delay: 300ms; }
 
 
 .swap-mini .mini-fallback {
@@ -2340,7 +2364,7 @@ html:not(.dark) .studio {
 @media (prefers-reduced-motion: reduce) {
   .stage-layer,
   .swap-face,
-  .journey-rail-track .journey-item,
+  .swap-face--out,
   .project-list-track,
   .case-modal-overlay,
   .case-modal,
