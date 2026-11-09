@@ -853,6 +853,8 @@ function ContactView() {
     }
   }
 
+  const mobileStrip = [...contactBands.top.slice(0, 2), ...contactBands.bottom.slice(0, 3)]
+
   return (
     <div className="view contact-view">
       <header className="contact-intro">
@@ -864,12 +866,6 @@ function ContactView() {
         </h2>
         <p className="body">{contact.lede}</p>
       </header>
-
-      <div className="contact-band contact-band--top">
-        {contactBands.top.map((item, i) => (
-          <Polaroid key={`top-${i}`} item={item} />
-        ))}
-      </div>
 
       <div className="contact-stage">
         <div className="contact-scatter-field" aria-hidden="true">
@@ -936,9 +932,10 @@ function ContactView() {
         </form>
       </div>
 
-      <div className="contact-band contact-band--bottom">
-        {contactBands.bottom.map((item, i) => (
-          <Polaroid key={`bot-${i}`} item={item} />
+      {/* Mobile-only compact strip — desktop uses the scatter field around the form */}
+      <div className="contact-band contact-band--mobile" aria-label="Photos">
+        {mobileStrip.map((item, i) => (
+          <Polaroid key={`m-${i}`} item={item} />
         ))}
       </div>
     </div>
@@ -1037,83 +1034,85 @@ export default function StudioPortfolio() {
       style={{ '--studio-units': trackUnits, '--ease': EASE, '--ease-in-out': EASE_IN_OUT }}
     >
       <div className="studio-pin">
-        <div className="studio-grid" aria-hidden="true" />
-        <header className="studio-header">
-          <a
-            className="brand"
-            href="#about"
-            onClick={(e) => {
-              e.preventDefault()
-              go('about')
-            }}
-          >
-            <strong>av.r</strong>
-            <span>Portfolio</span>
-            <AccentDot />
-          </a>
-          <nav className="nav" aria-label="Sections">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                className={phase.id === item.id ? 'is-active' : ''}
-                aria-current={phase.id === item.id ? 'true' : undefined}
-                onClick={() => go(item.id)}
-              >
-                {item.label}
-                {phase.id === item.id ? <AccentDot /> : null}
+        <div className="studio-scale">
+          <div className="studio-grid" aria-hidden="true" />
+          <header className="studio-header">
+            <a
+              className="brand"
+              href="#about"
+              onClick={(e) => {
+                e.preventDefault()
+                go('about')
+              }}
+            >
+              <strong>av.r</strong>
+              <span>Portfolio</span>
+              <AccentDot />
+            </a>
+            <nav className="nav" aria-label="Sections">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={phase.id === item.id ? 'is-active' : ''}
+                  aria-current={phase.id === item.id ? 'true' : undefined}
+                  onClick={() => go(item.id)}
+                >
+                  {item.label}
+                  {phase.id === item.id ? <AccentDot /> : null}
+                </button>
+              ))}
+            </nav>
+            <div className="header-meta">
+              <p>Personal  /  2026</p>
+              <button type="button" className="mode-toggle" onClick={toggleTheme}>
+                {isDark ? 'Light' : 'Blueprint'}
               </button>
-            ))}
-          </nav>
-          <div className="header-meta">
-            <p>Personal  /  2026</p>
-            <button type="button" className="mode-toggle" onClick={toggleTheme}>
-              {isDark ? 'Light' : 'Blueprint'}
-            </button>
-          </div>
-        </header>
+            </div>
+          </header>
 
-        <main className="studio-stage" aria-live="polite">
-          <div
-            className={`stage-layer${phase.id === 'about' ? ' is-active' : ''}`}
-            aria-hidden={phase.id !== 'about'}
-          >
-            <AboutView active={phase.id === 'about'} sectionProgress={aboutProgress} />
-          </div>
-          <div
-            className={`stage-layer${phase.id === 'experience' ? ' is-active' : ''}`}
-            aria-hidden={phase.id !== 'experience'}
-          >
-            <ExperienceView
-              index={roleIndex}
-              itemProgress={roleProgress}
-              onStep={(dir) => stepWithinPhase('experience', rolesLen, roleIndex, dir)}
-            />
-          </div>
-          <div
-            className={`stage-layer${phase.id === 'projects' ? ' is-active' : ''}`}
-            aria-hidden={phase.id !== 'projects'}
-          >
-            <ProjectsView
-              index={projectIndex}
-              scrollOffset={projectExact}
-              itemProgress={projectProgress}
-              active={phase.id === 'projects'}
-              onStep={(dir) => stepWithinPhase('projects', projectsLen, projectIndex, dir)}
-            />
-          </div>
-          <div
-            className={`stage-layer${phase.id === 'contact' ? ' is-active' : ''}`}
-            aria-hidden={phase.id !== 'contact'}
-          >
-            <ContactView />
-          </div>
-        </main>
+          <main className="studio-stage" aria-live="polite">
+            <div
+              className={`stage-layer${phase.id === 'about' ? ' is-active' : ''}`}
+              aria-hidden={phase.id !== 'about'}
+            >
+              <AboutView active={phase.id === 'about'} sectionProgress={aboutProgress} />
+            </div>
+            <div
+              className={`stage-layer${phase.id === 'experience' ? ' is-active' : ''}`}
+              aria-hidden={phase.id !== 'experience'}
+            >
+              <ExperienceView
+                index={roleIndex}
+                itemProgress={roleProgress}
+                onStep={(dir) => stepWithinPhase('experience', rolesLen, roleIndex, dir)}
+              />
+            </div>
+            <div
+              className={`stage-layer${phase.id === 'projects' ? ' is-active' : ''}`}
+              aria-hidden={phase.id !== 'projects'}
+            >
+              <ProjectsView
+                index={projectIndex}
+                scrollOffset={projectExact}
+                itemProgress={projectProgress}
+                active={phase.id === 'projects'}
+                onStep={(dir) => stepWithinPhase('projects', projectsLen, projectIndex, dir)}
+              />
+            </div>
+            <div
+              className={`stage-layer${phase.id === 'contact' ? ' is-active' : ''}`}
+              aria-hidden={phase.id !== 'contact'}
+            >
+              <ContactView />
+            </div>
+          </main>
 
-        <footer className="section-foot">
-          <p>Achilles Vonn D. Rabina</p>
-          <p className="section-foot-hint">{footHint}</p>
-        </footer>
+          <footer className="section-foot">
+            <p>Achilles Vonn D. Rabina</p>
+            <p className="section-foot-hint">{footHint}</p>
+          </footer>
+        </div>
       </div>
     </div>
   )
