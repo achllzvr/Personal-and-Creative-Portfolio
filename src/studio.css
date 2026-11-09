@@ -633,6 +633,25 @@ html.dark body { background-color: #1e4fe0; }
   border-color: var(--accent);
 }
 
+/* Generous invisible tap area without changing the dot's drawn size */
+.loop-dot {
+  position: relative;
+}
+.loop-dot::after {
+  content: '';
+  position: absolute;
+  inset: calc(-8 * var(--u)) calc(-3 * var(--u));
+}
+
+/* index.css gives every button a 44px min-height on touch screens — that stretched the
+   carousel dots and arrow buttons into tall ovals. These are drawn at their own size. */
+@media (hover: none) and (pointer: coarse) {
+  .studio-pin .loop-dot,
+  .studio-pin .rail-controls button {
+    min-height: 0;
+  }
+}
+
 .mini,
 .journey,
 .flip-mini {
@@ -1884,21 +1903,36 @@ html:not(.dark) .studio {
   .about-view .portrait-card figcaption { display: none; }
   .about-view .copy .kicker { grid-area: kick; align-self: end; }
   .about-view .copy h1 { grid-area: name; font-size: max(24px, calc(30 * var(--u))); line-height: 0.98; }
-  .about-view .copy .role { grid-area: role; margin-top: calc(8 * var(--u)); }
+  /* Spare height goes to the portrait; the role line sits at its bottom edge */
+  .about-view .split { flex: 1 0 auto; grid-template-rows: auto auto minmax(0, 1fr) auto auto; }
+  .about-view .copy .role { grid-area: role; align-self: end; margin-top: calc(8 * var(--u)); }
   .about-view .copy .body { grid-area: body; margin-top: calc(12 * var(--u)); }
   .about-view .copy .tags { grid-area: tags; }
 
   /* Recognition: two stacked, compact rows */
   .recognition-grid { grid-template-columns: minmax(0, 1fr); }
+  /* Each carousel: label + dots share one header line, the card sits underneath */
   .recognition-col {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "label dots" "card card";
+    align-items: center;
     border-right: 0;
     border-bottom: 1px solid var(--line);
-    padding: 0 0 calc(6 * var(--u));
+    padding: 0 0 calc(4 * var(--u));
   }
   .recognition-col:last-child { border-bottom: 0; }
-  .recognition-label { margin: calc(8 * var(--u)) calc(12 * var(--u)) 0; }
-  .loop-indicator { padding: 0 calc(12 * var(--u)) calc(2 * var(--u)); }
-  .loop-dots { flex-wrap: nowrap; }
+  .recognition-label { grid-area: label; margin: calc(8 * var(--u)) calc(12 * var(--u)) calc(2 * var(--u)); }
+  .recognition-col .flip-mini { grid-area: card; flex: none; }
+  .loop-indicator {
+    grid-area: dots;
+    justify-self: end;
+    padding: calc(8 * var(--u)) calc(14 * var(--u)) calc(2 * var(--u)) 0;
+  }
+  .loop-dots { flex-wrap: nowrap; gap: calc(5 * var(--u)); }
+  .loop-dot { width: calc(6 * var(--u)); height: calc(6 * var(--u)); flex: none; }
+  .loop-dot.is-active { width: calc(16 * var(--u)); }
+  .rail-controls button { min-height: 0; }
   .mini { flex-direction: row; align-items: center; gap: calc(12 * var(--u)); padding: calc(8 * var(--u)) calc(12 * var(--u)); min-height: 0; }
   .mini img,
   .mini-fallback { width: calc(64 * var(--u)); height: calc(46 * var(--u)); }
@@ -1921,6 +1955,26 @@ html:not(.dark) .studio {
   .journey { padding: calc(10 * var(--u)) calc(12 * var(--u)); min-height: 0; }
   .journey h3 { font-size: max(12px, calc(14 * var(--u))); }
 
+  /* Experience + Projects: the main card absorbs spare height so the view always fills
+     the phone (no dead gap above the bottom carousel). */
+  .experience-view .split,
+  .projects-view .split {
+    flex: 1 0 auto;
+    grid-template-rows: minmax(auto, 1fr) auto;
+    align-content: stretch;
+  }
+  .experience-view .flip-feature,
+  .projects-view .flip-feature,
+  .experience-view .flip-feature > .flip-face,
+  .projects-view .flip-feature > .flip-face,
+  .experience-view .flip-feature .feature-card,
+  .projects-view .flip-feature .feature-card {
+    height: 100%;
+    box-sizing: border-box;
+  }
+  .experience-view .feature-card .feature-year { margin-top: auto; font-size: max(44px, calc(64 * var(--u))); }
+  .experience-view .feature-card h2 { margin-top: calc(6 * var(--u)); font-size: max(14px, calc(17 * var(--u))); }
+
   /* ---- Projects ---- */
   .feature-card--project {
     display: grid;
@@ -1934,10 +1988,12 @@ html:not(.dark) .studio {
   .feature-card--project .project-hero-mark { grid-area: mark; }
   .feature-card--project .project-word { grid-area: word; margin: 0; font-size: max(16px, calc(22 * var(--u))); }
   .feature-card--project footer { grid-area: foot; }
+  .feature-card--project { grid-template-rows: auto minmax(0, 1fr) auto; }
   .brand-mark--xl { width: calc(64 * var(--u)); height: calc(64 * var(--u)); margin: 0; border-radius: calc(18 * var(--u)); font-size: max(20px, calc(24 * var(--u))); }
   .project-mark { font-size: max(32px, calc(44 * var(--u))); margin: 0; }
-  .project-list { --project-row-h: calc(64 * var(--u)); }
-  .project-list-viewport { height: calc(2.6 * var(--project-row-h)); }
+  .project-list { --project-row-h: calc(84 * var(--u)); }
+  .project-list-viewport { height: calc(2.4 * var(--project-row-h)); }
+  .project-entry { align-items: center; }
   .project-entry { padding: calc(8 * var(--u)) 0; gap: calc(10 * var(--u)); }
   .project-entry-main { gap: calc(12 * var(--u)); }
   .project-entry h2 { font-size: calc(max(13px, calc(14 * var(--u))) + (var(--emph) * calc(4 * var(--u)))); }
