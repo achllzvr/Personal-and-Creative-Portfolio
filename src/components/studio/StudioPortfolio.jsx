@@ -17,6 +17,7 @@ import { BrandMark } from './BrandMark'
 import ProjectCaseModal from './ProjectCaseModal'
 import RecognitionModal from './RecognitionModal'
 import { SolarIcon } from './SolarDuotoneIcons'
+import { TechIcon, techIconName, socialIconName } from './TechIcons'
 
 const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)'
 const EASE_IN_OUT = 'cubic-bezier(0.45, 0.05, 0.25, 1)'
@@ -135,7 +136,7 @@ function Polaroid({ item, style }) {
       className={`polaroid${show ? ' polaroid--photo' : ' polaroid--slot'}${enlarged ? ' polaroid--enlarged' : ''}${pinned ? ' polaroid--pinned' : ''}`}
       style={{
         '--tilt': `${item.rotate || 0}deg`,
-        width: item.w ? `calc(${item.w} * var(--u))` : undefined,
+        '--w': item.w || undefined,
         ...style,
       }}
       onMouseEnter={() => setHovered(true)}
@@ -156,7 +157,7 @@ function Polaroid({ item, style }) {
       aria-label={pinned || hovered ? `Shrink ${item.alt || 'photo'}` : `Enlarge ${item.alt || 'photo'}`}
     >
       {show ? (
-        <img src={item.src} alt={item.alt || ''} onError={() => setFailed(true)} />
+        <img src={item.src} alt={item.alt || ''} loading="lazy" decoding="async" onError={() => setFailed(true)} />
       ) : (
         <div className="polaroid-empty">
           <span>+</span>
@@ -286,6 +287,7 @@ function StackMarquee({ items, active }) {
       <div className="stack-marquee-track" ref={trackRef}>
         {loop.map((tech, i) => (
           <span key={`${tech}-${i}`} className="stack-chip">
+            <TechIcon name={techIconName(tech)} />
             {tech}
           </span>
         ))}
@@ -893,6 +895,7 @@ function ContactView() {
             {contact.socials.map((link) => (
               <li key={link.label}>
                 <a href={link.href} target="_blank" rel="noreferrer">
+                  <TechIcon name={socialIconName(link.label)} className="social-icon" />
                   {link.label}
                 </a>
               </li>

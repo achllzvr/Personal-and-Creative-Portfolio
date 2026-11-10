@@ -390,60 +390,67 @@ export const contact = {
   ],
 }
 
-const tilts = [-6, 5, -4, 6, -5, 4, -3, 7, -5, 4, -6, 3, -4, 5, -3, 6]
-
-/** All collected Photos + portrait — scattered around contact. */
+/** All collected photos + portrait. `r` = width / height of the full (uncropped) image. */
 const contactPhotoFiles = [
-  { file: 'chi_photo.png', root: true, alt: 'Portrait of Achilles' },
-  { file: 'NULPlay Onsite.jpg', alt: 'NULPlay onsite' },
-  { file: 'TAPUS! Soft Launch Cover Photo.jpg', alt: 'TAPUS soft launch' },
-  { file: 'SOITS President.jpg', alt: 'SOITS presidency' },
-  { file: 'CHED AI.jpg', alt: 'CHED RAISE event' },
-  { file: 'The Filipino Times.jpg', alt: 'The Filipino Times feature' },
-  { file: 'Breaking Enigma Hackathon 3.jpg', alt: 'Breaking Enigma Hackathon' },
-  { file: 'CD.jpg', alt: 'Campus moment' },
-  { file: 'Rank 1 First Honor.jpg', alt: 'First Honor recognition' },
-  { file: 'Rank 1 First Honor 2.jpg', alt: 'First Honor recognition' },
-  { file: '1st Gold Medal.jpg', alt: 'WorldSkills gold medal' },
-  { file: '2nd Gold Medal.jpg', alt: 'WorldSkills gold medal' },
-  { file: 'Top 2 Hackathon.jpg', alt: 'Hackathon runner-up' },
-  { file: 'IC3.jpg', alt: 'IC3 certification' },
-  { file: 'PSC1.jpg', alt: 'DICT startup participant' },
-  { file: 'PSC2.jpg', alt: 'DICT startup participant' },
+  { file: 'chi_photo.png', root: true, alt: 'Portrait of Achilles', r: 0.559 },
+  { file: 'NULPlay Onsite.jpg', alt: 'NULPlay onsite', r: 0.8 },
+  { file: 'TAPUS! Soft Launch Cover Photo.jpg', alt: 'TAPUS soft launch', r: 2.702 },
+  { file: 'SOITS President.jpg', alt: 'SOITS presidency', r: 1 },
+  { file: 'CHED AI.jpg', alt: 'CHED RAISE event', r: 1.333 },
+  { file: 'The Filipino Times.jpg', alt: 'The Filipino Times feature', r: 1.778 },
+  { file: 'Breaking Enigma Hackathon 3.jpg', alt: 'Breaking Enigma Hackathon', r: 0.8 },
+  { file: 'CD.jpg', alt: 'Campus moment', r: 1 },
+  { file: 'Rank 1 First Honor.jpg', alt: 'First Honor recognition', r: 1 },
+  { file: 'Rank 1 First Honor 2.jpg', alt: 'First Honor recognition', r: 1 },
+  { file: '1st Gold Medal.jpg', alt: 'WorldSkills gold medal', r: 1 },
+  { file: '2nd Gold Medal.jpg', alt: 'WorldSkills gold medal', r: 1 },
+  { file: 'Top 2 Hackathon.jpg', alt: 'Hackathon runner-up', r: 1 },
+  { file: 'IC3.jpg', alt: 'IC3 certification', r: 1 },
+  { file: 'PSC1.jpg', alt: 'DICT startup participant', r: 1.333 },
+  { file: 'PSC2.jpg', alt: 'DICT startup participant', r: 2.224 },
+  { file: 'SACE SC Logo.jpg', alt: 'SACE Student Council', r: 1 },
 ]
 
 /**
- * Desktop scatter anchors — percent of the contact field, which is exactly the content column
- * wide: two photo columns in each gutter beside the form (left, right, left, right, …).
+ * Desktop photocard layout. The scatter field is exactly the content column wide, so each side of
+ * the form gets two columns x five rows of cells. Every photo keeps its full aspect ratio and is
+ * "contained" in its cell (nothing cropped); x / y are the cell centres, in percent of the field.
  */
-const scatterLayout = [
-  { x: 1.2, y: 0, w: 100 },
-  { x: 88.8, y: 3, w: 100 },
-  { x: 12.4, y: 10, w: 96 },
-  { x: 77.4, y: 12, w: 96 },
-  { x: 1.2, y: 23, w: 100 },
-  { x: 88.8, y: 26, w: 100 },
-  { x: 12.4, y: 33, w: 96 },
-  { x: 77.4, y: 35, w: 96 },
-  { x: 1.2, y: 46, w: 100 },
-  { x: 88.8, y: 49, w: 100 },
-  { x: 12.4, y: 56, w: 96 },
-  { x: 77.4, y: 58, w: 96 },
-  { x: 1.2, y: 69, w: 100 },
-  { x: 88.8, y: 72, w: 100 },
-  { x: 12.4, y: 79, w: 96 },
-  { x: 77.4, y: 81, w: 96 },
+const CELL_W = 104
+const CELL_H = 90
+const COLS = [6, 17.4]
+const ROWS = [10, 30, 50, 70, 90]
+// small deterministic jitter so the cards look dropped on a table, not placed on a grid
+const JITTER = [
+  [0, 1], [1.2, -1.5], [-0.8, 0.8], [0.6, 1.6], [-1, -0.6], [1.4, 0.6], [0.4, -1.2], [-1.2, 1.2], [0.8, 0.2],
 ]
+const SLOT_ORDER = [
+  [0, 0], [1, 0], [0, 1], [1, 1], [0, 2], [1, 2], [0, 3], [1, 3], [0, 4], [1, 4],
+]
+const tilts = [-4.5, 3.5, -2.5, 4, -3.5, 2.5, -4, 3, -2, 4.5, -3, 2, -5, 3.8, -2.8, 4.2, -3.8]
+
+function slotFor(i) {
+  const side = i % 2 // 0 = left, 1 = right
+  const [col, row] = SLOT_ORDER[Math.floor(i / 2) % SLOT_ORDER.length]
+  const [jx, jy] = JITTER[Math.floor(i / 2) % JITTER.length]
+  const cx = COLS[col] + jx
+  return {
+    x: side === 0 ? cx : 100 - cx,
+    y: ROWS[row] + jy * 1.6,
+  }
+}
 
 export const contactPhotos = contactPhotoFiles.map((item, i) => {
-  const layout = scatterLayout[i % scatterLayout.length]
+  const { x, y } = slotFor(i)
+  const w = item.r >= CELL_W / CELL_H ? CELL_W : CELL_H * item.r
   return {
     src: item.root ? site.photo : photo(item.file),
     alt: item.alt,
     rotate: tilts[i % tilts.length],
-    x: layout.x,
-    y: layout.y,
-    w: layout.w,
+    ratio: item.r,
+    x,
+    y,
+    w: Math.round(w * 10) / 10,
   }
 })
 

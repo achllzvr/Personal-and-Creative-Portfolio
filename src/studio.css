@@ -19,7 +19,7 @@
 
 /* Match the page behind the pin to the studio theme (overscroll / mobile bars never flash another colour) */
 html:not(.dark) body { background-color: #f8f8f4; }
-html.dark body { background-color: #1e4fe0; }
+html.dark body { background-color: #123ab3; }
 
 @supports (height: 1svh) {
   :root {
@@ -61,28 +61,57 @@ html.dark body { background-color: #1e4fe0; }
 }
 
 .dark .studio {
-  --bg: #1e4fe0;
+  --bg: #123ab3;
   --ink: #ffffff;
-  --muted: rgba(255, 255, 255, 0.78);
-  --faint: rgba(255, 255, 255, 0.55);
-  --line: rgba(255, 255, 255, 0.28);
-  --grid: rgba(255, 255, 255, 0.22);
-  --grid-core: 0.22;
-  --accent: #9ec0ff;
-  --accent-soft: #cfe0ff;
-  --card: rgba(10, 36, 140, 0.35);
+  --muted: rgba(255, 255, 255, 0.74);
+  --faint: rgba(255, 255, 255, 0.5);
+  --line: rgba(255, 255, 255, 0.3);
+  --grid: rgba(255, 255, 255, 0.13);
+  --grid-core: 0;
+  --accent: #b4ccff;
+  --accent-soft: #c9d9ff;
+  --card: rgba(255, 255, 255, 0.07);
   --card-ink: #ffffff;
   --card-muted: rgba(255, 255, 255, 0.72);
-  --card-line: rgba(255, 255, 255, 0.28);
-  --nav: rgba(255, 255, 255, 0.45);
+  --card-line: rgba(255, 255, 255, 0.3);
+  --nav: rgba(255, 255, 255, 0.4);
   --nav-active: #ffffff;
-  --nav-active-ink: #1639b0;
-  --field: rgba(18, 58, 180, 0.22);
+  --nav-active-ink: #123ab3;
+  --field: rgba(255, 255, 255, 0.04);
   --send: #ffffff;
-  --send-ink: #1639b0;
-  --portrait: rgba(255, 255, 255, 0.08);
+  --send-ink: #123ab3;
+  --portrait: rgba(255, 255, 255, 0.05);
   --shadow: none;
 }
+
+/* Blueprint surfaces: one flat blue sheet; cards / rails are just a lighter wash with a hairline */
+.dark .portrait-card,
+.dark .feature-card {
+  border: 1px solid var(--card-line);
+  box-shadow: none;
+}
+.dark .feature-card,
+.dark .swap-feature .feature-card,
+.dark .feature-card--project {
+  background: var(--card) !important;
+  box-shadow: none;
+}
+.dark .rail {
+  background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
+}
+.dark .rail-progress span,
+.dark .rail-seg span {
+  background: #ffffff;
+}
+.dark .inquiry {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--card-line);
+}
+.dark .inquiry input,
+.dark .inquiry textarea {
+  border-color: rgba(255, 255, 255, 0.34);
+}
+.dark .tech-icon { background: rgba(255, 255, 255, 0.14); }
 
 .studio-pin {
   position: sticky;
@@ -496,6 +525,7 @@ html.dark body { background-color: #1e4fe0; }
 }
 
 .feature-card {
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -526,7 +556,8 @@ html.dark body { background-color: #1e4fe0; }
 
 .feature-year {
   margin: auto 0 0;
-  font-size: max(44px, calc(104 * var(--u)));
+  /* never wider than the card's inner padding box: capped by the card's own width */
+  font-size: min(max(40px, calc(104 * var(--u))), 25cqw);
   font-weight: 300;
   letter-spacing: -0.055em;
   line-height: 0.9;
@@ -1818,6 +1849,33 @@ html:not(.dark) .form-note--error { color: #9f1d1d; }
   transition: color 200ms var(--ease);
 }
 .socials a:hover { color: var(--ink); }
+.socials a { display: inline-flex; align-items: center; gap: calc(7 * var(--u)); }
+
+/* Duotone tech / social icons: glyph in the accent on a softly tinted tile of the same hue */
+.tech-icon {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: calc(22 * var(--u));
+  height: calc(22 * var(--u));
+  border-radius: calc(7 * var(--u));
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.tech-icon svg {
+  width: 62%;
+  height: 62%;
+  display: block;
+}
+.social-icon {
+  width: calc(20 * var(--u));
+  height: calc(20 * var(--u));
+  color: inherit;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+.socials a:hover .social-icon { color: var(--accent); }
+.stack-chip { display: inline-flex; align-items: center; gap: calc(8 * var(--u)); }
+.stack-chip:has(.tech-icon) { padding-left: calc(8 * var(--u)); }
 
 /*
   Scatter field = exactly the content column wide, so the photos sit in the two gutters
@@ -1838,6 +1896,9 @@ html:not(.dark) .form-note--error { color: #9f1d1d; }
 
 .contact-scatter-field .polaroid {
   position: absolute;
+  /* x / y in the data are the card's centre */
+  translate: -50% -50%;
+  width: calc(var(--w) * var(--u) * var(--pc));
   pointer-events: auto;
   margin: 0;
 }
@@ -1847,14 +1908,21 @@ html:not(.dark) .form-note--error { color: #9f1d1d; }
   display: none;
 }
 
+/* Photocards: the full photo (never cropped) on a thin white card, lying flat on the surface */
 .polaroid {
+  --pc: 1;
   width: calc(104 * var(--u));
   margin: 0;
+  padding: calc(3.5 * var(--u));
+  box-sizing: border-box;
   transform: rotate(var(--tilt));
-  border-radius: calc(14 * var(--u));
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 calc(10 * var(--u)) calc(26 * var(--u)) rgba(20, 28, 60, 0.12);
+  border-radius: calc(3 * var(--u));
+  overflow: visible;
+  background: #fbfbf8;
+  box-shadow:
+    0 0 0 1px rgba(20, 28, 60, 0.07),
+    0 calc(1 * var(--u)) calc(2 * var(--u)) rgba(20, 28, 60, 0.12),
+    0 calc(7 * var(--u)) calc(16 * var(--u)) rgba(20, 28, 60, 0.12);
   transition:
     transform 420ms var(--ease),
     box-shadow 420ms var(--ease);
@@ -1863,13 +1931,18 @@ html:not(.dark) .form-note--error { color: #9f1d1d; }
 }
 
 .dark .polaroid {
-  background: #f4f6ff;
-  box-shadow: 0 calc(14 * var(--u)) calc(34 * var(--u)) rgba(0, 0, 0, 0.35);
+  background: #f6f7fb;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.35),
+    0 calc(1 * var(--u)) calc(2 * var(--u)) rgba(5, 18, 80, 0.35),
+    0 calc(8 * var(--u)) calc(18 * var(--u)) rgba(5, 18, 80, 0.38);
 }
 
 .polaroid--enlarged {
   transform: rotate(0deg) scale(2.15);
-  box-shadow: 0 calc(28 * var(--u)) calc(64 * var(--u)) rgba(20, 28, 60, 0.32);
+  box-shadow:
+    0 0 0 1px rgba(20, 28, 60, 0.08),
+    0 calc(28 * var(--u)) calc(64 * var(--u)) rgba(20, 28, 60, 0.32);
   z-index: 40;
   cursor: zoom-out;
 }
@@ -1880,10 +1953,9 @@ html:not(.dark) .form-note--error { color: #9f1d1d; }
 
 .polaroid img {
   width: 100%;
-  height: calc(88 * var(--u));
-  object-fit: cover;
-  object-position: center top;
+  height: auto;
   display: block;
+  border-radius: calc(1.5 * var(--u));
   filter: none;
   pointer-events: none;
 }
@@ -1984,10 +2056,6 @@ html:not(.dark) .studio {
     inset 0 0 0 1px color-mix(in srgb, var(--swap-tint) 35%, transparent);
 }
 
-.dark .swap-feature .feature-card {
-  background: color-mix(in srgb, var(--swap-tint) 28%, rgba(10, 36, 140, 0.35));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--swap-tint) 55%, #fff);
-}
 
 .swap-copy .role-line strong,
 .swap-copy .project-entry.is-active h2,
@@ -2101,6 +2169,7 @@ html:not(.dark) .studio {
   .contact-intro .body { margin-top: calc(10 * var(--u)); }
   .inquiry { padding: calc(16 * var(--u)) calc(22 * var(--u)) calc(12 * var(--u)); gap: calc(9 * var(--u)); }
   .inquiry textarea { height: calc(64 * var(--u)); min-height: 0; }
+  .contact-scatter-field .polaroid { --pc: 0.86; }
 }
 
 /* ==========================================================================
@@ -2268,7 +2337,7 @@ html:not(.dark) .studio {
 
   /* ---- Experience ---- */
   .feature-card { padding: calc(18 * var(--u)) calc(20 * var(--u)) calc(16 * var(--u)); }
-  .feature-year { font-size: max(44px, calc(76 * var(--u))); }
+  .feature-year { font-size: min(max(40px, calc(76 * var(--u))), 25cqw); }
   .feature-card h2 { font-size: max(15px, calc(20 * var(--u))); margin-top: calc(12 * var(--u)); padding-top: calc(12 * var(--u)); }
   .org-brand-row { margin-top: calc(12 * var(--u)); gap: calc(12 * var(--u)); }
   .brand-mark--md { width: calc(42 * var(--u)); height: calc(42 * var(--u)); }
@@ -2347,15 +2416,15 @@ html:not(.dark) .studio {
   }
   .contact-band-dup { display: contents; }
   .contact-band--mobile .polaroid {
-    width: calc(96 * var(--u));
+    width: auto;
     flex: none;
+    padding: calc(3 * var(--u));
     transform: none;
-    border-radius: calc(14 * var(--u));
-    box-shadow: none;
+    box-shadow: 0 0 0 1px rgba(20, 28, 60, 0.08), 0 calc(2 * var(--u)) calc(6 * var(--u)) rgba(20, 28, 60, 0.12);
     cursor: default;
   }
-  .contact-band--mobile .polaroid img,
-  .contact-band--mobile .polaroid-empty { height: calc(64 * var(--u)); }
+  .contact-band--mobile .polaroid img { width: auto; height: calc(62 * var(--u)); }
+  .contact-band--mobile .polaroid-empty { height: calc(62 * var(--u)); }
   .contact-band--mobile .polaroid--enlarged { transform: none; box-shadow: none; }
 }
 
