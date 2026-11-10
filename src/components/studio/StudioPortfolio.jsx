@@ -670,7 +670,12 @@ function ProjectsView({ index, scrollOffset, itemProgress, active, onStep }) {
   const promoteTimer = useRef(0)
 
   // List tracks scroll continuously; selected card follows after a short settle.
-  const offset = reduce ? index : clamp(scrollOffset ?? index + itemProgress, 0, items.length - 1)
+  // Rest on whole rows: the list only travels during the last stretch of each item's scroll range,
+  // so a settled view always shows the current project at the top (never half-way between two).
+  const raw = clamp(scrollOffset ?? index + itemProgress, 0, items.length - 1)
+  const whole = Math.floor(raw)
+  const t = clamp((raw - whole - 0.6) / 0.4, 0, 1)
+  const offset = reduce ? index : whole + t * t * (3 - 2 * t)
 
   useEffect(() => {
     if (index === pendingRef.current) return undefined
@@ -824,8 +829,8 @@ function ContactView() {
       <header className="contact-intro">
         <p className="kicker">{contact.kicker}</p>
         <h2>
-          {contact.titleLead}
-          <br />
+          {contact.titleLead}{' '}
+          <br className="contact-br" />
           {contact.titleTail}
         </h2>
         <p className="body">{contact.lede}</p>
@@ -1007,18 +1012,30 @@ export default function StudioPortfolio() {
       <div className="studio-pin">
         <div className="studio-grid" aria-hidden="true" />
         <header className="studio-header">
-          <a
-            className="brand"
-            href="#about"
-            onClick={(e) => {
-              e.preventDefault()
-              go('about')
-            }}
-          >
-            <strong>av.r</strong>
-            <span>Portfolio</span>
-            <AccentDot />
-          </a>
+          <div className="header-top">
+            <a
+              className="brand"
+              href="#about"
+              onClick={(e) => {
+                e.preventDefault()
+                go('about')
+              }}
+            >
+              <strong>av.r</strong>
+              <span>Portfolio</span>
+              <AccentDot />
+            </a>
+            <div className="header-meta">
+              <p>Personal  /  2026</p>
+              <button
+                type="button"
+                className={`mode-toggle${isDark ? '' : ' mode-toggle--shine'}`}
+                onClick={toggleTheme}
+              >
+                {isDark ? 'Light' : 'Blueprint'}
+              </button>
+            </div>
+          </div>
           <nav className="nav" aria-label="Sections">
             {navItems.map((item) => (
               <button
@@ -1033,16 +1050,6 @@ export default function StudioPortfolio() {
               </button>
             ))}
           </nav>
-          <div className="header-meta">
-            <p>Personal  /  2026</p>
-              <button
-                type="button"
-                className={`mode-toggle${isDark ? '' : ' mode-toggle--shine'}`}
-                onClick={toggleTheme}
-              >
-                {isDark ? 'Light' : 'Blueprint'}
-              </button>
-          </div>
         </header>
 
         <main className="studio-stage" aria-live="polite">
@@ -1082,7 +1089,7 @@ export default function StudioPortfolio() {
           </div>
         </main>
 
-        <footer className="section-foot">
+        <footer className={`section-foot${phase.id === 'contact' ? ' section-foot--bare' : ''}`}>
           <p>Achilles Vonn D. Rabina</p>
           <p className="section-foot-hint">{footHint}</p>
         </footer>

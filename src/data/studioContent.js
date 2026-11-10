@@ -380,9 +380,9 @@ export const projects = {
 
 export const contact = {
   kicker: '04  /  Get in touch',
-  titleLead: "Let's build",
+  titleLead: "Let’s build",
   titleTail: 'something.',
-  lede: "Have a project or a question? I'd love to hear it.",
+  lede: "Have a project or a question? I’d love to hear it.",
   socials: [
     { label: 'GitHub', href: site.socials.github },
     { label: 'LinkedIn', href: site.socials.linkedin },
@@ -390,7 +390,7 @@ export const contact = {
   ],
 }
 
-const tilts = [-11, 8, -6, 10, -9, 7, -5, 12, -8, 6, -10, 5, -7, 9, -4, 11]
+const tilts = [-6, 5, -4, 6, -5, 4, -3, 7, -5, 4, -6, 3, -4, 5, -3, 6]
 
 /** All collected Photos + portrait — scattered around contact. */
 const contactPhotoFiles = [
@@ -412,24 +412,27 @@ const contactPhotoFiles = [
   { file: 'PSC2.jpg', alt: 'DICT startup participant' },
 ]
 
-/** Desktop scatter anchors (percent of contact field). */
+/**
+ * Desktop scatter anchors — percent of the contact field, which is exactly the content column
+ * wide: two photo columns in each gutter beside the form (left, right, left, right, …).
+ */
 const scatterLayout = [
-  { x: 4, y: 8, w: 132 },
-  { x: 18, y: -2, w: 118 },
-  { x: 78, y: 4, w: 128 },
-  { x: 90, y: 18, w: 112 },
-  { x: 2, y: 36, w: 124 },
-  { x: 88, y: 42, w: 120 },
-  { x: 6, y: 62, w: 116 },
-  { x: 86, y: 68, w: 130 },
-  { x: 14, y: 84, w: 110 },
-  { x: 76, y: 88, w: 122 },
-  { x: -2, y: 18, w: 108 },
-  { x: 94, y: 56, w: 114 },
-  { x: 22, y: 72, w: 106 },
-  { x: 70, y: -4, w: 120 },
-  { x: -4, y: 78, w: 118 },
-  { x: 96, y: 82, w: 108 },
+  { x: 1.2, y: 0, w: 100 },
+  { x: 88.8, y: 3, w: 100 },
+  { x: 12.4, y: 10, w: 96 },
+  { x: 77.4, y: 12, w: 96 },
+  { x: 1.2, y: 23, w: 100 },
+  { x: 88.8, y: 26, w: 100 },
+  { x: 12.4, y: 33, w: 96 },
+  { x: 77.4, y: 35, w: 96 },
+  { x: 1.2, y: 46, w: 100 },
+  { x: 88.8, y: 49, w: 100 },
+  { x: 12.4, y: 56, w: 96 },
+  { x: 77.4, y: 58, w: 96 },
+  { x: 1.2, y: 69, w: 100 },
+  { x: 88.8, y: 72, w: 100 },
+  { x: 12.4, y: 79, w: 96 },
+  { x: 77.4, y: 81, w: 96 },
 ]
 
 export const contactPhotos = contactPhotoFiles.map((item, i) => {
